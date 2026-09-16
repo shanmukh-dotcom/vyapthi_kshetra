@@ -39,6 +39,74 @@
     .time-tab { padding: 8px 16px; border-radius: 8px; font-size: 13.5px; font-weight: 600; color: #65796E; cursor: pointer; }
     .time-tab.active { background: #1B4D35; color: #FFFFFF; }
     
+    
+    /* VIBRANT CARD COLORS */
+    .card { border: none !important; box-shadow: 0 10px 30px rgba(0,0,0,0.06) !important; color: #FFFFFF; }
+    .card-title, .card-title svg { color: #FFFFFF !important; stroke: #FFFFFF !important; fill: none; }
+    
+    .card-today-price {
+      background: linear-gradient(135deg, #0B3D2E 0%, #1A744B 100%) !important;
+    }
+    .card-today-price h2, .card-today-price p, .card-today-price .news-text { color: #FFFFFF !important; }
+    .potato-circle { background: rgba(255,255,255,0.2) !important; }
+    .trend-badge { background: rgba(255,255,255,0.2) !important; color: #FFFFFF !important; }
+
+    .card-fair-price {
+      background: linear-gradient(135deg, #F59F00 0%, #E85D04 100%) !important;
+    }
+    .card-fair-price .fair-price-box { background: rgba(255,255,255,0.2) !important; }
+    .card-fair-price h2, .card-fair-price p { color: #FFFFFF !important; }
+    .fair-check-list div { color: #FFFFFF !important; }
+    .fair-check-list svg { stroke: #FFFFFF !important; fill: rgba(255,255,255,0.3) !important; }
+
+    .card-trend {
+      background: linear-gradient(135deg, #1C7ED6 0%, #0B2B5E 100%) !important;
+    }
+    
+    .card-nearby {
+      background: linear-gradient(135deg, #82C89A 0%, #2B6B39 100%) !important;
+    }
+    .nearby-table th, .nearby-table td { color: #FFFFFF !important; border-bottom-color: rgba(255,255,255,0.2) !important; }
+    .nearby-table tr:hover { background: rgba(255,255,255,0.1) !important; }
+    .card-link { color: #FFFFFF !important; }
+
+    .card-comparison {
+      background: linear-gradient(135deg, #9C36B5 0%, #5C007A 100%) !important;
+    }
+    .comp-label, .comp-val { color: #FFFFFF !important; }
+    .bar-dark { background: #FFFFFF !important; }
+    .bar-light { background: rgba(255,255,255,0.4) !important; }
+
+    .card-insight {
+      background: linear-gradient(135deg, #FDE68A 0%, #D97706 100%) !important;
+    }
+    .card-insight .insight-text { color: #432000 !important; font-weight: 600; }
+    .card-insight .insight-green-box { background: rgba(255,255,255,0.6) !important; }
+    .card-insight .insight-green-box h4, .card-insight .insight-green-box p { color: #432000 !important; }
+    .card-insight .card-title, .card-insight .card-title svg { color: #432000 !important; stroke: #432000 !important; }
+
+    .card-ds {
+      background: linear-gradient(135deg, #20C997 0%, #087F5B 100%) !important;
+    }
+    .ds-label { color: #FFFFFF !important; }
+    .ds-bar-bg { background: rgba(255,255,255,0.3) !important; }
+    .ds-bar-fill { background: #FFFFFF !important; }
+    .ds-high, .ds-low { color: #FFFFFF !important; }
+    .ds-msg { background: rgba(255,255,255,0.2) !important; color: #FFFFFF !important; }
+
+    .card-map {
+      background: linear-gradient(135deg, #F0F6EA 0%, #A3C9A8 100%) !important;
+    }
+    .card-map .card-title, .card-map .card-title svg { color: #1B4D35 !important; stroke: #1B4D35 !important; }
+
+    .card-news {
+      background: linear-gradient(135deg, #4A5C52 0%, #11261A 100%) !important;
+    }
+    .news-date { color: #A8C7B4 !important; }
+    .news-text { color: #FFFFFF !important; }
+    .news-dot { background: #82C89A !important; border-color: #4A5C52 !important; }
+    .news-item { border-left-color: rgba(255,255,255,0.2) !important; }
+
     /* Main Grid */
     .main-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     
@@ -322,7 +390,7 @@ function googleTranslateElementInit() {
       
       <!-- Top Row -->
       <!-- Card 1: Today's Market Price -->
-      <div class="card">
+      <div class="card card-today-price">
         <div class="card-header">
           <h3 class="card-title">Today's Market Price <svg style="width: 16px; height: 16px; stroke: #8F9E96; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></h3>
         </div>
@@ -343,7 +411,7 @@ function googleTranslateElementInit() {
       </div>
 
       <!-- Card 2: Fair Price -->
-      <div class="card">
+      <div class="card card-fair-price">
         <div class="card-header">
           <h3 class="card-title">Fair Price for Farmers <svg style="width: 16px; height: 16px; stroke: #8F9E96; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></h3>
         </div>
@@ -360,7 +428,7 @@ function googleTranslateElementInit() {
       </div>
 
       <!-- Card 3: Price Trend -->
-      <div class="card">
+      <div class="card card-trend">
         <div class="card-header" style="margin-bottom: 0;">
           <h3 class="card-title">Price Trend (Last 6 Months)</h3>
         </div>
@@ -415,7 +483,7 @@ function googleTranslateElementInit() {
 
       <!-- Middle Row -->
       <!-- Card 4: Prices in Nearby Markets -->
-      <div class="card">
+      <div class="card card-nearby">
         <div class="card-header">
           <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Prices in Nearby Markets</h3>
           <a href="#" class="card-link">View on Map <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
@@ -471,7 +539,7 @@ function googleTranslateElementInit() {
       </div>
 
       <!-- Card 5: Price Comparison -->
-      <div class="card">
+      <div class="card card-comparison">
         <div class="card-header">
           <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Price Comparison</h3>
         </div>
@@ -505,7 +573,7 @@ function googleTranslateElementInit() {
       </div>
 
       <!-- Card 6: Market Insight -->
-      <div class="card insight-card">
+      <div class="card insight-card card-insight">
         <div class="card-header">
           <h3 class="card-title"><svg style="width: 20px; height: 20px; stroke: #D97706; fill: #FDE68A;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Market Insight</h3>
         </div>
@@ -520,7 +588,7 @@ function googleTranslateElementInit() {
 
       <!-- Bottom Row -->
       <!-- Card 7: Demand & Supply -->
-      <div class="card">
+      <div class="card card-ds">
         <div class="card-header">
           <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Demand & Supply</h3>
         </div>
@@ -541,7 +609,7 @@ function googleTranslateElementInit() {
       </div>
 
       <!-- Card 8: Market Locations Map -->
-      <div class="card map-card">
+      <div class="card map-card card-map">
         <div class="card-header" style="margin-bottom: 12px;">
           <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Market Locations</h3>
           <button style="background: white; border: 1px solid #E8ECEF; padding: 4px; border-radius: 6px; cursor: pointer;">
@@ -572,7 +640,7 @@ function googleTranslateElementInit() {
       </div>
 
       <!-- Card 9: Market News -->
-      <div class="card">
+      <div class="card card-news">
         <div class="card-header">
           <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Market News</h3>
           <a href="#" class="card-link">View All <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
