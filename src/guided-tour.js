@@ -142,21 +142,33 @@ class GuidedAssistant {
 
     const utterance = new SpeechSynthesisUtterance(spokenText);
     utterance.lang = langCodes[langKey] || 'en-IN';
+    utterance.rate = 0.9;
     
     // Attempt to find a native voice for the selected language
-    const voices = window.speechSynthesis.getVoices();
-    const nativeVoice = voices.find(v => v.lang.includes(langKey));
-    const indVoice = voices.find(v => v.lang.includes('en-IN'));
+    let voices = window.speechSynthesis.getVoices();
+    let nativeVoice = voices.find(v => v.lang.toLowerCase().includes(langKey));
     
     if (nativeVoice) {
       utterance.voice = nativeVoice;
-    } else if (indVoice) {
-      utterance.voice = indVoice;
+    } else if (langKey === 'en') {
+      const indVoice = voices.find(v => v.lang.includes('en-IN'));
+      if (indVoice) utterance.voice = indVoice;
+    } else if (voices.length > 0 && !nativeVoice) {
+      // Voices are loaded, but Telugu/Hindi isn't available on this device!
+      console.warn(`No native voice found for language: ${langKey}. The browser may stay silent.`);
+      // We will not force an English voice, we let the browser try to use network voices if utterance.lang is set.
     }
     
-    utterance.rate = 0.9;
-    
     utterance.onend = () => {
+      setTimeout(() => {
+        this.currentStep++;
+        this.playNextStep();
+      }, 600);
+    };
+
+    utterance.onerror = (e) => {
+      console.error('SpeechSynthesis error:', e);
+      // Skip to next step on error so it doesn't hang forever
       setTimeout(() => {
         this.currentStep++;
         this.playNextStep();
