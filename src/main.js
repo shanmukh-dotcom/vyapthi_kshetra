@@ -1,6 +1,51 @@
 const STORAGE_KEY = 'vyapti_selected_language';
 const DEFAULT_LANG = 'te'; // Telugu default
 
+const TRANSLATIONS = {
+  en: {
+    title: "Choose Your Language",
+    subtitle: "Select your preferred language to continue",
+    continueBtn: "Continue",
+    note: "You can change language later in settings"
+  },
+  te: {
+    title: "మీ భాషను ఎంచుకోండి",
+    subtitle: "కొనసాగించడానికి మీ ప్రాధాన్య భాషను ఎంచుకోండి",
+    continueBtn: "కొనసాగించండి",
+    note: "మీరు సెట్టింగ్‌లలో తర్వాత భాషను మార్చవచ్చు"
+  },
+  hi: {
+    title: "अपनी भाषा चुनें",
+    subtitle: "जारी रखने के लिए अपनी पसंदीदा भाषा चुनें",
+    continueBtn: "जारी रखें",
+    note: "आप बाद में सेटिंग्स में भाषा बदल सकते हैं"
+  },
+  kn: {
+    title: "ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    subtitle: "ಮುಂದುವರಿಯಲು ನಿಮ್ಮ ಆದ್ಯತೆಯ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    continueBtn: "ಮುಂದುವರಿಸಿ",
+    note: "ನೀವು ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ನಂತರ ಭಾಷೆಯನ್ನು ಬದಲಾಯಿಸಬಹುದು"
+  },
+  ta: {
+    title: "உங்கள் மொழியைத் தேர்ந்தெடுக்கவும்",
+    subtitle: "தொடர உங்கள் விருப்பமான மொழியைத் தேர்ந்தெடுக்கவும்",
+    continueBtn: "தொடரவும்",
+    note: "அமைப்புகளில் பின்னர் மொழியை மாற்றலாம்"
+  },
+  mr: {
+    title: "तुमची भाषा निवडा",
+    subtitle: "पुढे जाण्यासाठी तुमची पसंतीची भाषा निवडा",
+    continueBtn: "पुढे जा",
+    note: "तुम्ही सेटिंग्जमध्ये नंतर भाषा बदलू शकता"
+  },
+  bn: {
+    title: "আপনার ভাষা চয়ন করুন",
+    subtitle: "চালিয়ে যেতে আপনার পছন্দের ভাষা নির্বাচন করুন",
+    continueBtn: "অবিরত রাখুন",
+    note: "আপনি পরে সেটিংসে ভাষা পরিবর্তন করতে পারেন"
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   const languageOptions = Array.from(document.querySelectorAll('.language-option'));
   const continueBtn = document.getElementById('continue-btn');
@@ -95,5 +140,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const selectedLang = targetOption.getAttribute('data-lang');
       localStorage.setItem(STORAGE_KEY, selectedLang);
     }
+
+    // Apply translations to the page
+    const currentLangCode = targetOption.getAttribute('data-lang');
+    const dict = TRANSLATIONS[currentLangCode] || TRANSLATIONS['en'];
+    
+    const titleEl = document.querySelector('.card-title');
+    const subtitleEl = document.querySelector('.card-subtitle');
+    const btnSpan = document.querySelector('#continue-btn span');
+    const noteSpan = document.querySelector('.bottom-note span');
+
+    if(titleEl) titleEl.innerText = dict.title;
+    if(subtitleEl) subtitleEl.innerText = dict.subtitle;
+    if(btnSpan) btnSpan.innerText = dict.continueBtn;
+    if(noteSpan) noteSpan.innerText = dict.note;
   }
 });
