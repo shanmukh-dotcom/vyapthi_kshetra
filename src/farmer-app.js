@@ -274,22 +274,32 @@ class FarmerApp {
   }
 
   /**
-   * Web Speech Synthesis Read Aloud for current page
+   * Play Custom Pre-recorded Audio for current page
    */
   setupReadAloud() {
     const readBtns = Array.from(document.querySelectorAll('.btn-read-aloud'));
-    let isSpeaking = false;
+    let currentAudio = null;
+    let isPlaying = false;
+
+    // Map page keys to the actual uploaded audio files
+    const PAGE_AUDIO_FILES = {
+      home: 'mp3/farmer_home.mpeg',
+      myFarm: 'mp3/my_farm.mpeg',
+      market: 'mp3/market_fair price.mpeg',
+      gradeSell: 'mp3/grade and scale.mpeg',
+      findBuyers: 'mp3/find buyers.mpeg',
+      logistics: 'mp3/collective logistics.mpeg',
+      transactions: 'mp3/my transcations.mpeg'
+    };
 
     readBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        if (!('speechSynthesis' in window)) {
-          alert('Read Aloud is not supported in this browser.');
-          return;
-        }
-
-        if (isSpeaking) {
-          window.speechSynthesis.cancel();
-          isSpeaking = false;
+        if (isPlaying && currentAudio) {
+          // Stop audio if it's currently playing
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+          isPlaying = false;
+          
           btn.classList.remove('speaking');
           btn.innerHTML = `
             <svg class="icon-read" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
@@ -298,35 +308,39 @@ class FarmerApp {
           return;
         }
 
+        // Determine which page we are on
         const pageKey = document.body.getAttribute('data-page') || 'home';
-        const currentLang = localStorage.getItem(LANG_KEY) || 'en';
-        const pageData = PAGE_READ_DATA[pageKey] || PAGE_READ_DATA.home;
-        const speechText = pageData[currentLang] || pageData.en;
+        const audioSrc = PAGE_AUDIO_FILES[pageKey];
 
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(speechText);
-        utterance.lang = currentLang === 'te' ? 'te-IN' : (currentLang === 'hi' ? 'hi-IN' : 'en-IN');
-        utterance.rate = 0.95;
+        if (!audioSrc) {
+          alert('No audio file found for this page.');
+          return;
+        }
 
-        utterance.onstart = () => {
-          isSpeaking = true;
+        // Initialize and play the new audio
+        currentAudio = new Audio(audioSrc);
+        
+        currentAudio.play().then(() => {
+          isPlaying = true;
           btn.classList.add('speaking');
           btn.innerHTML = `
             <svg class="icon-read" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="1" y1="1" x2="23" y2="23"></line></svg>
             <span>Stop Audio</span>
           `;
-        };
+        }).catch(err => {
+          console.error("Audio playback failed:", err);
+          alert("Could not play the audio file. Make sure you are interacting with the page first.");
+        });
 
-        utterance.onend = utterance.onerror = () => {
-          isSpeaking = false;
+        // Reset button when audio finishes
+        currentAudio.onended = () => {
+          isPlaying = false;
           btn.classList.remove('speaking');
           btn.innerHTML = `
             <svg class="icon-read" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
             <span>Read Aloud</span>
           `;
         };
-
-        window.speechSynthesis.speak(utterance);
       });
     });
   }
