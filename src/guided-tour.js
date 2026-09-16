@@ -25,8 +25,47 @@ class GuidedAssistant {
         { classSelector: '.match-banner', text: 'Based on the grade, we will show you the fair market price and find matching buyers instantly.' },
         { classSelector: '.action-btn', text: 'Finally, click the green button to list your crop for sale and view the buyers!' }
       ];
+    } else if (path.includes('farmer-home')) {
+      this.steps = [
+        { classSelector: '.page-title-left', text: 'Welcome to your farm dashboard. Here is your daily summary.' },
+        { classSelector: '.hero-card:nth-child(1)', text: 'This card shows your active crop and how much is ready to harvest.' },
+        { classSelector: '.hero-card:nth-child(2)', text: 'Here you can check today\'s average market price in your area.' },
+        { classSelector: '.hero-card:nth-child(3)', text: 'This shows how many verified buyers are currently looking for your crop.' },
+        { classSelector: '.action-card', text: 'Click here when you are ready to grade and sell your produce.' }
+      ];
+    } else if (path.includes('farmer-my-farm')) {
+      this.steps = [
+        { classSelector: '.page-title-left', text: 'This is your farm profile. It tracks your land area, soil type, and irrigation details.' },
+        { classSelector: '.card:nth-child(1)', text: 'Here you can see the details of the crops you are currently growing.' },
+        { classSelector: 'button.action-btn', text: 'Use this button to add a new crop or update your existing farming records.' }
+      ];
+    } else if (path.includes('farmer-market')) {
+      this.steps = [
+        { classSelector: '.page-title-left', text: 'Welcome to Market Intelligence. Here you can track prices and demand.' },
+        { classSelector: '.card:nth-child(1)', text: 'This section shows the current price trends and whether prices are rising or falling.' },
+        { classSelector: '.card:nth-child(2)', text: 'This is the Fair Price Guard, helping you understand the true value of your crop today.' }
+      ];
+    } else if (path.includes('farmer-find-buyers')) {
+      this.steps = [
+        { classSelector: '.page-title-left', text: 'Here you can see all verified buyers looking for your crop.' },
+        { classSelector: '.card:nth-child(1)', text: 'Each card shows the buyer requirement, price offered, and their distance from you.' },
+        { classSelector: 'button', text: 'Click accept to begin the transaction securely.' }
+      ];
+    } else if (path.includes('farmer-collective')) {
+      this.steps = [
+        { classSelector: '.page-title-left', text: 'Welcome to Logistics. Here you can arrange transport for your produce.' },
+        { classSelector: '.card:nth-child(1)', text: 'If you have a small quantity, you can pool your crop with nearby farmers here.' },
+        { classSelector: '.card:nth-child(2)', text: 'Use this section to book a verified truck to transport your crop to the buyer.' }
+      ];
+    } else if (path.includes('farmer-transactions')) {
+      this.steps = [
+        { classSelector: '.page-title-left', text: 'This is your transaction history and payment ledger.' },
+        { classSelector: '.card:nth-child(1)', text: 'Here you can track active orders, view payment status, and see transparent deductions.' }
+      ];
     } else {
-      this.steps = [];
+      this.steps = [
+        { classSelector: '.page-title-left', text: 'Welcome to this page. You can use the menu on the left to navigate.' }
+      ];
     }
   }
 
