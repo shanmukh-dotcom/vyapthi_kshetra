@@ -29,19 +29,19 @@ const INITIAL_DB = {
     }
   },
   supplies: {
-    'supply-ramesh-tomato': {
-      id: 'supply-ramesh-tomato',
+    'supply-ramesh-potato': {
+      id: 'supply-ramesh-potato',
       farmerId: 'farmer-ramesh',
-      crop: 'Tomato',
+      crop: 'Potato',
       quantity: 5000,
       grade: 'Grade A',
       availability: 'Available',
       location: 'Krishna District, Andhra Pradesh'
     },
-    'supply-lakshmi-tomato': {
-      id: 'supply-lakshmi-tomato',
+    'supply-lakshmi-potato': {
+      id: 'supply-lakshmi-potato',
       farmerId: 'farmer-lakshmi',
-      crop: 'Tomato',
+      crop: 'Potato',
       quantity: 3500,
       grade: 'Grade A',
       availability: 'Available',

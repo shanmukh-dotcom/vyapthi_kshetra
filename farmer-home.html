@@ -7,7 +7,7 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
   <link rel="stylesheet" href="/src/style.css" />
   <style>
-    body { background-color: #F4F6F5; font-family: var(--font-main); overflow-x: hidden; }
+    body { background-color: var(--bg); font-family: 'Inter', sans-serif; overflow-x: hidden; }
     
     /* Side bar specific tweaks for home reference */
     #app-sidebar-drawer {  width: 260px; background: #FFFFFF; border-right: 1px solid #E8ECEF; box-shadow: none; left: 0; position: fixed;  }
@@ -15,35 +15,37 @@
     
     /* Transparent header floating */
     .top-floating-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 30px; }
-    .header-pill { background: #FFFFFF; border: 1px solid #E4EBE6; padding: 8px 16px; border-radius: 20px; font-size: 13.5px; font-weight: 600; color: #163323; display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-    .header-bell { background: #FFFFFF; border: 1px solid #E4EBE6; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.02); cursor: pointer; }
+    .header-pill { background: var(--white); border: 1px solid #E4EBE6; padding: 8px 16px; border-radius: 20px; font-size: 13.5px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 8px 30px rgba(20, 50, 35, 0.06); }
+    .header-bell { background: var(--white); border: 1px solid #E4EBE6; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 8px 30px rgba(20, 50, 35, 0.06); cursor: pointer; color: var(--text); }
     .bell-badge { position: absolute; top: -2px; right: -2px; background: #E03131; color: white; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
-    .profile-pill { background: #FFFFFF; border: 1px solid #E4EBE6; padding: 4px 12px 4px 4px; border-radius: 24px; display: flex; align-items: center; gap: 10px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .profile-pill { background: var(--white); border: 1px solid #E4EBE6; padding: 4px 12px 4px 4px; border-radius: 24px; display: flex; align-items: center; gap: 10px; cursor: pointer; box-shadow: 0 8px 30px rgba(20, 50, 35, 0.06); }
     
     /* Page Title Row */
     .page-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
-    .page-title-left h2 { font-size: 32px; font-weight: 700; color: #163323; margin: 0; display: flex; align-items: center; gap: 8px; }
-    .page-title-left h1 { font-size: 52px; font-weight: 800; color: #11261A; margin: -4px 0 4px; letter-spacing: -0.5px; }
+    .page-title-left h2 { font-size: 36px; font-weight: 700; color: #163323; margin: 0; display: flex; align-items: center; gap: 8px; }
+    .page-title-left h1 { font-size: 56px; font-weight: 800; color: #11261A; margin: -4px 0 4px; letter-spacing: -0.5px; }
     .page-title-left p { font-size: 18px; color: #65796E; margin: 0; }
+    .better-prices-btn:hover { transform: translateY(-2px); }
     .better-prices-btn { background: #E9F3EC; color: #165A31; padding: 12px 20px; border-radius: 12px; font-size: 14.5px; font-weight: 700; display: flex; align-items: center; gap: 10px; text-decoration: none; border: none; }
     
     /* Hero Cards */
     .hero-cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
-    .hero-card { border-radius: 16px; padding: 20px 24px; position: relative; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-    .hero-card-1 { background: #F0F6EA; }
-    .hero-card-2 { background: #FDF5E6; }
-    .hero-card-3 { background: #E9F4FF; }
+    .hero-card { border-radius: 24px; padding: 24px 28px; position: relative; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; border: none; box-shadow: 0 8px 30px rgba(20, 50, 35, 0.06); transition: transform 0.2s; }
+    .hero-card:hover { transform: translateY(-4px); }
+    .hero-card-1 { background: rgba(46, 139, 87, 0.03); }
+    .hero-card-2 { background: var(--cream); }
+    .hero-card-3 { background: #EAF3FB; }
     
     .card-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
-    .c-icon-1 { background: #D1E5C9; color: #2B6B39; }
-    .c-icon-2 { background: #FAD19D; color: #9C540C; font-weight: bold; font-size: 18px; }
-    .c-icon-3 { background: #BBDDF5; color: #17638B; }
+    .c-icon-1 { background: #E5F4E8; color: var(--vyapti-green); }
+    .c-icon-2 { background: #FFF0D2; color: #C47A13; font-weight: bold; font-size: 18px; }
+    .c-icon-3 { background: #D6E9F7; color: var(--buyer-blue); }
     
-    .card-title { font-size: 14px; font-weight: 600; color: #4A5C52; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-    .card-title-2 { color: #8C6A42; }
-    .card-title-3 { color: #356788; }
+    .card-title { font-size: 18px; font-weight: 600; color: var(--muted); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+    .card-title-2 { color: var(--market-amber); }
+    .card-title-3 { color: var(--buyer-blue); }
     
-    .card-main-val { font-size: 32px; font-weight: 800; color: #11261A; margin-bottom: 16px; display: flex; align-items: baseline; gap: 6px; }
+    .card-main-val { font-size: 42px; font-weight: 800; color: var(--text); margin-bottom: 16px; display: flex; align-items: baseline; gap: 6px; }
     
     .card-pill { padding: 6px 12px; border-radius: 12px; font-size: 12.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; width: fit-content; margin-bottom: 4px; }
     .c-pill-1 { background: #D1E5C9; color: #165A31; }
@@ -52,29 +54,31 @@
     
     .card-arrow { position: absolute; bottom: 20px; right: 20px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; color: #11261A; font-weight: bold; }
     
-    .tomato-img { position: absolute; right: -20px; top: 30px; width: 140px; height: 140px; object-fit: contain; mix-blend-mode: multiply; }
+    .potato-img { position: absolute; right: -20px; top: 30px; width: 140px; height: 140px; object-fit: contain; mix-blend-mode: multiply; }
     
     /* Sell Banner */
-    .sell-banner { background: #1B4D35; border-radius: 16px; padding: 0; display: flex; align-items: center; text-decoration: none; overflow: hidden; position: relative; margin-bottom: 30px; box-shadow: 0 8px 20px rgba(27, 77, 53, 0.2); }
+    .sell-banner { background: var(--vyapti-deep); border-radius: 24px; padding: 0; display: flex; align-items: center; text-decoration: none; overflow: hidden; position: relative; margin-bottom: 30px; box-shadow: 0 8px 30px rgba(20, 50, 35, 0.06); }
     .sell-banner-content { padding: 30px 40px; display: flex; align-items: center; gap: 20px; z-index: 2; flex: 1; }
     .sell-banner-cam { width: 64px; height: 64px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #1B4D35; flex-shrink: 0; }
     .sell-banner-text h3 { font-size: 28px; font-weight: 800; color: white; margin: 0 0 4px; }
     .sell-banner-text p { font-size: 15.5px; color: rgba(255,255,255,0.9); margin: 0; }
     .sell-banner-arrow { width: 36px; height: 36px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #1B4D35; margin-left: 10px; flex-shrink: 0; }
-    .sell-banner-img { position: absolute; right: 0; top: 0; height: 100%; width: 550px; object-fit: cover; mask-image: linear-gradient(to right, transparent 0%, black 50%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 50%); }
+    .sell-banner-img { position: absolute; right: 0; top: 0; height: 100%; width: 550px; object-fit: cover; mask-image: linear-gradient(to right, transparent 0%, black 70%); -webkit-mask-image: linear-gradient(to right, transparent 0%, black 70%); }
     .sell-banner-script { position: absolute; right: 40px; bottom: 30px; color: white; font-family: cursive, sans-serif; font-size: 20px; transform: rotate(-5deg); z-index: 3; text-shadow: 0 2px 4px rgba(0,0,0,0.5); text-align: center; line-height: 1.2; }
     
     /* Other Options */
-    .section-title { font-size: 17px; font-weight: 700; color: #11261A; margin-bottom: 16px; }
+    .section-title { font-size: 26px; font-weight: 700; color: var(--text); margin-bottom: 24px; }
     .options-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 30px; }
-    .option-card { background: white; border: 1px solid #E8ECEF; border-radius: 14px; padding: 16px; display: flex; align-items: center; gap: 14px; text-decoration: none; transition: transform 0.15s; }
-    .option-card:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.04); }
+    .option-card { background: var(--white); border: none; border-radius: 24px; padding: 24px; display: flex; align-items: center; gap: 14px; text-decoration: none; transition: all 200ms ease; box-shadow: 0 8px 30px rgba(20, 50, 35, 0.06); }
+    .option-card .card-arrow-right { transition: transform 200ms ease; }
+    .option-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(20, 50, 35, 0.1); }
+    .option-card:hover .card-arrow-right { transform: translateX(4px); }
     .opt-icon { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .opt-info h4 { font-size: 14px; font-weight: 700; color: #11261A; margin: 0 0 2px; }
+    .opt-info h4 { font-size: 18px; font-weight: 600; color: var(--text); margin: 0 0 4px; }
     .opt-info p { font-size: 11.5px; color: #65796E; margin: 0; }
     
     /* Join Banner */
-    .join-banner { background: linear-gradient(to right, #EBF5F0, #D2E8D9); border-radius: 16px; padding: 0; display: flex; align-items: center; text-decoration: none; position: relative; overflow: hidden; height: 100px; margin-bottom: 40px; }
+    .join-banner { background: #E8F5EB; border-radius: 24px; padding: 0; display: flex; align-items: center; text-decoration: none; position: relative; overflow: hidden; height: 120px; margin-bottom: 40px; box-shadow: 0 8px 30px rgba(20, 50, 35, 0.06); }
     .join-content { padding: 0 30px; display: flex; align-items: center; gap: 16px; z-index: 2; }
     .join-icon { width: 48px; height: 48px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #1B4D35; }
     .join-text h4 { font-size: 18px; font-weight: 700; color: #11261A; margin: 0 0 2px; }
@@ -84,7 +88,7 @@
     /* Bottom Bar */
     .bottom-acc-container { display: flex; justify-content: center; align-items: center; padding: 20px 0 40px; margin-top: auto; }
     .acc-pill-wrap { display: flex; align-items: center; gap: 20px; pointer-events: auto; }
-    .acc-pill { background: white; border-radius: 30px; padding: 8px 12px; display: flex; align-items: center; gap: 4px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); border: 1px solid #E4EBE6; }
+    .acc-pill { background: var(--white); border-radius: 30px; padding: 8px 12px; display: flex; align-items: center; gap: 4px; box-shadow: 0 8px 30px rgba(20, 50, 35, 0.06); border: 1px solid rgba(228, 235, 230, 0.5); }
     .acc-btn { display: flex; align-items: center; gap: 8px; padding: 8px 16px; color: #273E31; font-size: 13px; font-weight: 600; text-decoration: none; border-radius: 20px; transition: background 0.15s; background: none; border: none; cursor: pointer; }
     .acc-btn:hover { background: #F4F7F5; }
     .acc-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
@@ -210,7 +214,7 @@ function googleTranslateElementInit() {
 
   <main class="app-main-layout">
     
-    <div class="top-green-banner" style="background: linear-gradient(rgba(27, 77, 53, 0.4), rgba(27, 77, 53, 0.85)), url('/assets/rajesh_bg.png') center/cover no-repeat; padding: 30px 40px 40px; margin: -30px -40px 30px -40px; border-radius: 0 0 24px 24px; box-shadow: 0 10px 30px rgba(27, 77, 53, 0.1);">
+    <div class="top-green-banner" style="background: linear-gradient(90deg, rgba(11,61,46,0.92) 0%, rgba(20,90,58,0.72) 48%, rgba(20,90,58,0.45) 100%), url('/assets/rajesh_bg.png') center/cover no-repeat; padding: 30px 40px 40px; margin: -30px -40px 30px -40px; border-radius: 0 0 30px 30px; box-shadow: 0 10px 30px rgba(27, 77, 53, 0.1);">
       <div class="top-floating-header" style="margin-bottom: 30px;">
           <button type="button" id="app-menu-toggle" style="background: #FFFFFF; border: 1px solid #E4EBE6; border-radius: 8px; width: 42px; height: 42px; cursor: pointer; color: #163323; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><svg style="width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
           <div style="display: flex; gap: 12px;">
@@ -234,7 +238,7 @@ function googleTranslateElementInit() {
           <img src="/assets/farmer_portrait.jpg" alt="Ramesh Kumar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" />
           <div style="display: flex; flex-direction: column;">
             <span style="font-size: 14px; font-weight: 700; color: #11261A;" class="sync-farmer-name">Ramesh Kumar</span>
-            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Kolar, KA</span>
+            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Krishna District, AP</span>
           </div>
           <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
@@ -248,7 +252,7 @@ function googleTranslateElementInit() {
           <p style="color: #A8C7B4;">Here's what matters for your farm today.</p>
           <span style="display: inline-block; font-size: 10px; font-weight: 700; background: rgba(255,255,255,0.15); color: #FFFFFF; padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.3); margin-top: 6px;">Demo Data</span>
         </div>
-        <a href="/farmer-collective-logistics.html" class="better-prices-btn" style="background: #FFFFFF; color: #1B4D35; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <a href="/farmer-collective-logistics.html" class="better-prices-btn" style="background: var(--white); color: var(--vyapti-primary); box-shadow: 0 8px 30px rgba(20, 50, 35, 0.06); transition: transform 0.2s;">
           <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
           Together for<br>Better Prices
           <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; margin-left: 8px;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -262,13 +266,13 @@ function googleTranslateElementInit() {
           <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
         </div>
         <div class="card-title">Your Crop</div>
-        <div style="font-size: 22px; font-weight: 800; color: #11261A; margin-bottom: 8px;" class="sync-crop-name">Tomato</div>
+        <div style="font-size: 22px; font-weight: 800; color: #11261A; margin-bottom: 8px;" class="sync-crop-name">Potato</div>
         <div class="card-main-val sync-crop-qty">500 kg</div>
         <div class="card-pill c-pill-1">
           <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
           Ready to sell
         </div>
-        <img src="/assets/tomato_card_bg.jpg" alt="Tomatoes" class="tomato-img" />
+        <img src="/assets/potato_crop.jpg" alt="Potatoes" class="potato-img" />
         <div class="card-arrow">></div>
       </a>
 
@@ -290,7 +294,7 @@ function googleTranslateElementInit() {
         </div>
         <div class="card-title card-title-3">Buyers Interested</div>
         <div class="card-main-val" style="margin-top: 14px; margin-bottom: 4px;"><span style="font-size: 42px;">3</span> <span style="font-size: 24px;">buyers</span></div>
-        <div style="font-size: 14.5px; color: #356788; font-weight: 500; margin-bottom: 12px;">want your tomatoes</div>
+        <div style="font-size: 14.5px; color: #356788; font-weight: 500; margin-bottom: 12px;">want your potatoes</div>
         <div class="card-pill c-pill-3">
           🔥 2 are ready to buy now
         </div>
@@ -304,58 +308,58 @@ function googleTranslateElementInit() {
           <svg style="width: 32px; height: 32px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
         </div>
         <div class="sell-banner-text">
-          <h3>Sell My Tomato</h3>
+          <h3>Sell My Potato</h3>
           <p>Check quality, get best price, and find buyers</p>
         </div>
         <div class="sell-banner-arrow">
           <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </div>
       </div>
-      <img src="/assets/hands_tomatoes_banner.jpg" class="sell-banner-img" alt="Hands holding tomatoes" />
+      <img src="/assets/hands_tomatoes_banner.jpg" class="sell-banner-img" alt="Hands holding potatoes" />
       <div class="sell-banner-script">Good produce<br>Better opportunities</div>
     </a>
 
     <div class="section-title">Other Options</div>
     <div class="options-grid">
       <a href="/farmer-my-farm.html" class="option-card">
-        <div class="opt-icon" style="background: #EEF8F2; color: #1B4D35;">
+        <div class="opt-icon" style="background: #E5F4E8; color: var(--vyapti-green);">
           <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
         </div>
         <div class="opt-info">
           <h4>Manage My Farm</h4>
           <p>Update crop details</p>
         </div>
-        <div style="margin-left: auto; color: #11261A; font-weight: bold;">></div>
+        <div class="card-arrow-right" style="margin-left: auto; color: var(--text); font-weight: bold;">></div>
       </a>
       <a href="/farmer-market.html" class="option-card">
-        <div class="opt-icon" style="background: #FEF3D6; color: #9C540C;">
+        <div class="opt-icon" style="background: #FFF0D2; color: #C47A13;">
           <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
         </div>
         <div class="opt-info">
           <h4>Check Market Price</h4>
           <p>See prices in nearby markets</p>
         </div>
-        <div style="margin-left: auto; color: #11261A; font-weight: bold;">></div>
+        <div class="card-arrow-right" style="margin-left: auto; color: var(--text); font-weight: bold;">></div>
       </a>
       <a href="/farmer-find-buyers.html" class="option-card">
-        <div class="opt-icon" style="background: #E2F1F8; color: #17638B;">
+        <div class="opt-icon" style="background: #D6E9F7; color: var(--buyer-blue);">
           <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg>
         </div>
         <div class="opt-info">
           <h4>Find Buyers</h4>
           <p>View offers and connect</p>
         </div>
-        <div style="margin-left: auto; color: #11261A; font-weight: bold;">></div>
+        <div class="card-arrow-right" style="margin-left: auto; color: var(--text); font-weight: bold;">></div>
       </a>
       <a href="/farmer-collective-logistics.html" class="option-card">
-        <div class="opt-icon" style="background: #EEF8F2; color: #1B4D35;">
+        <div class="opt-icon" style="background: #E5F4E8; color: var(--vyapti-green);">
           <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon></svg>
         </div>
         <div class="opt-info">
           <h4>Logistics & Transport</h4>
           <p>Move together, save more</p>
         </div>
-        <div style="margin-left: auto; color: #11261A; font-weight: bold;">></div>
+        <div class="card-arrow-right" style="margin-left: auto; color: var(--text); font-weight: bold;">></div>
       </a>
     </div>
 

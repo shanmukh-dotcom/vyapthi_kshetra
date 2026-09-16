@@ -77,7 +77,7 @@ class BuyerApp {
       
       // Determine crop emoji
       let emoji = '📦';
-      if (req.crop.toLowerCase().includes('tomato')) emoji = '🍅';
+      if (req.crop.toLowerCase().includes('potato')) emoji = '🍅';
       if (req.crop.toLowerCase().includes('chilli')) emoji = '🌶️';
       if (req.crop.toLowerCase().includes('maize')) emoji = '🌽';
       
@@ -112,11 +112,11 @@ class BuyerApp {
     const list = document.querySelector('.farmer-list');
     if (!list) return;
     
-    // Check if we have active tomato req
+    // Check if we have active potato req
     const reqs = Object.values(sharedState.db.requirements);
-    const tomatoReq = reqs.find(r => r.crop === 'Tomato' && r.status === 'active');
+    const potatoReq = reqs.find(r => r.crop === 'Potato' && r.status === 'active');
     
-    if (!tomatoReq) {
+    if (!potatoReq) {
       list.innerHTML = `<div class="fc-empty" style="border: none; background: transparent;"><h3 style="color:var(--vk-text-muted); text-align:center; width:100%;">Create a requirement first to see matches.</h3></div>`;
       const donutVal = document.querySelector('.donut-val');
       if (donutVal) donutVal.textContent = '0 /';
@@ -125,7 +125,7 @@ class BuyerApp {
       return;
     }
     
-    const matchData = sharedState.matchRequirementToFarmers(tomatoReq);
+    const matchData = sharedState.matchRequirementToFarmers(potatoReq);
     
     list.innerHTML = '';
     
@@ -235,9 +235,9 @@ class BuyerApp {
     if (donutVal) donutVal.textContent = matchData.totalMatchedQty.toLocaleString() + ' /';
     
     const reqVal = document.querySelector('.req-val');
-    if (reqVal) reqVal.textContent = tomatoReq.quantity.toLocaleString() + ' kg';
+    if (reqVal) reqVal.textContent = potatoReq.quantity.toLocaleString() + ' kg';
     
-    const pct = Math.min(100, Math.round((matchData.totalMatchedQty / tomatoReq.quantity) * 100));
+    const pct = Math.min(100, Math.round((matchData.totalMatchedQty / potatoReq.quantity) * 100));
     const donutFill = document.querySelector('.donut-fill');
     if (donutFill) {
       const dash = (pct / 100) * 251.2;
@@ -250,16 +250,16 @@ class BuyerApp {
   }
   
   renderHome() {
-    // In consumer-home, we just need to update the matched quantity of Tomato req if exists
+    // In consumer-home, we just need to update the matched quantity of Potato req if exists
     const reqs = Object.values(sharedState.db.requirements);
-    const tomatoReq = reqs.find(r => r.crop === 'Tomato' && r.status === 'active');
+    const potatoReq = reqs.find(r => r.crop === 'Potato' && r.status === 'active');
     
-    if (tomatoReq) {
-      const matchData = sharedState.matchRequirementToFarmers(tomatoReq);
-      const pct = Math.min(100, Math.round((matchData.totalMatchedQty / tomatoReq.quantity) * 100));
+    if (potatoReq) {
+      const matchData = sharedState.matchRequirementToFarmers(potatoReq);
+      const pct = Math.min(100, Math.round((matchData.totalMatchedQty / potatoReq.quantity) * 100));
       
       const qtyText = document.querySelector('.flex-between span:first-child');
-      if (qtyText) qtyText.textContent = `${matchData.totalMatchedQty.toLocaleString()} / ${tomatoReq.quantity.toLocaleString()} kg matched`;
+      if (qtyText) qtyText.textContent = `${matchData.totalMatchedQty.toLocaleString()} / ${potatoReq.quantity.toLocaleString()} kg matched`;
       
       const pctText = document.querySelector('.flex-between span:last-child');
       if (pctText) pctText.textContent = `${pct}%`;

@@ -1,7 +1,7 @@
 // Synthetic Demo Data for Crop Production Alerts
 const demoProductionData = [
   { crop: 'Potato', district: 'Krishna', year: '2026', production: 82, threshold: 100, farmers: 42 },
-  { crop: 'Tomato', district: 'Krishna', year: '2026', production: 145, threshold: 120, farmers: 58 },
+  { crop: 'Potato', district: 'Krishna', year: '2026', production: 145, threshold: 120, farmers: 58 },
   { crop: 'Rice', district: 'Krishna', year: '2026', production: 920, threshold: 800, farmers: 110 },
   { crop: 'Onion', district: 'Krishna', year: '2026', production: 68, threshold: 75, farmers: 15 },
   { crop: 'Maize', district: 'Krishna', year: '2026', production: 410, threshold: 350, farmers: 23 },

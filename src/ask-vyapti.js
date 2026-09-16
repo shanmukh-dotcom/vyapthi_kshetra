@@ -5,7 +5,7 @@
 class AskVyapti {
   constructor() {
     this.farmerName = 'Ramesh Kumar';
-    this.farmerLocation = 'Kolar, Karnataka';
+    this.farmerLocation = 'Krishna District, Andhra Pradesh';
     this.isPanelOpen = false;
     this.init();
   }
@@ -159,7 +159,7 @@ class AskVyapti {
     // 1. CROP SWITCH (Dragon Fruit Scenario from FARM2WORLD)
     if (lower.includes('dragon fruit') || lower.includes('next crop')) {
       this.appendMessage(`
-        Before changing your crop, I can check whether Dragon Fruit fits your farm in Kolar, and compare it with other suitable crops.
+        Before changing your crop, I can check whether Dragon Fruit fits your farm in Krishna District, and compare it with other suitable crops.
         <br><br>
         I evaluate:<br>
         • Land suitability<br>
@@ -174,7 +174,7 @@ class AskVyapti {
     // 2. MARKET PRICE
     else if (lower.includes('price') || lower.includes('market')) {
       this.appendMessage(`
-        Current available potato market information for Kolar:<br><br>
+        Current available potato market information for Krishna District:<br><br>
         Modal: ₹22/kg<br>
         Range: ₹20–₹24/kg<br>
         Updated: Today<br>
@@ -201,7 +201,7 @@ class AskVyapti {
         I am currently operating in Phase 1 mode. Try asking me about:<br>
         - "Should I grow dragon fruit?"<br>
         - "What is today's potato price?"<br>
-        - "My tomato leaves are turning yellow."
+        - "My potato leaves are turning yellow."
       `, 'system');
     }
   }

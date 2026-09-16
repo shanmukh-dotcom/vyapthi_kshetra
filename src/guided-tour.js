@@ -14,7 +14,7 @@ class GuidedAssistant {
         { id: 'name-input', text: 'Look here, this is where you enter your full name.' },
         { id: 'mobile-input', text: 'Here, enter your ten digit mobile number.' },
         { id: 'village-input', text: 'This is where you type the name of your village and district.' },
-        { id: 'crop-input', text: 'This is where you enter your crop detail, like tomato or rice.' },
+        { id: 'crop-input', text: 'This is where you enter your crop detail, like potato or rice.' },
         { id: 'quantity-input', text: 'Here, enter the approximate quantity you want to sell.' },
         { id: 'continue-profile-btn', text: 'Once you are done filling these details, click the continue button to go to your farm dashboard.' }
       ];
@@ -108,7 +108,7 @@ class GuidedAssistant {
         'Look here, this is where you enter your full name.': 'यहाँ देखें, यहाँ आपको अपना पूरा नाम दर्ज करना है।',
         'Here, enter your ten digit mobile number.': 'यहाँ अपना दस अंकों का मोबाइल नंबर दर्ज करें।',
         'This is where you type the name of your village and district.': 'यहाँ आप अपने गाँव और जिले का नाम टाइप करें।',
-        'This is where you enter your crop detail, like tomato or rice.': 'यहाँ अपनी फसल का विवरण दर्ज करें, जैसे टमाटर या चावल।',
+        'This is where you enter your crop detail, like potato or rice.': 'यहाँ अपनी फसल का विवरण दर्ज करें, जैसे टमाटर या चावल।',
         'Here, enter the approximate quantity you want to sell.': 'यहाँ वह अनुमानित मात्रा दर्ज करें जिसे आप बेचना चाहते हैं।',
         'Once you are done filling these details, click the continue button to go to your farm dashboard.': 'विवरण भरने के बाद, अपने फार्म डैशबोर्ड पर जाने के लिए जारी रखें बटन पर क्लिक करें।',
         'First, click or drag here to upload clear photos of your crop so the AI can analyze it.': 'सबसे पहले, अपनी फसल की स्पष्ट तस्वीरें अपलोड करने के लिए यहाँ क्लिक करें।',
@@ -125,7 +125,7 @@ class GuidedAssistant {
         'Look here, this is where you enter your full name.': 'ఇక్కడ చూడండి, ఇక్కడ మీరు మీ పేరును నమోదు చేయాలి.',
         'Here, enter your ten digit mobile number.': 'ఇక్కడ, మీ మొబైల్ నంబర్‌ను నమోదు చేయండి.',
         'This is where you type the name of your village and district.': 'ఇక్కడ మీరు మీ గ్రామం మరియు జిల్లా పేరును టైప్ చేయాలి.',
-        'This is where you enter your crop detail, like tomato or rice.': 'ఇక్కడ మీరు మీ పంట వివరాలను నమోదు చేయాలి.',
+        'This is where you enter your crop detail, like potato or rice.': 'ఇక్కడ మీరు మీ పంట వివరాలను నమోదు చేయాలి.',
         'Here, enter the approximate quantity you want to sell.': 'ఇక్కడ, మీరు విక్రయించదలుచుకున్న పరిమాణాన్ని నమోదు చేయండి.',
         'Once you are done filling these details, click the continue button to go to your farm dashboard.': 'ఈ వివరాలను పూరించిన తర్వాత, కొనసాగించు బటన్‌ను క్లిక్ చేయండి.',
         'First, click or drag here to upload clear photos of your crop so the AI can analyze it.': 'మొదట, AI విశ్లేషించడానికి మీ పంట ఫోటోలను అప్‌లోడ్ చేయడానికి ఇక్కడ క్లిక్ చేయండి.',

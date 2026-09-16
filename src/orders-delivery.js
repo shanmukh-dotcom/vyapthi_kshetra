@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
       farmersList.innerHTML = '';
       selectedIds.forEach(fid => {
         const farmer = sharedState.db.farmers[fid];
-        const supplies = Object.values(sharedState.db.supplies).filter(s => s.farmerId === fid && s.crop === 'Tomato');
+        const supplies = Object.values(sharedState.db.supplies).filter(s => s.farmerId === fid && s.crop === 'Potato');
         if (!farmer || supplies.length === 0) return;
         const supply = supplies[0];
         const avatarSrc = farmer.name.includes('Lakshmi') ? '/assets/lakshmi_avatar.jpg' : '/assets/farmer_portrait.jpg';

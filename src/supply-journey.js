@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
       selectedIds.forEach(fid => {
         const farmer = sharedState.db.farmers[fid];
         // find matching supply
-        const supplies = Object.values(sharedState.db.supplies).filter(s => s.farmerId === fid && s.crop === 'Tomato');
+        const supplies = Object.values(sharedState.db.supplies).filter(s => s.farmerId === fid && s.crop === 'Potato');
         if (!farmer || supplies.length === 0) return;
         const supply = supplies[0];
         const avatarSrc = farmer.name.includes('Lakshmi') ? '/assets/lakshmi_avatar.jpg' : '/assets/farmer_portrait.jpg';
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
       cfFarmers.innerHTML = '';
       selectedIds.forEach(fid => {
         const farmer = sharedState.db.farmers[fid];
-        const supplies = Object.values(sharedState.db.supplies).filter(s => s.farmerId === fid && s.crop === 'Tomato');
+        const supplies = Object.values(sharedState.db.supplies).filter(s => s.farmerId === fid && s.crop === 'Potato');
         if (!farmer || supplies.length === 0) return;
         const supply = supplies[0];
         const avatarSrc = farmer.name.includes('Lakshmi') ? '/assets/lakshmi_avatar.jpg' : '/assets/farmer_portrait.jpg';
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update total quantity
     let totalQty = 0;
     selectedIds.forEach(fid => {
-      const supplies = Object.values(sharedState.db.supplies).filter(s => s.farmerId === fid && s.crop === 'Tomato');
+      const supplies = Object.values(sharedState.db.supplies).filter(s => s.farmerId === fid && s.crop === 'Potato');
       if (supplies.length > 0) totalQty += supplies[0].quantity;
     });
     

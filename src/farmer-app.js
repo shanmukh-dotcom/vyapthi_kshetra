@@ -27,7 +27,7 @@ const DEFAULT_FARMER_STATE = {
     irrigation: 'Borewell + Drip'
   },
   currentCrop: {
-    name: 'Tomato',
+    name: 'Potato',
     variety: 'Arka Rakshak',
     currentSellableLot: '500 kg', // Current lot ready for sale
     totalExpectedCrop: '12,000 kg', // Total seasonal expected yield
@@ -43,7 +43,7 @@ const DEFAULT_FARMER_STATE = {
   myCrops: [
     {
       id: 'c1',
-      name: 'Tomato',
+      name: 'Potato',
       variety: 'Arka Rakshak',
       totalExpectedCrop: '12,000 kg',
       currentSellableLot: '500 kg',
@@ -76,31 +76,31 @@ const DEFAULT_FARMER_STATE = {
     }
   ],
   transactions: [
-    { id: 'TXN-8842', date: '14 May 2025', type: 'SALE', crop: 'Tomato (500 kg lot)', buyer: 'Krishna Fresh Mart', amount: 11500, method: 'UPI Payment', status: 'Received' },
-    { id: 'TXN-8839', date: '10 May 2025', type: 'SALE', crop: 'Tomato (1,200 kg lot)', buyer: 'South India Fresh Foods', amount: 27600, method: 'Bank Transfer', status: 'Pending' },
+    { id: 'TXN-8842', date: '14 May 2025', type: 'SALE', crop: 'Potato (500 kg lot)', buyer: 'Krishna Fresh Mart', amount: 11500, method: 'UPI Payment', status: 'Received' },
+    { id: 'TXN-8839', date: '10 May 2025', type: 'SALE', crop: 'Potato (1,200 kg lot)', buyer: 'South India Fresh Foods', amount: 27600, method: 'Bank Transfer', status: 'Pending' },
     { id: 'TXN-8820', date: '02 May 2025', type: 'SALE', crop: 'Chilli (800 kg lot)', buyer: 'Vijayawada Organic Hub', amount: 28001, method: 'UPI Payment', status: 'Received' },
     { id: 'TXN-8815', date: '28 Apr 2025', type: 'PAYOUT', crop: 'Bank Payout', buyer: 'Escrow → SBI Account (•••• 4892)', amount: 39500, method: 'IMPS Transfer', status: 'Completed' },
-    { id: 'TXN-8790', date: '18 Apr 2025', type: 'SALE', crop: 'Tomato (800 kg lot)', buyer: 'Karnataka Institutional Buyer', amount: 18400, method: 'Bank Transfer', status: 'Received' },
-    { id: 'TXN-8762', date: '05 Apr 2025', type: 'SALE', crop: 'Chilli (500 kg lot)', buyer: 'Chikkaballapur Produce Buyer', amount: 17500, method: 'Direct Transfer', status: 'Pending' }
+    { id: 'TXN-8790', date: '18 Apr 2025', type: 'SALE', crop: 'Potato (800 kg lot)', buyer: 'Andhra Pradesh Institutional Buyer', amount: 18400, method: 'Bank Transfer', status: 'Received' },
+    { id: 'TXN-8762', date: '05 Apr 2025', type: 'SALE', crop: 'Chilli (500 kg lot)', buyer: 'Guntur Produce Buyer', amount: 17500, method: 'Direct Transfer', status: 'Pending' }
   ]
 };
 
 // Page Summaries for Voice Read Aloud in supported languages
 const PAGE_READ_DATA = {
   home: {
-    en: "Good morning Ramesh Kumar. Today your sellable lot is Tomato, 500 kilograms ready for sale out of 12 thousand kilograms total crop. Indicative market price is 22 rupees per kilogram. 3 strong matches are interested in your lot. Click Sell My Tomato to inspect quality and connect with buyers.",
+    en: "Good morning Ramesh Kumar. Today your sellable lot is Potato, 500 kilograms ready for sale out of 12 thousand kilograms total crop. Indicative market price is 22 rupees per kilogram. 3 strong matches are interested in your lot. Click Sell My Potato to inspect quality and connect with buyers.",
     te: "శుభోదయం రమేష్ కుమార్. నేడు మీ అమ్మకానికి సిద్ధంగా ఉన్న టమాటా లాట్ 500 కిలోలు. సూచిక మార్కెట్ ధర కిలోకు 22 రూపాయలు."
   },
   myFarm: {
-    en: "My Farm Overview. Chennuboina Farm, verified 2.5 acres in Krishna District, Andhra Pradesh. You have 3 crops: Tomato 12,000 kg expected with 500 kg sellable lot harvesting, Chilli 3,000 kg growing, and Maize in planning stage.",
+    en: "My Farm Overview. Chennuboina Farm, verified 2.5 acres in Krishna District, Andhra Pradesh. You have 3 crops: Potato 12,000 kg expected with 500 kg sellable lot harvesting, Chilli 3,000 kg growing, and Maize in planning stage.",
     te: "నా పొలం వివరాలు. చెన్నుబోయిన ఫార్మ్, కోలార్, కర్ణాటక. మీ వద్ద టమాటా, మిర్చి మరియు మొక్కజొన్న సాగులో ఉన్నాయి."
   },
   market: {
-    en: "Market and Fair Price. Tomato indicative price is 22 rupees per kilogram. Indicative fair-value range for farmers is 21 to 23 rupees per kilogram based on demand and quality analysis.",
+    en: "Market and Fair Price. Potato indicative price is 22 rupees per kilogram. Indicative fair-value range for farmers is 21 to 23 rupees per kilogram based on demand and quality analysis.",
     te: "మార్కెట్ మరియు న్యాయమైన ధర. టమాటా సూచిక ధర కిలోకు 22 రూపాయలు. న్యాయమైన ధర 21 నుండి 23 రూపాయలు."
   },
   gradeSell: {
-    en: "Grade and Sell. AI visual pre-grade analysis for Tomato: Estimated Visual Grade A with 94 percent model confidence. Indicative fair-value range is 21 to 23 rupees per kilogram.",
+    en: "Grade and Sell. AI visual pre-grade analysis for Potato: Estimated Visual Grade A with 94 percent model confidence. Indicative fair-value range is 21 to 23 rupees per kilogram.",
     te: "గ్రేడ్ మరియు సేల్. టమాటా AI గ్రేడింగ్ ఫలితం గ్రేడ్ A."
   },
   findBuyers: {
@@ -461,13 +461,13 @@ let demoFutureCrops = [
     id: 1,
     crop_name: 'Rice',
     variety: 'BPT 5204',
-    previous_crop: 'Tomato',
+    previous_crop: 'Potato',
     planned_area: 1.5,
     expected_sowing: '2026-07-15',
     expected_harvest: '2026-10-20',
     expected_production: 3.5,
     production_unit: 'Tonnes',
-    notes: 'Planning to plant after tomato harvest.',
+    notes: 'Planning to plant after potato harvest.',
     status: 'PLANNED'
   }
 ];

@@ -31,11 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Also sync the crop quantity
-    const rameshTomato = sharedState.db.supplies['supply-ramesh-tomato'];
-    if (rameshTomato) {
+    const rameshPotato = sharedState.db.supplies['supply-ramesh-potato'];
+    if (rameshPotato) {
       const qtyElems = document.querySelectorAll('.sync-crop-qty');
       qtyElems.forEach(el => {
-        el.textContent = `${rameshTomato.quantity.toLocaleString()} kg`;
+        el.textContent = `${rameshPotato.quantity.toLocaleString()} kg`;
       });
     }
   }
