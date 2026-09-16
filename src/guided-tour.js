@@ -110,19 +110,22 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const assistant = new GuidedAssistant();
   
-  // Find the Listen button
-  const readBtn = document.querySelector('#voice-guidance-btn') || document.querySelector('.btn-read-aloud');
-  
-  if (readBtn) {
-    // Clone to remove existing event listeners from farmer-app.js
-    const clone = readBtn.cloneNode(true);
-    readBtn.parentNode.replaceChild(clone, readBtn);
+  setTimeout(() => {
+    // Find the Listen button
+    const readBtn = document.querySelector('#voice-guidance-btn') || document.querySelector('.btn-read-aloud');
     
-    clone.addEventListener('click', (e) => {
-      e.preventDefault();
-      // Stop any existing speech
-      window.speechSynthesis.cancel();
-      assistant.startTour();
-    });
-  }
+    if (readBtn) {
+      // Clone to remove existing event listeners from farmer-app.js so MP3 doesn't overlap
+      const clone = readBtn.cloneNode(true);
+      readBtn.parentNode.replaceChild(clone, readBtn);
+      
+      clone.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        // Stop any existing speech
+        window.speechSynthesis.cancel();
+        assistant.startTour();
+      });
+    }
+  }, 100);
 });
