@@ -171,11 +171,49 @@
       opacity: 1;
       pointer-events: auto;
     }
+  
+    /* Bank Modal & Toast Styles */
+    .farm-modal-backdrop { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(11,61,46,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+    .farm-modal-backdrop.show { display: flex; opacity: 1; }
+    .farm-modal-card { background: #FFFFFF; width: 90%; max-width: 500px; border-radius: 24px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); transform: translateY(20px); transition: transform 0.3s ease; position: relative; }
+    .farm-modal-backdrop.show .farm-modal-card { transform: translateY(0); }
+    .fm-title { font-size: 24px; font-weight: 800; color: #12231C; margin: 0 0 8px; }
+    .fm-subtitle { font-size: 14px; color: #64766E; margin: 0 0 24px; }
+    .fm-form-group { margin-bottom: 16px; text-align: left; }
+    .fm-label { display: block; font-size: 13px; font-weight: 700; color: #12231C; margin-bottom: 8px; }
+    .fm-input { width: 100%; box-sizing: border-box; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(20,70,50,0.15); font-size: 14.5px; outline: none; transition: border-color 0.2s; background: #FAFCFA; font-family: inherit; }
+    .fm-input:focus { border-color: #1F6B46; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(31,107,70,0.1); }
+    .fm-actions { display: flex; gap: 12px; margin-top: 32px; }
+    .fm-btn-cancel { flex: 1; padding: 14px; border-radius: 14px; font-size: 15px; font-weight: 700; background: #FAFCFA; color: #64766E; border: 1px solid rgba(20,70,50,0.15); cursor: pointer; }
+    .fm-btn-save { flex: 1; padding: 14px; border-radius: 14px; font-size: 15px; font-weight: 700; background: #0B3D2E; color: #FFFFFF; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(11,61,46,0.2); }
+    
+    .farm-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #12231C; color: #FFFFFF; padding: 14px 24px; border-radius: 30px; font-size: 14.5px; font-weight: 600; display: flex; align-items: center; gap: 12px; z-index: 3000; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .farm-toast.show { transform: translateX(-50%) translateY(0); }
+
   </style>
 <style>
 body { top: 0 !important; }
 .skiptranslate { display: none !important; }
-</style>
+
+    /* Bank Modal & Toast Styles */
+    .farm-modal-backdrop { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(11,61,46,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+    .farm-modal-backdrop.show { display: flex; opacity: 1; }
+    .farm-modal-card { background: #FFFFFF; width: 90%; max-width: 500px; border-radius: 24px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); transform: translateY(20px); transition: transform 0.3s ease; position: relative; }
+    .farm-modal-backdrop.show .farm-modal-card { transform: translateY(0); }
+    .fm-title { font-size: 24px; font-weight: 800; color: #12231C; margin: 0 0 8px; }
+    .fm-subtitle { font-size: 14px; color: #64766E; margin: 0 0 24px; }
+    .fm-form-group { margin-bottom: 16px; text-align: left; }
+    .fm-label { display: block; font-size: 13px; font-weight: 700; color: #12231C; margin-bottom: 8px; }
+    .fm-input { width: 100%; box-sizing: border-box; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(20,70,50,0.15); font-size: 14.5px; outline: none; transition: border-color 0.2s; background: #FAFCFA; font-family: inherit; }
+    .fm-input:focus { border-color: #1F6B46; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(31,107,70,0.1); }
+    .fm-actions { display: flex; gap: 12px; margin-top: 32px; }
+    .fm-btn-cancel { flex: 1; padding: 14px; border-radius: 14px; font-size: 15px; font-weight: 700; background: #FAFCFA; color: #64766E; border: 1px solid rgba(20,70,50,0.15); cursor: pointer; }
+    .fm-btn-save { flex: 1; padding: 14px; border-radius: 14px; font-size: 15px; font-weight: 700; background: #0B3D2E; color: #FFFFFF; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(11,61,46,0.2); }
+    
+    .farm-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #12231C; color: #FFFFFF; padding: 14px 24px; border-radius: 30px; font-size: 14.5px; font-weight: 600; display: flex; align-items: center; gap: 12px; z-index: 3000; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .farm-toast.show { transform: translateX(-50%) translateY(0); }
+
+  </style>
 <script type="text/javascript">
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
@@ -522,7 +560,7 @@ function googleTranslateElementInit() {
                   <p>Manage your bank accounts and view payout history.</p>
                 </div>
               </div>
-              <a href="#" class="ib-btn">Manage Accounts <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+              <a href="#" class="ib-btn" id="btnManageAccounts">Manage Accounts <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
             </div>
             
             <div class="info-block" style="background: #F4F8FA;">
@@ -659,6 +697,88 @@ function googleTranslateElementInit() {
   <script src="/src/ask-vyapti.js"></script>
 
   <script src="/src/guided-tour.js"></script>
+
+  <!-- Bank Details Modal -->
+  <div class="farm-modal-backdrop" id="bankModal">
+    <div class="farm-modal-card">
+      <h2 class="fm-title">Bank & Payout Details</h2>
+      <p class="fm-subtitle">Enter your bank account information to receive payouts directly.</p>
+      
+      <div class="fm-form-group">
+        <label class="fm-label">Account Holder Name</label>
+        <input type="text" class="fm-input" placeholder="e.g., Ramesh Kumar" value="Ramesh Kumar">
+      </div>
+      
+      <div class="fm-form-group">
+        <label class="fm-label">Bank Name</label>
+        <input type="text" class="fm-input" placeholder="e.g., State Bank of India">
+      </div>
+      
+      <div class="fm-form-group">
+        <label class="fm-label">Account Number</label>
+        <input type="text" class="fm-input" placeholder="Enter your account number">
+      </div>
+      
+      <div class="fm-form-group">
+        <label class="fm-label">IFSC Code</label>
+        <input type="text" class="fm-input" placeholder="e.g., SBIN0001234" style="text-transform: uppercase;">
+      </div>
+      
+      <div class="fm-actions">
+        <button type="button" class="fm-btn-cancel" id="btnCancelBank">Cancel</button>
+        <button type="button" class="fm-btn-save" id="btnSaveBank">Save Details</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="farm-toast" id="farmToast">
+    <svg style="width: 20px; height: 20px; color: #55B85A;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <span id="toastMsg">Bank details saved successfully!</span>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const bankModal = document.getElementById('bankModal');
+      const btnManageAccounts = document.getElementById('btnManageAccounts');
+      const btnCancelBank = document.getElementById('btnCancelBank');
+      const btnSaveBank = document.getElementById('btnSaveBank');
+      const toast = document.getElementById('farmToast');
+      
+      function showToast(msg) {
+        document.getElementById('toastMsg').textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }
+
+      if (btnManageAccounts) {
+        btnManageAccounts.addEventListener('click', (e) => {
+          e.preventDefault();
+          bankModal.classList.add('show');
+        });
+      }
+      
+      if (btnCancelBank) {
+        btnCancelBank.addEventListener('click', () => {
+          bankModal.classList.remove('show');
+        });
+      }
+      
+      if (btnSaveBank) {
+        btnSaveBank.addEventListener('click', () => {
+          bankModal.classList.remove('show');
+          showToast('Bank details saved securely.');
+        });
+      }
+      
+      if (bankModal) {
+        bankModal.addEventListener('click', (e) => {
+          if (e.target === bankModal) bankModal.classList.remove('show');
+        });
+      }
+    });
+  </script>
+
 </body>
 </html>
 
