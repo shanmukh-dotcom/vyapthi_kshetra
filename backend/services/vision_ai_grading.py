@@ -45,8 +45,8 @@ load_env()
 
 def get_gemini_api_key() -> Optional[str]:
     load_env()
-    key = os.getenv("GEMINI_API_KEY") or os.getenv("VISION_AI_API_KEY")
-    if not key or key in ["your_gemini_api_key_here", "your_key_here"]:
+    key = os.getenv("VISION_AI_API_KEY")
+    if not key or key in ["your_gemini_api_key_here", "your_key_here", "your_vision_ai_api_key_here"]:
         return None
     return key
 
@@ -169,7 +169,8 @@ INSPECTION TASKS:
    - Inspect all {num_images} uploaded image(s).
    - Check if the image(s) clearly show potato tubers.
    - Check image quality: is it too blurry, too dark, or non-potato objects?
-   - If NOT potatoes or unusable, set "is_valid_potato": false, "grade": "N/A", "score": 0, and provide a clear, helpful "validation_message" explaining why.
+   - If the image contains an inanimate object or something else instead of a potato, DO NOT output random crop names. Instead, strictly set "is_valid_potato": false, "grade": "N/A", "score": 0, and set the "validation_message" to exactly: "Inanimate object or unrecognized item detected. Please upload a clear photo of potatoes."
+
 
 2. MULTI-IMAGE DEFECT & QUALITY INSPECTION:
    - Inspect each image individually for visible symptoms:

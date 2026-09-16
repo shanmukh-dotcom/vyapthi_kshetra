@@ -24,7 +24,7 @@ def get_ai_recommendation(crop: str, quantity_kg: float, farmer_address: str, fa
     Returns structured AI recommendation dict.
     """
     load_env()
-    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("VISION_AI_API_KEY")
+    api_key = os.getenv("GEMINI_API_KEY")
     if not api_key or api_key in ["your_gemini_api_key_here", "your_key_here"]:
         api_key = None
 
@@ -135,7 +135,7 @@ def get_potato_ai_explanation(grade: str, quality_score: float, defects: list, r
     IMPORTANT: Gemini MUST NOT alter the grade or quality score.
     """
     load_env()
-    api_key = os.getenv("GEMINI_API_KEY") or os.getenv("VISION_AI_API_KEY")
+    api_key = os.getenv("GEMINI_API_KEY")
     if not api_key or api_key in ["your_gemini_api_key_here", "your_key_here"]:
         api_key = None
 
