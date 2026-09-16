@@ -212,248 +212,228 @@ function googleTranslateElementInit() {
     </div>
   </aside>
 
-  <main class="app-main-layout" style="background: #F7F8F5; margin-left: 0; max-width: 1400px; padding: 16px 40px 20px; min-height: 100vh; display: flex; flex-direction: column;">
+  <main class="app-main-layout" style="background: #F7F9F6; margin-left: 0; padding: 2vh 3vw 2vh; height: 100vh; display: flex; flex-direction: column; overflow: hidden; max-width: 1540px; margin: 0 auto;">
     
     <!-- Top Header -->
-    <div class="top-floating-header" style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px; width: 100%;">
+    <div class="top-floating-header" style="display: flex; align-items: center; gap: 1vw; margin-bottom: 2vh; width: 100%; flex-shrink: 0; height: 6vh; min-height: 50px;">
       
-      <!-- Hamburger (Visible on Desktop for this mockup layout) -->
-      <button type="button" id="app-menu-toggle-desktop" style="background: #FFFFFF; border: none; border-radius: 12px; width: 48px; height: 48px; cursor: pointer; color: #163323; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.04); flex-shrink: 0;">
-        <svg style="width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      <!-- Hamburger -->
+      <button type="button" id="app-menu-toggle-desktop" style="background: #FFFFFF; border: none; border-radius: 12px; width: 5vh; height: 5vh; min-width: 44px; min-height: 44px; cursor: pointer; color: #145A3A; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(20,60,45,0.05); flex-shrink: 0;">
+        <svg style="width: 2.5vh; height: 2.5vh; min-width: 20px; min-height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
 
       <!-- Search Bar -->
-      <div style="flex: 1; max-width: 500px; position: relative;">
-        <svg style="width: 18px; height: 18px; stroke: #65796E; fill: none; stroke-width: 2; position: absolute; left: 16px; top: 15px;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input type="text" placeholder="Search crops, buyers, market prices..." style="width: 100%; height: 48px; padding-left: 44px; border: none; border-radius: 24px; font-family: inherit; font-size: 14px; background: #FFFFFF; box-shadow: 0 4px 12px rgba(0,0,0,0.04); outline: none;">
+      <div style="flex: 1; max-width: 40vw; position: relative; height: 100%;">
+        <svg style="width: 2vh; height: 2vh; min-width: 16px; min-height: 16px; stroke: #65756D; fill: none; stroke-width: 2; position: absolute; left: 1.5vw; top: 50%; transform: translateY(-50%);" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" placeholder="Search crops, buyers, market prices..." style="width: 100%; height: 100%; padding-left: 3.5vw; border: none; border-radius: 14px; font-family: inherit; font-size: clamp(13px, 1vw, 15px); background: #FFFFFF; box-shadow: 0 4px 12px rgba(20,60,45,0.03); outline: none; color: #14231D;">
       </div>
 
       <div style="flex: 1;"></div>
 
       <!-- Right Controls -->
-      <select id="header-lang-select" class="header-pill" style="border: none; padding: 0 32px 0 16px; background: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 stroke=%22%2311261A%22 fill=%22none%22 stroke-width=%222%22 viewBox=%220 0 24 24%22><polyline points=%226 9 12 15 18 9%22></polyline></svg>') no-repeat right 12px center; background-color: #FFFFFF; font-family: inherit; font-size: 14px; font-weight: 600; color: #163323; cursor: pointer; outline: none; height: 48px; border-radius: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); appearance: none;">
+      <select id="header-lang-select" class="header-pill" style="border: none; padding: 0 2.5vw 0 1.2vw; background: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 stroke=%22%2314231D%22 fill=%22none%22 stroke-width=%222%22 viewBox=%220 0 24 24%22><polyline points=%226 9 12 15 18 9%22></polyline></svg>') no-repeat right 1vw center; background-color: #FFFFFF; font-family: inherit; font-size: clamp(13px, 1vw, 15px); font-weight: 600; color: #14231D; cursor: pointer; outline: none; height: 100%; border-radius: 20px; box-shadow: 0 4px 12px rgba(20,60,45,0.03); appearance: none;">
         <option value="en">English</option>
-        <option value="te">తెలుగు</option>
-        <option value="hi">हिंदी</option>
-        <option value="kn">ಕನ್ನಡ</option>
-        <option value="ta">தமிழ்</option>
-        <option value="mr">मराठी</option>
-        <option value="bn">বাংলা</option>
       </select>
 
-      <button type="button" class="header-pill acc-btn btn-read-aloud" style="border: none; height: 48px; padding: 0 20px; background: #FFFFFF; border-radius: 24px; font-weight: 600; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); display: flex; align-items: center; gap: 8px; cursor: pointer;">
-        <svg style="width: 18px; height: 18px; stroke: #163323; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+      <button type="button" class="header-pill acc-btn btn-read-aloud" style="border: none; height: 100%; padding: 0 1.5vw; background: #FFFFFF; border-radius: 20px; font-weight: 600; font-size: clamp(13px, 1vw, 15px); color: #14231D; box-shadow: 0 4px 12px rgba(20,60,45,0.03); display: flex; align-items: center; gap: 0.5vw; cursor: pointer;">
+        <svg style="width: 2vh; height: 2vh; min-width: 16px; min-height: 16px; stroke: #14231D; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
         Listen
       </button>
 
-      <div class="header-bell" style="background: #FFFFFF; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.04); cursor: pointer;">
-        <svg style="width: 20px; height: 20px; stroke: #163323; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-        <div class="bell-badge" style="position: absolute; top: 0; right: 0; background: #E03131; color: white; font-size: 11px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white;">2</div>
+      <div class="header-bell" style="background: #FFFFFF; width: 5vh; height: 5vh; min-width: 44px; min-height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 4px 12px rgba(20,60,45,0.03); cursor: pointer;">
+        <svg style="width: 2.2vh; height: 2.2vh; min-width: 18px; min-height: 18px; stroke: #14231D; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <div class="bell-badge" style="position: absolute; top: 0; right: 0; background: #E87522; color: white; font-size: clamp(9px, 0.8vw, 11px); font-weight: bold; width: 2vh; height: 2vh; min-width: 16px; min-height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white;">2</div>
       </div>
 
-      <div class="profile-pill" style="background: #FFFFFF; padding: 6px 16px 6px 6px; border-radius: 30px; display: flex; align-items: center; gap: 12px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
-        <img src="/assets/farmer_portrait.jpg" alt="Profile" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;">
-        <div style="display: flex; flex-direction: column;">
-          <span style="font-size: 14px; font-weight: 700; color: #11261A; line-height: 1.2;" class="sync-farmer-name">Ramesh Kumar</span>
-          <span style="font-size: 11px; color: #65796E; line-height: 1.2;" class="sync-farmer-loc">Farmer | Krishna District, Andhra Pradesh</span>
+      <div class="profile-pill" style="background: #FFFFFF; padding: 4px 1vw 4px 4px; border-radius: 30px; display: flex; align-items: center; gap: 0.8vw; cursor: pointer; box-shadow: 0 4px 12px rgba(20,60,45,0.03); height: 100%;">
+        <img src="/assets/farmer_portrait.jpg" alt="Profile" style="width: 4vh; height: 4vh; min-width: 36px; min-height: 36px; border-radius: 50%; object-fit: cover;">
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+          <span style="font-size: clamp(13px, 1vw, 15px); font-weight: 700; color: #14231D; line-height: 1.2;" class="sync-farmer-name">Ramesh Kumar</span>
+          <span style="font-size: clamp(11px, 0.8vw, 12px); color: #65756D; line-height: 1.2;" class="sync-farmer-loc">Farmer | Krishna District, Andhra Pradesh</span>
         </div>
-        <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        <svg style="width: 1.5vh; height: 1.5vh; min-width: 12px; min-height: 12px; stroke: #65756D; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
       </div>
     </div>
 
-    <!-- Hero Section -->
-    <div style="background: url('/assets/ramesh_bg.png') center/cover no-repeat; border-radius: 30px; padding: 24px 30px; margin-bottom: 12px; display: flex; justify-content: space-between; position: relative; overflow: hidden; box-shadow: 0 12px 30px rgba(0,0,0,0.08);">
-      <div style="position: relative; z-index: 2;">
-        <h2 style="font-size: 20px; font-weight: 700; color: #163323; margin: 0 0 4px;">Good morning, 🌤️</h2>
-        <h1 style="font-size: 32px; font-weight: 800; color: #11261A; margin: 0 0 12px; letter-spacing: -1px; display: flex; align-items: center; gap: 16px;">
-          <span class="sync-farmer-name">Ramesh Kumar</span> <span style="font-size: 36px;">👋</span>
+    <!-- Hero Banner (Height ~25vh) -->
+    <div style="background: url('/assets/ramesh_bg.png') center/cover no-repeat; border-radius: 30px; padding: 3vh 3vw; margin-bottom: 2.5vh; flex-shrink: 0; height: 25vh; min-height: 180px; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(20,60,45,0.08);">
+      <div style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+        <h2 style="font-size: clamp(24px, 2.5vw, 36px); font-weight: 700; color: #14231D; margin: 0 0 0.5vh;">Good morning, 🌤️</h2>
+        <h1 style="font-size: clamp(40px, 4vw, 56px); font-weight: 800; color: #0B3D2E; margin: 0 0 1vh; letter-spacing: -1px; display: flex; align-items: center; gap: 1vw;">
+          <span class="sync-farmer-name">Ramesh Kumar</span> <span style="font-size: clamp(32px, 3.5vw, 48px);">👋</span>
         </h1>
-        <p style="font-size: 20px; color: #2E4B3C; margin: 0 0 20px; font-weight: 500;">Here's what matters for your farm today.</p>
-        <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.7); padding: 4px 12px; border-radius: 12px; font-size: 12px; font-weight: 700; color: #1B4D35; border: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(4px);">
+        <p style="font-size: clamp(16px, 1.5vw, 20px); color: #145A3A; margin: 0 0 1.5vh; font-weight: 500;">Here's what matters for your farm today.</p>
+        <div style="display: inline-flex; align-items: center; gap: 0.5vw; background: rgba(255,255,255,0.85); padding: 0.5vh 1vw; border-radius: 12px; font-size: clamp(11px, 1vw, 13px); font-weight: 700; color: #0B3D2E; border: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(4px); width: fit-content;">
           <div style="width: 6px; height: 6px; border-radius: 50%; background: #2E8B57;"></div> Demo Data
         </div>
       </div>
       
-      <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between;">
-        <div style="font-family: 'Georgia', serif; font-style: italic; font-size: 22px; color: #165A31; text-align: right; line-height: 1.3;">
-          <svg style="width: 24px; height: 24px; fill: #2E8B57; margin-bottom: -4px; margin-right: 4px;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M11.5 7v5.5l4.5 2.5.75-1.25-3.75-2V7z"/></svg><br>
+      <div style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between;">
+        <div style="font-family: 'Georgia', serif; font-style: italic; font-size: clamp(18px, 1.8vw, 24px); color: #145A3A; text-align: right; line-height: 1.2;">
+          <svg style="width: clamp(20px, 2vw, 28px); height: clamp(20px, 2vw, 28px); fill: #2E8B57; margin-bottom: -4px; margin-right: 4px;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M11.5 7v5.5l4.5 2.5.75-1.25-3.75-2V7z"/></svg><br>
           "Better Farming.<br>Brighter Tomorrows."
         </div>
-        <a href="/farmer-collective-logistics.html" style="background: #FFFFFF; color: #11261A; padding: 16px 24px; border-radius: 16px; font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 16px; text-decoration: none; box-shadow: 0 8px 24px rgba(0,0,0,0.06); transition: transform 0.2s;">
-          <svg style="width: 24px; height: 24px; stroke: #2E8B57; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <a href="/farmer-collective-logistics.html" style="background: #FFFFFF; color: #0B3D2E; padding: 1.5vh 2vw; border-radius: 16px; font-size: clamp(14px, 1.2vw, 16px); font-weight: 700; display: flex; align-items: center; gap: 1vw; text-decoration: none; box-shadow: 0 8px 24px rgba(20,60,45,0.06); transition: transform 0.2s;">
+          <svg style="width: 2.2vh; height: 2.2vh; min-width: 18px; min-height: 18px; stroke: #2E8B57; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
           Together for<br>Better Prices
-          <svg style="width: 20px; height: 20px; stroke: #11261A; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          <svg style="width: 2vh; height: 2vh; min-width: 16px; min-height: 16px; stroke: #14231D; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </a>
       </div>
     </div>
 
-    <!-- 3 Main Cards Grid -->
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 12px;">
+    <!-- 3 Main Cards Grid (Height ~28vh) -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5vw; margin-bottom: 2.5vh; flex-shrink: 0; height: 28vh; min-height: 200px;">
       
       <!-- Card 1: Your Crop -->
-      <a href="/farmer-my-farm.html" style="background: #EEF8F2; border-radius: 24px; padding: 20px; text-decoration: none; position: relative; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(20, 50, 35, 0.04); transition: transform 0.2s; border: 1px solid #E1F0E7;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; background: #C5EAD0; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
-          <svg style="width: 24px; height: 24px; stroke: #165A31; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22C12 22 20 18 20 12C20 6 12 2 12 2C12 2 4 6 4 12C4 18 12 22 12 22Z"></path></svg>
+      <a href="/farmer-my-farm.html" style="background: #EFF8F0; border-radius: 24px; padding: 2.5vh 2vw; text-decoration: none; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 8px 30px rgba(20,60,45,0.07); border: 1px solid rgba(46,139,87,0.15); transition: transform 0.2s;">
+        <div style="width: 4.5vh; height: 4.5vh; min-width: 36px; min-height: 36px; border-radius: 50%; background: #E5F4E8; display: flex; align-items: center; justify-content: center; margin-bottom: 1vh;">
+          <svg style="width: 2.2vh; height: 2.2vh; stroke: #2E8B57; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22C12 22 20 18 20 12C20 6 12 2 12 2C12 2 4 6 4 12C4 18 12 22 12 22Z"></path></svg>
         </div>
-        <div style="font-size: 15px; color: #2E4B3C; font-weight: 600; margin-bottom: 4px;">Your Crop</div>
-        <div style="font-size: 20px; font-weight: 800; color: #11261A; margin-bottom: 8px;" class="sync-crop-name">Potato</div>
-        <div style="font-size: 32px; font-weight: 800; color: #11261A; margin-bottom: 12px; letter-spacing: -1px;" class="sync-crop-qty">500 kg</div>
-        <div style="display: inline-flex; align-items: center; gap: 6px; background: #C5EAD0; color: #165A31; padding: 8px 16px; border-radius: 12px; font-size: 14px; font-weight: 700; width: fit-content; margin-bottom: 12px;">
-          <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Ready to sell
+        <div style="font-size: clamp(14px, 1.2vw, 16px); color: #145A3A; font-weight: 600; margin-bottom: 0.5vh;">Your Crop</div>
+        <div style="font-size: clamp(24px, 2vw, 32px); font-weight: 800; color: #14231D; margin-bottom: 0.5vh;" class="sync-crop-name">Potato</div>
+        <div style="font-size: clamp(32px, 3vw, 42px); font-weight: 800; color: #14231D; margin-bottom: 1.5vh; letter-spacing: -1px;" class="sync-crop-qty">500 kg</div>
+        <div style="display: inline-flex; align-items: center; gap: 0.5vw; background: #EAF5EC; color: #2E8B57; padding: 0.6vh 1vw; border-radius: 8px; font-size: clamp(12px, 1vw, 14px); font-weight: 700; width: fit-content;">
+          <svg style="width: 1.5vh; height: 1.5vh; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Ready to sell
         </div>
-        <svg style="width: 24px; height: 24px; stroke: #11261A; fill: none; stroke-width: 2.5; position: absolute; bottom: 20px; right: 20px;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <svg style="width: 2.2vh; height: 2.2vh; stroke: #14231D; fill: none; stroke-width: 2.5; position: absolute; bottom: 2.5vh; right: 2vw;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
         
-        <!-- Potato Image -->
-        <img src="/assets/potato_crop.jpg" style="position: absolute; right: 30px; top: 30px; width: 110px; height: 110px; object-fit: cover; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.15);" alt="Potato Crop">
+        <img src="/assets/potato_crop.jpg" style="position: absolute; right: 2vw; top: 50%; transform: translateY(-50%); width: clamp(80px, 10vw, 130px); height: clamp(80px, 10vw, 130px); object-fit: cover; border-radius: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);" alt="Potato Crop">
       </a>
 
       <!-- Card 2: Today's Price -->
-      <a href="/farmer-market.html" style="background: #FFF9EF; border-radius: 24px; padding: 20px; text-decoration: none; position: relative; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(20, 50, 35, 0.04); transition: transform 0.2s; border: 1px solid #FDF0D9;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; background: #FFE4B5; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
-          <span style="font-size: 22px; font-weight: 700; color: #B45309;">₹</span>
+      <a href="/farmer-market.html" style="background: #FFF7E8; border-radius: 24px; padding: 2.5vh 2vw; text-decoration: none; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 8px 30px rgba(20,60,45,0.07); border: 1px solid rgba(242,169,59,0.15); transition: transform 0.2s;">
+        <div style="width: 4.5vh; height: 4.5vh; min-width: 36px; min-height: 36px; border-radius: 50%; background: #FFF0D2; display: flex; align-items: center; justify-content: center; margin-bottom: 1vh;">
+          <span style="font-size: clamp(18px, 1.8vw, 22px); font-weight: 700; color: #F2A93B;">₹</span>
         </div>
-        <div style="font-size: 16px; color: #B45309; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">Today's Price <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
-        <div style="font-size: 36px; font-weight: 800; color: #11261A; margin-bottom: 12px; letter-spacing: -1px; display: flex; align-items: baseline; gap: 8px;">₹ 22 <span style="font-size: 20px; color: #11261A;">/ kg</span></div>
-        <div style="display: inline-flex; align-items: center; gap: 6px; background: #C5EAD0; color: #165A31; padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: 700; width: fit-content; margin-bottom: 12px;">
-          <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><polyline points="19 12 12 5 5 12"></polyline><line x1="12" y1="19" x2="12" y2="5"></line></svg> Good price today
+        <div style="font-size: clamp(14px, 1.2vw, 16px); color: #F2A93B; font-weight: 700; margin-bottom: 0.5vh; display: flex; align-items: center; gap: 0.5vw;">Today's Price <svg style="width: 1.5vh; height: 1.5vh; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></div>
+        <div style="font-size: clamp(36px, 3.5vw, 48px); font-weight: 800; color: #14231D; margin-bottom: 1vh; letter-spacing: -1px; display: flex; align-items: baseline; gap: 0.5vw;">₹ 22 <span style="font-size: clamp(20px, 2vw, 24px); color: #14231D;">/ kg</span></div>
+        <div style="display: inline-flex; align-items: center; gap: 0.5vw; background: #EAF5EC; color: #2E8B57; padding: 0.6vh 1vw; border-radius: 8px; font-size: clamp(12px, 1vw, 13px); font-weight: 700; width: fit-content; margin-bottom: 1vh;">
+          <svg style="width: 1.5vh; height: 1.5vh; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><polyline points="19 12 12 5 5 12"></polyline><line x1="12" y1="19" x2="12" y2="5"></line></svg> Good price today
         </div>
-        <div style="font-size: 14px; color: #65796E; font-weight: 500; margin-bottom: 12px; line-height: 1.4;">Usually ₹ 20 – 24 / kg<br>in your area</div>
-        <svg style="width: 24px; height: 24px; stroke: #11261A; fill: none; stroke-width: 2.5; position: absolute; bottom: 20px; right: 20px;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <div style="font-size: clamp(12px, 1vw, 14px); color: #65756D; font-weight: 500; line-height: 1.4;">Usually ₹ 20 – 24 / kg<br>in your area</div>
+        <svg style="width: 2.2vh; height: 2.2vh; stroke: #14231D; fill: none; stroke-width: 2.5; position: absolute; bottom: 2.5vh; right: 2vw;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
         
-        <!-- Bars Graphic -->
-        <div style="position: absolute; right: 40px; top: 110px; display: flex; align-items: flex-end; gap: 8px; height: 60px;">
-          <div style="width: 12px; height: 20px; background: #FDE68A; border-radius: 6px;"></div>
-          <div style="width: 12px; height: 35px; background: #FCD34D; border-radius: 6px;"></div>
-          <div style="width: 12px; height: 50px; background: #FBBF24; border-radius: 6px;"></div>
-          <div style="width: 12px; height: 60px; background: #F59E0B; border-radius: 6px;"></div>
+        <div style="position: absolute; right: 2.5vw; top: 50%; transform: translateY(-50%); display: flex; align-items: flex-end; gap: 0.5vw; height: clamp(40px, 5vh, 60px);">
+          <div style="width: clamp(8px, 0.8vw, 12px); height: 30%; background: #FDE68A; border-radius: 6px;"></div>
+          <div style="width: clamp(8px, 0.8vw, 12px); height: 50%; background: #FCD34D; border-radius: 6px;"></div>
+          <div style="width: clamp(8px, 0.8vw, 12px); height: 75%; background: #FBBF24; border-radius: 6px;"></div>
+          <div style="width: clamp(8px, 0.8vw, 12px); height: 100%; background: #F2A93B; border-radius: 6px;"></div>
         </div>
       </a>
 
       <!-- Card 3: Buyers Interested -->
-      <a href="/farmer-find-buyers.html" style="background: #F0F7FE; border-radius: 24px; padding: 20px; text-decoration: none; position: relative; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 8px 24px rgba(20, 50, 35, 0.04); transition: transform 0.2s; border: 1px solid #E2F0FD;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; background: #D9EEFB; display: flex; align-items: center; justify-content: center; margin-bottom: 12px;">
-          <svg style="width: 24px; height: 24px; stroke: #1D4ED8; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      <a href="/farmer-find-buyers.html" style="background: #EEF6FD; border-radius: 24px; padding: 2.5vh 2vw; text-decoration: none; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 8px 30px rgba(20,60,45,0.07); border: 1px solid rgba(61,127,196,0.15); transition: transform 0.2s;">
+        <div style="width: 4.5vh; height: 4.5vh; min-width: 36px; min-height: 36px; border-radius: 50%; background: #D6E9F7; display: flex; align-items: center; justify-content: center; margin-bottom: 1vh;">
+          <svg style="width: 2.2vh; height: 2.2vh; stroke: #3D7FC4; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         </div>
-        <div style="font-size: 16px; color: #1D4ED8; font-weight: 700; margin-bottom: 12px;">Buyers Interested</div>
-        <div style="font-size: 36px; font-weight: 800; color: #11261A; margin-bottom: 8px; letter-spacing: -1px; display: flex; align-items: baseline; gap: 12px;">3 <span style="font-size: 20px; color: #11261A;">buyers</span></div>
-        <div style="font-size: 16px; color: #3B82F6; font-weight: 600; margin-bottom: 12px;">want your potatoes</div>
-        <div style="display: inline-flex; align-items: center; gap: 6px; background: #FFEDD5; color: #C2410C; padding: 6px 12px; border-radius: 8px; font-size: 13.5px; font-weight: 700; width: fit-content; margin-bottom: 12px;">
+        <div style="font-size: clamp(14px, 1.2vw, 16px); color: #3D7FC4; font-weight: 700; margin-bottom: 0.5vh;">Buyers Interested</div>
+        <div style="font-size: clamp(36px, 3.5vw, 48px); font-weight: 800; color: #14231D; margin-bottom: 0.5vh; letter-spacing: -1px; display: flex; align-items: baseline; gap: 0.8vw;">3 <span style="font-size: clamp(20px, 2vw, 24px); color: #14231D;">buyers</span></div>
+        <div style="font-size: clamp(14px, 1.2vw, 16px); color: #3D7FC4; font-weight: 600; margin-bottom: 1.5vh;">want your potatoes</div>
+        <div style="display: inline-flex; align-items: center; gap: 0.5vw; background: #FFEDD5; color: #E87522; padding: 0.6vh 1vw; border-radius: 8px; font-size: clamp(12px, 1vw, 13.5px); font-weight: 700; width: fit-content;">
           🔥 2 are ready to buy now
         </div>
-        <svg style="width: 24px; height: 24px; stroke: #11261A; fill: none; stroke-width: 2.5; position: absolute; bottom: 20px; right: 20px;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <svg style="width: 2.2vh; height: 2.2vh; stroke: #14231D; fill: none; stroke-width: 2.5; position: absolute; bottom: 2.5vh; right: 2vw;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
         
-        <!-- People Graphic -->
-        <svg style="position: absolute; right: 30px; top: 100px; width: 100px; height: 100px; fill: #BFDBFE; opacity: 0.6;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <svg style="position: absolute; right: 2vw; top: 50%; transform: translateY(-50%); width: clamp(70px, 8vw, 100px); height: clamp(70px, 8vw, 100px); fill: #D6E9F7; opacity: 0.8;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
       </a>
 
     </div>
 
     <!-- Other Options Header -->
-    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 12px;">
-      <h3 style="font-size: 20px; font-weight: 700; color: #11261A; margin: 0;">Other Options</h3>
-      <div style="font-family: 'Georgia', serif; font-style: italic; font-size: 18px; color: #165A31; display: flex; align-items: center; gap: 8px;">
-        <svg style="width: 20px; height: 20px; fill: #2E8B57;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M11.5 7v5.5l4.5 2.5.75-1.25-3.75-2V7z"/></svg> Grow Together<br>Live Better
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5vh; flex-shrink: 0;">
+      <h3 style="font-size: clamp(18px, 1.8vw, 24px); font-weight: 700; color: #0B3D2E; margin: 0;">Other Options</h3>
+      <div style="font-family: 'Georgia', serif; font-style: italic; font-size: clamp(14px, 1.5vw, 18px); color: #2E8B57; display: flex; align-items: center; gap: 0.5vw;">
+        <svg style="width: clamp(16px, 1.5vw, 20px); height: clamp(16px, 1.5vw, 20px); fill: #2E8B57;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M11.5 7v5.5l4.5 2.5.75-1.25-3.75-2V7z"/></svg> Grow Together Live Better
       </div>
     </div>
 
-    <!-- Other Options Grid -->
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 16px;">
+    <!-- Other Options Grid (Height ~10vh) -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; margin-bottom: 2.5vh; flex-shrink: 0; height: 10vh; min-height: 80px;">
       
-      <!-- Option 1 -->
-      <a href="/farmer-my-farm.html" style="background: #FFFFFF; border-radius: 16px; padding: 20px; text-decoration: none; display: flex; align-items: center; gap: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); transition: transform 0.2s; border: 1px solid #F1F4F2;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; background: #E5F4E8; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-          <svg style="width: 24px; height: 24px; stroke: #165A31; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      <a href="/farmer-my-farm.html" style="background: #FFFFFF; border-radius: 16px; padding: 1.5vh 1.5vw; text-decoration: none; display: flex; align-items: center; gap: 1vw; box-shadow: 0 4px 16px rgba(20,60,45,0.05); transition: transform 0.2s; border: 1px solid rgba(46,139,87,0.1);">
+        <div style="width: 4vh; height: 4vh; min-width: 32px; min-height: 32px; border-radius: 50%; background: #EAF5EC; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg style="width: 2vh; height: 2vh; stroke: #2E8B57; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
         </div>
         <div style="flex: 1;">
-          <div style="font-size: 15px; font-weight: 700; color: #11261A; margin-bottom: 4px;">Manage My Farm</div>
-          <div style="font-size: 12px; color: #65796E;">Update crop details</div>
+          <div style="font-size: clamp(13px, 1vw, 15px); font-weight: 700; color: #14231D; margin-bottom: 0.2vh;">Manage My Farm</div>
+          <div style="font-size: clamp(11px, 0.8vw, 12px); color: #65756D;">Update crop details</div>
         </div>
-        <svg style="width: 20px; height: 20px; stroke: #11261A; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <svg style="width: 1.8vh; height: 1.8vh; stroke: #14231D; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>
 
-      <!-- Option 2 -->
-      <a href="/farmer-market.html" style="background: #FFFFFF; border-radius: 16px; padding: 20px; text-decoration: none; display: flex; align-items: center; gap: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); transition: transform 0.2s; border: 1px solid #FDF4E1;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; background: #FFF0D2; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-          <svg style="width: 24px; height: 24px; stroke: #B45309; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+      <a href="/farmer-market.html" style="background: #FFFFFF; border-radius: 16px; padding: 1.5vh 1.5vw; text-decoration: none; display: flex; align-items: center; gap: 1vw; box-shadow: 0 4px 16px rgba(20,60,45,0.05); transition: transform 0.2s; border: 1px solid rgba(242,169,59,0.1);">
+        <div style="width: 4vh; height: 4vh; min-width: 32px; min-height: 32px; border-radius: 50%; background: #FFF7E8; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg style="width: 2vh; height: 2vh; stroke: #F2A93B; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
         </div>
         <div style="flex: 1;">
-          <div style="font-size: 15px; font-weight: 700; color: #11261A; margin-bottom: 4px;">Check Market Price</div>
-          <div style="font-size: 12px; color: #65796E;">See prices in nearby markets</div>
+          <div style="font-size: clamp(13px, 1vw, 15px); font-weight: 700; color: #14231D; margin-bottom: 0.2vh;">Check Market Price</div>
+          <div style="font-size: clamp(11px, 0.8vw, 12px); color: #65756D;">See prices in nearby markets</div>
         </div>
-        <svg style="width: 20px; height: 20px; stroke: #11261A; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <svg style="width: 1.8vh; height: 1.8vh; stroke: #14231D; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>
 
-      <!-- Option 3 -->
-      <a href="/farmer-find-buyers.html" style="background: #FFFFFF; border-radius: 16px; padding: 20px; text-decoration: none; display: flex; align-items: center; gap: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); transition: transform 0.2s; border: 1px solid #E8F0FE;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; background: #D6E9F7; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-          <svg style="width: 24px; height: 24px; stroke: #1D4ED8; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <a href="/farmer-find-buyers.html" style="background: #FFFFFF; border-radius: 16px; padding: 1.5vh 1.5vw; text-decoration: none; display: flex; align-items: center; gap: 1vw; box-shadow: 0 4px 16px rgba(20,60,45,0.05); transition: transform 0.2s; border: 1px solid rgba(61,127,196,0.1);">
+        <div style="width: 4vh; height: 4vh; min-width: 32px; min-height: 32px; border-radius: 50%; background: #EEF6FD; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg style="width: 2vh; height: 2vh; stroke: #3D7FC4; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
         </div>
         <div style="flex: 1;">
-          <div style="font-size: 15px; font-weight: 700; color: #11261A; margin-bottom: 4px;">Find Buyers</div>
-          <div style="font-size: 12px; color: #65796E;">View offers and connect</div>
+          <div style="font-size: clamp(13px, 1vw, 15px); font-weight: 700; color: #14231D; margin-bottom: 0.2vh;">Find Buyers</div>
+          <div style="font-size: clamp(11px, 0.8vw, 12px); color: #65756D;">View offers and connect</div>
         </div>
-        <svg style="width: 20px; height: 20px; stroke: #11261A; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <svg style="width: 1.8vh; height: 1.8vh; stroke: #14231D; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>
 
-      <!-- Option 4 -->
-      <a href="/farmer-collective-logistics.html" style="background: #FFFFFF; border-radius: 16px; padding: 20px; text-decoration: none; display: flex; align-items: center; gap: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.03); transition: transform 0.2s; border: 1px solid #FBE8EA;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; background: #FDE8EA; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-          <svg style="width: 24px; height: 24px; stroke: #C53030; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+      <a href="/farmer-collective-logistics.html" style="background: #FFFFFF; border-radius: 16px; padding: 1.5vh 1.5vw; text-decoration: none; display: flex; align-items: center; gap: 1vw; box-shadow: 0 4px 16px rgba(20,60,45,0.05); transition: transform 0.2s; border: 1px solid rgba(224,49,49,0.1);">
+        <div style="width: 4vh; height: 4vh; min-width: 32px; min-height: 32px; border-radius: 50%; background: #FFF0F0; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <svg style="width: 2vh; height: 2vh; stroke: #E03131; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
         </div>
         <div style="flex: 1;">
-          <div style="font-size: 15px; font-weight: 700; color: #11261A; margin-bottom: 4px;">Logistics & Transport</div>
-          <div style="font-size: 12px; color: #65796E;">Move together, save more</div>
+          <div style="font-size: clamp(13px, 1vw, 15px); font-weight: 700; color: #14231D; margin-bottom: 0.2vh;">Logistics & Transport</div>
+          <div style="font-size: clamp(11px, 0.8vw, 12px); color: #65756D;">Move together, save more</div>
         </div>
-        <svg style="width: 20px; height: 20px; stroke: #11261A; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <svg style="width: 1.8vh; height: 1.8vh; stroke: #14231D; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>
-
     </div>
 
-    <!-- Join Nearby Farmers -->
-    <a href="/farmer-collective-logistics.html" style="background: linear-gradient(90deg, rgba(27,77,53,1) 0%, rgba(20,90,58,0.85) 50%, rgba(20,90,58,0.1) 100%), url('/assets/ramesh_bg.png') center/cover no-repeat; border-radius: 24px; padding: 20px 30px; display: flex; align-items: center; justify-content: space-between; text-decoration: none; margin-bottom: 16px; box-shadow: 0 12px 30px rgba(0,0,0,0.1); position: relative; overflow: hidden;">
-      <div style="display: flex; align-items: center; gap: 24px; z-index: 2;">
-        <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center;">
-          <svg style="width: 32px; height: 32px; stroke: #FFFFFF; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+    <!-- Join Nearby Farmers (Height ~10vh) -->
+    <a href="/farmer-collective-logistics.html" style="background: linear-gradient(90deg, rgba(20,90,58,1) 0%, rgba(46,139,87,0.85) 50%, rgba(46,139,87,0.1) 100%), url('/assets/farm_landscape.jpg') center/cover no-repeat; border-radius: 20px; padding: 2vh 3vw; display: flex; align-items: center; justify-content: space-between; text-decoration: none; box-shadow: 0 8px 24px rgba(20,60,45,0.08); position: relative; overflow: hidden; flex-shrink: 0; height: 10vh; min-height: 80px;">
+      <div style="display: flex; align-items: center; gap: 1.5vw; z-index: 2;">
+        <div style="width: 6vh; height: 6vh; border-radius: 50%; background: rgba(255,255,255,0.25); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center;">
+          <svg style="width: 3vh; height: 3vh; stroke: #FFFFFF; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         </div>
         <div>
-          <div style="font-size: 20px; font-weight: 800; color: #FFFFFF; margin-bottom: 6px;">Join nearby farmers</div>
-          <div style="font-size: 16px; color: rgba(255,255,255,0.9); font-weight: 500;">Combine produce and get better prices</div>
+          <div style="font-size: clamp(16px, 1.8vw, 22px); font-weight: 800; color: #FFFFFF; margin-bottom: 0.5vh;">Join nearby farmers</div>
+          <div style="font-size: clamp(13px, 1vw, 15px); color: rgba(255,255,255,0.95); font-weight: 500;">Combine produce and get better prices</div>
         </div>
       </div>
-      <svg style="width: 24px; height: 24px; stroke: #FFFFFF; fill: none; stroke-width: 3; z-index: 2; margin-right: 50%;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      <div style="position: absolute; right: 40px; top: 32px; font-family: 'Georgia', serif; font-style: italic; font-size: 20px; color: #FFFFFF; text-shadow: 0 2px 4px rgba(0,0,0,0.5); z-index: 2; text-align: right;">
-        Stronger Farmers<br>Stronger Communities <svg style="width: 20px; height: 20px; fill: #FFFFFF; margin-left: 4px; margin-bottom: -4px;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M11.5 7v5.5l4.5 2.5.75-1.25-3.75-2V7z"/></svg>
+      <svg style="width: 2.5vh; height: 2.5vh; stroke: #FFFFFF; fill: none; stroke-width: 3; z-index: 2; margin-right: 30%;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      <div style="position: absolute; right: 3vw; top: 50%; transform: translateY(-50%); font-family: 'Georgia', serif; font-style: italic; font-size: clamp(16px, 1.8vw, 22px); color: #FFFFFF; text-shadow: 0 2px 4px rgba(0,0,0,0.5); z-index: 2; text-align: right; line-height: 1.2;">
+        Stronger Farmers<br>Stronger Communities <svg style="width: 2vh; height: 2vh; fill: #FFFFFF; margin-left: 4px; margin-bottom: -4px;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M11.5 7v5.5l4.5 2.5.75-1.25-3.75-2V7z"/></svg>
       </div>
     </a>
-
-  </main>
-
-  <div class="bottom-acc-container">
-    <div class="acc-pill-wrap">
-      <div class="acc-pill">
-        <a href="javascript:void(0)" class="acc-btn">
-          <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+    
+    <!-- Bottom Accessibility Bar inside main for proper flex flow (Height ~6vh) -->
+    <div class="bottom-acc-container" style="display: flex; justify-content: center; align-items: center; flex-shrink: 0; margin-top: auto; padding-top: 1vh; height: 6vh; min-height: 48px;">
+      <div class="acc-pill-wrap" style="display: flex; align-items: center; gap: 0; background: #FFFFFF; border-radius: 30px; padding: 0.5vh; box-shadow: 0 8px 30px rgba(20,60,45,0.06); border: 1px solid rgba(20,60,45,0.05); height: 100%;">
+        <a href="javascript:void(0)" class="acc-btn" style="display: flex; align-items: center; gap: 0.5vw; padding: 0 1.2vw; color: #14231D; font-size: clamp(12px, 0.9vw, 14px); font-weight: 600; text-decoration: none; border-right: 1px solid #EAF5EC;">
+          <svg style="width: 1.8vh; height: 1.8vh;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
           Speak / Voice Input
         </a>
-        <button type="button" class="acc-btn btn-read-aloud">
-          <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+        <button type="button" class="acc-btn btn-read-aloud" style="display: flex; align-items: center; gap: 0.5vw; padding: 0 1.2vw; color: #14231D; font-size: clamp(12px, 0.9vw, 14px); font-weight: 600; text-decoration: none; border: none; border-right: 1px solid #EAF5EC; background: none; cursor: pointer;">
+          <svg style="width: 1.8vh; height: 1.8vh;" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path fill="none" stroke="currentColor" stroke-width="2" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
           Read Aloud
         </button>
-        <a href="tel:18001234567" id="acc-call-btn" class="acc-btn">
-          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        <a href="tel:18001234567" id="acc-call-btn" class="acc-btn" style="display: flex; align-items: center; gap: 0.5vw; padding: 0 1.2vw; color: #14231D; font-size: clamp(12px, 0.9vw, 14px); font-weight: 600; text-decoration: none; border-right: 1px solid #EAF5EC;">
+          <svg style="width: 1.8vh; height: 1.8vh;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
           Call Vyapti
         </a>
-        <a href="https://wa.me/919876543210" target="_blank" rel="noopener" id="acc-wa-btn" class="acc-btn">
-          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        <a href="https://wa.me/919876543210" target="_blank" rel="noopener" id="acc-wa-btn" class="acc-btn" style="display: flex; align-items: center; gap: 0.5vw; padding: 0 1.2vw; color: #14231D; font-size: clamp(12px, 0.9vw, 14px); font-weight: 600; text-decoration: none;">
+          <svg style="width: 1.8vh; height: 1.8vh;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
           WhatsApp Vyapti
         </a>
       </div>
-      <div class="farmers-feed">
-        <svg style="width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
-        Farmers<br>Feed the Future
-      </div>
     </div>
-  </div>
+  </main>
 
   <script type="module" src="/src/farmer-app.js"></script>
 <script type="module" src="/src/home-integration.js"></script>
