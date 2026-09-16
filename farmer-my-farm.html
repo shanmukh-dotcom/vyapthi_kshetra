@@ -180,6 +180,79 @@
 
 </head>
 <body>
+<div id="app-drawer-backdrop" class="drawer-backdrop"></div>
+
+  <aside id="app-sidebar-drawer" aria-label="Main Navigation">
+    <div class="sidebar-header" style="padding: 24px 20px 16px; display: flex; justify-content: center; align-items: center; min-height: 100px;">
+      <a href="/role.html" title="Switch Role" style="display:block; text-align:center;"><img src="/assets/app_logo.png" alt="Vyapti Kshetra" style="width: 180px; height: auto; object-fit: contain; image-rendering: -webkit-optimize-contrast;" /></a>
+    </div>
+    
+    <ul class="sidebar-nav-list">
+      <li>
+        <a href="/farmer-home.html" class="sidebar-nav-link active" style="background: #1B4D35; color: white; border-radius: 12px; box-shadow: none;">
+          <svg class="nav-icon" style="stroke: white;" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-my-farm.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+          <span>My Farm</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-market.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span>Market & Fair Price</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-grade-sell.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          <span>Grade & Sell</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-find-buyers.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Find Buyers</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-collective-logistics.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span>Collective & Logistics</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-transactions.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span>My Transactions</span>
+        </a>
+      </li>
+      <li class="sidebar-divider"></li>
+      <li>
+        <a href="#" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Help & Support</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-footer" style="margin-top: auto; padding-top: 40px; padding-bottom: 20px; background: url('/assets/ramesh_bg.png') no-repeat bottom center; background-size: cover; position: relative; border-top: none;">
+      <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.7) 100%);"></div>
+      <div style="position: relative; z-index: 1;">
+        <strong style="color: #65796E; font-size: 11px;">Stronger Farmers<br>Brighter Tomorrows</strong><br />
+        <span style="font-size: 9px; color: #A8C7B4;">Version 1.0.0</span>
+      </div>
+    </div>
+  </aside>
+
 
   <!-- Top Floating Header -->
   <header class="top-floating-header">
@@ -191,8 +264,11 @@
       
       <!-- Brand Logo -->
       <div style="display: flex; align-items: center; gap: 10px;">
-        <div style="width: 32px; height: 32px; border-radius: 8px; background: #0B3D2E; display: flex; align-items: center; justify-content: center; color: white;">
-          <svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 22h20L12 2z"/></svg>
+        <div style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+          <svg style="width: 24px; height: 24px;" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#0B3D2E"/>
+            <path d="M16 8 L24 22 L8 22 Z" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linejoin="round"/>
+          </svg>
         </div>
         <div>
           <div style="font-size: 16px; font-weight: 800; color: #0B3D2E; letter-spacing: -0.5px; line-height: 1;">Vyapti Kshetra</div>
@@ -551,6 +627,30 @@
     </div>
   </div>
 
+  
+  <!-- Tab Details Modal -->
+  <div class="farm-modal-backdrop" id="tabDetailsModal">
+    <div class="farm-modal-card">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <div id="tabModalIcon" style="width: 40px; height: 40px; border-radius: 12px; background: #EAF5EC; color: #1F6B46; display: flex; align-items: center; justify-content: center;"></div>
+        <div>
+          <h2 class="fm-title" id="tabModalTitle" style="margin: 0;">Details</h2>
+        </div>
+      </div>
+      <p class="fm-subtitle" id="tabModalDesc" style="color: #64766E; line-height: 1.5; font-size: 15px;">Here is the detailed view for this section.</p>
+      
+      <div style="background: #FAFCFA; border: 1px solid rgba(20,70,50,0.08); border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+        <ul id="tabModalList" style="margin: 0; padding-left: 20px; color: #12231C; font-weight: 500; font-size: 14.5px; line-height: 2;">
+          <li>Loading data...</li>
+        </ul>
+      </div>
+      
+      <div class="fm-actions" style="margin-top: 0;">
+        <button type="button" class="fm-btn-cancel" id="btnCancelTabModal" style="background: #EAF5EC; color: #1F6B46; border: none;">Close</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div class="farm-toast" id="farmToast">
     <svg style="width: 20px; height: 20px; color: #55B85A;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
@@ -610,8 +710,71 @@
         });
       });
 
-      // Tabs Logic
+      
+      const tabDetailsModal = document.getElementById('tabDetailsModal');
+      const tabModalTitle = document.getElementById('tabModalTitle');
+      const tabModalDesc = document.getElementById('tabModalDesc');
+      const tabModalList = document.getElementById('tabModalList');
+      const tabModalIcon = document.getElementById('tabModalIcon');
+      
+      const tabContentMap = {
+        'My Crops': {
+          desc: 'Manage your current and upcoming crop cycles, view expected yields, and track growth progress.',
+          list: ['Active Crops: Potato (2.5 Acres)', 'Upcoming Harvest: July 2025', 'Expected Yield: 15 Tons'],
+          icon: '<svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 7.477 2 13s4.477 10 10 10z"></path></svg>'
+        },
+        'Soil & Water': {
+          desc: 'Monitor soil health parameters and track your irrigation schedule based on real-time weather data.',
+          list: ['Soil Type: Red Loamy', 'Current Moisture: 42%', 'Next Irrigation: Today, 5:00 PM', 'pH Level: 6.8'],
+          icon: '<svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>'
+        },
+        'Crop History': {
+          desc: 'Review past crop cycles, historical yields, and prices received to plan better for the next season.',
+          list: ['2024 Kharif: Tomatoes (Good Yield)', '2023 Rabi: Onions (Market Price High)', '2023 Kharif: Cotton'],
+          icon: '<svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>'
+        },
+        'Documents': {
+          desc: 'Securely access and manage all your farm-related documents, certificates, and soil health cards.',
+          list: ['Land Registration (Verified)', 'Soil Health Card (Updated 2024)', 'Organic Certification (Pending)'],
+          icon: '<svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>'
+        }
+      };
+
+      // Override previous tab logic
       const tabs = document.querySelectorAll('.tab-item');
+      tabs.forEach(tab => {
+        // Remove old listeners by cloning (quick hack)
+        const newTab = tab.cloneNode(true);
+        tab.parentNode.replaceChild(newTab, tab);
+        
+        newTab.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          const tabName = newTab.textContent.trim();
+          if (tabName !== 'Farm Overview') {
+            const data = tabContentMap[tabName] || { desc: 'Details not available.', list: [], icon: '' };
+            tabModalTitle.textContent = tabName;
+            tabModalDesc.textContent = data.desc;
+            tabModalIcon.innerHTML = data.icon;
+            tabModalList.innerHTML = data.list.map(i => `<li>${i}</li>`).join('');
+            
+            tabDetailsModal.classList.add('show');
+          } else {
+            // Just activate Farm Overview
+            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+            newTab.classList.add('active');
+          }
+        });
+      });
+      
+      document.getElementById('btnCancelTabModal').addEventListener('click', () => {
+        tabDetailsModal.classList.remove('show');
+      });
+      tabDetailsModal.addEventListener('click', (e) => {
+        if (e.target === tabDetailsModal) tabDetailsModal.classList.remove('show');
+      });
+
+      // Old tabs logic removed/replaced
       tabs.forEach(tab => {
         tab.addEventListener('click', (e) => {
           e.preventDefault();
