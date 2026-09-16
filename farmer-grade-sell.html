@@ -666,10 +666,11 @@ function googleTranslateElementInit() {
               thumbRow.prepend(newThumb);
             }
 
-            // Randomize high-grade result for demo
+            // Grading results including Grade B+ for mixed sizes
             const grades = [
-              { grade: 'Grade A+', conf: '97% confidence', valSize: 'Uniform (Large)', valColor: 'Optimal (Deep Red)', valDef: '0% (Pristine)', price: '₹ 26 – 28 / kg' },
-              { grade: 'Grade A', conf: '94% confidence', valSize: 'Uniform (Medium)', valColor: 'Good (Bright Red)', valDef: 'Minimal (2%)', price: '₹ 22 – 24 / kg' }
+              { grade: 'Grade B+', conf: '95% confidence', size: 'Mixed (Small to Large)', color: 'Natural Tan', def: 'Minimal (2%)', price: '₹ 16 – 18 / kg', alertTitle: 'Mixed Size Harvest Detected', alertText: 'Grade B+ due to size variation. Separate large & baby tubers to upgrade to Grade A (₹20/kg).' },
+              { grade: 'Grade A', conf: '94% confidence', size: 'Uniform (Medium)', color: 'Good Color', def: 'Minimal (1%)', price: '₹ 20 – 22 / kg', alertTitle: 'Your crop looks good!', alertText: 'This grade is based on visual quality analysis.' },
+              { grade: 'Grade A+', conf: '97% confidence', size: 'Uniform (Large)', color: 'Premium Harvest', def: '0% (Pristine)', price: '₹ 24 – 26 / kg', alertTitle: 'Premium Grade A+ Crop!', alertText: 'Highest market value grade detected.' }
             ];
             const result = grades[Math.floor(Math.random() * grades.length)];
 
@@ -678,6 +679,22 @@ function googleTranslateElementInit() {
 
             const priceElem = document.querySelector('.rec-green-block h2');
             if (priceElem) priceElem.innerText = result.price;
+
+            // Update stats list
+            const statRows = document.querySelectorAll('.stats-list .stat-row .stat-val');
+            if (statRows.length >= 4) {
+              statRows[0].innerText = result.size;
+              statRows[1].innerText = result.color;
+              statRows[3].innerText = result.def;
+            }
+
+            // Update alert block
+            const alertTitleEl = document.querySelector('.alert-text h4');
+            const alertTextEl = document.querySelector('.alert-text p');
+            if (alertTitleEl) alertTitleEl.innerText = result.alertTitle;
+            if (alertTextEl) alertTextEl.innerText = result.alertText;
+
+            alert(`🎉 AI Quality Analysis Complete!\nResult: ${result.grade}\nConfidence: ${result.conf}\nRecommended Market Price: ${result.price}`);
 
             alert(`🎉 AI Quality Analysis Complete!\nResult: ${result.grade}\nConfidence: ${result.conf}\nRecommended Market Price: ${result.price}`);
           }, 2200);
