@@ -228,8 +228,6 @@ function googleTranslateElementInit() {
 }
 </script>
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-  <link rel="stylesheet" href="/src/ask-vyapti.css">
 </head>
 <body data-page="gradeSell">
 <div id="google_translate_element" style="display:none;"></div>
@@ -257,6 +255,12 @@ function googleTranslateElementInit() {
         <a href="/farmer-market.html" class="sidebar-nav-link">
           <svg class="nav-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
           <span>Market & Fair Price</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-production-alerts.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          <span>Crop Production Alerts</span>
         </a>
       </li>
       <li>
@@ -315,14 +319,10 @@ function googleTranslateElementInit() {
       </div>
       </div>
       <div class="header-right">
-        <select id="header-lang-select" class="header-pill" style="border: 1px solid #E4EBE6; appearance: none; -webkit-appearance: none; padding-right: 32px; background: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 stroke=%22%2311261A%22 fill=%22none%22 stroke-width=%222%22 viewBox=%220 0 24 24%22><polyline points=%226 9 12 15 18 9%22></polyline></svg>') no-repeat right 12px center; background-color: #FFFFFF; font-family: inherit; font-size: 13.5px; font-weight: 600; color: #163323; cursor: pointer; outline: none; margin: 0; box-sizing: border-box; display: inline-flex; height: 40px;">
-        <option value="en">English</option>
-        <option value="hi">हिंदी (Hindi)</option>
-        <option value="te">తెలుగు (Telugu)</option>
-        <option value="ta">தமிழ் (Tamil)</option>
-        <option value="kn">ಕನ್ನಡ (Kannada)</option>
-        <option value="mr">मराठी (Marathi)</option>
-      </select>
+        <div class="header-pill">
+          <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          English <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
         <button type="button" class="header-pill btn-read-aloud">
           <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
           Read Aloud
@@ -335,7 +335,7 @@ function googleTranslateElementInit() {
           <img src="/assets/farmer_portrait.jpg" alt="Ramesh Kumar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" />
           <div style="display: flex; flex-direction: column;">
             <span style="font-size: 14px; font-weight: 700; color: #11261A;" class="sync-farmer-name">Ramesh Kumar</span>
-            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Kolar, KA</span>
+            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Krishna District, AP</span>
           </div>
           <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
@@ -468,56 +468,16 @@ function googleTranslateElementInit() {
         </div>
       </div>
 
-      <!-- Card 3: Buyer Matches -->
-      <div class="card">
+      <!-- Card 3: Transport Matches -->
+      <div class="card" id="transport-options-card">
         <div class="card-header" style="margin-bottom: 8px;">
-          <h3 class="card-title">3. Buyer Matches</h3>
-          <a href="/farmer-find-buyers.html" class="card-link">View All <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <h3 class="card-title">3. Nearby Transport Providers</h3>
+          <a href="/farmer-collective-logistics.html" class="card-link">Arrange Pickup <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
-        <div class="buyer-sub">Buyers interested in Grade A <span class="sync-crop-name">Tomato</span>es</div>
+        <div class="buyer-sub" id="transport-sub">Upload crop image to find nearby trucks...</div>
         
-        <div class="buyer-list">
-          <div class="buyer-item">
-            <div class="b-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg></div>
-            <div class="b-mid">
-              <h5 class="b-name">Kolar Fresh Mart</h5>
-              <div class="b-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Kolar (12 km)</div>
-              <div class="b-needs">Wants 500 – 2,000 kg</div>
-            </div>
-            <div class="b-right">
-              <div class="b-price">₹ 23 / kg</div>
-              <div class="pref-badge"><svg style="width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Preferred Buyer</div>
-              <a href="#" class="btn-contact"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Contact Buyer</a>
-            </div>
-          </div>
-          
-          <div class="buyer-item">
-            <div class="b-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></div>
-            <div class="b-mid">
-              <h5 class="b-name">Bengaluru Organic Hub</h5>
-              <div class="b-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Bengaluru (45 km)</div>
-              <div class="b-needs">Wants 1,000 – 5,000 kg</div>
-            </div>
-            <div class="b-right">
-              <div class="b-price">₹ 24 / kg</div>
-              <div style="height: 14px;"></div>
-              <a href="#" class="btn-contact"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Contact Buyer</a>
-            </div>
-          </div>
-
-          <div class="buyer-item">
-            <div class="b-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg></div>
-            <div class="b-mid">
-              <h5 class="b-name">Chikkaballapur Traders</h5>
-              <div class="b-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Chikkaballapur (28 km)</div>
-              <div class="b-needs">Wants 300 – 1,000 kg</div>
-            </div>
-            <div class="b-right">
-              <div class="b-price">₹ 22 / kg</div>
-              <div style="height: 14px;"></div>
-              <a href="#" class="btn-contact"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Contact Buyer</a>
-            </div>
-          </div>
+        <div class="buyer-list" id="transport-matches-container">
+          <!-- Dynamic Logistics Output -->
         </div>
       </div>
     </div>
@@ -587,7 +547,7 @@ function googleTranslateElementInit() {
 
   </main>
 
-  <input type="file" id="ai-crop-upload-input" accept="image/*" style="display: none;" />
+  <input type="file" id="ai-crop-upload-input" accept="image/*" multiple style="display: none;" />
 
   <script type="module" src="/src/farmer-app.js"></script>
   <script>
@@ -618,160 +578,244 @@ function googleTranslateElementInit() {
           e.preventDefault();
           dropzone.style.borderColor = '#E8ECEF';
           dropzone.style.background = 'transparent';
-          if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-            handleCropImage(e.dataTransfer.files[0]);
+          if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            handleCropFiles(Array.from(e.dataTransfer.files));
           }
         });
 
         fileInput.addEventListener('change', (e) => {
-          if (e.target.files && e.target.files[0]) {
-            handleCropImage(e.target.files[0]);
+          if (e.target.files && e.target.files.length > 0) {
+            handleCropFiles(Array.from(e.target.files));
           }
         });
       }
 
-      function handleCropImage(file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const imageSrc = e.target.result;
+      function readFileAsDataURL(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
 
-          // 1. Show scanning animation on dropzone
-          dropzone.innerHTML = `
-            <div style="padding: 20px; text-align: center;">
-              <div class="ai-scan-spinner" style="width: 40px; height: 40px; border: 4px solid #E8F4EC; border-top: 4px solid #1B4D35; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px;"></div>
-              <h4 style="font-size: 15px; font-weight: 700; color: #1B4D35; margin: 0 0 4px;">AI Model Analyzing Quality...</h4>
-              <p style="font-size: 12px; color: #65796E; margin: 0;">Scanning color spectrum, surface defect ratio & sizing metrics</p>
-            </div>
-          `;
+      async function handleCropFiles(files) {
+        const selectedFiles = files.slice(0, 3);
+        if (!selectedFiles.length) return;
 
-          // Add spin keyframes if missing
-          if (!document.getElementById('spin-style')) {
-            const style = document.createElement('style');
-            style.id = 'spin-style';
-            style.innerText = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
-            document.head.appendChild(style);
+        // 1. Show scanning animation on dropzone
+        dropzone.innerHTML = `
+          <div style="padding: 20px; text-align: center;">
+            <div class="ai-scan-spinner" style="width: 40px; height: 40px; border: 4px solid #E8F4EC; border-top: 4px solid #1B4D35; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px;"></div>
+            <h4 style="font-size: 15px; font-weight: 700; color: #1B4D35; margin: 0 0 4px;">Vision AI Analyzing Potato Quality...</h4>
+            <p style="font-size: 12px; color: #65796E; margin: 0;">Inspecting surface lesions, defect severity & AGMARK knowledge rules</p>
+          </div>
+        `;
+
+        if (!document.getElementById('spin-style')) {
+          const style = document.createElement('style');
+          style.id = 'spin-style';
+          style.innerText = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
+          document.head.appendChild(style);
+        }
+
+        try {
+          // Read all selected images
+          const imageSources = await Promise.all(selectedFiles.map(readFileAsDataURL));
+
+          // Update main preview
+          if (aiCropImg && imageSources[0]) {
+            aiCropImg.src = imageSources[0];
           }
 
-          // 2. Simulate AI Processing Delay
-          setTimeout(() => {
-            // Restore dropzone
-            dropzone.innerHTML = `
-              <svg class="dz-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
-              <h4 class="dz-title" style="color: #1B4D35;">Analysis Complete! Upload another image</h4>
-              <div class="dz-subtitle">Click or drag & drop to re-analyze</div>
-            `;
-
-            // Update Image Preview
-            if (aiCropImg) aiCropImg.src = imageSrc;
-
-            // Add thumbnail
-            if (thumbRow) {
+          // Update thumbnails
+          if (thumbRow) {
+            if (!thumbRow.dataset.userUploaded) {
+              thumbRow.innerHTML = '';
+              thumbRow.dataset.userUploaded = 'true';
+            }
+            imageSources.forEach((src) => {
               const newThumb = document.createElement('div');
               newThumb.className = 'thumb-wrap';
-              newThumb.innerHTML = `<img src="${imageSrc}" class="thumb-img" alt="Uploaded photo" /><div class="thumb-close">×</div>`;
-              thumbRow.prepend(newThumb);
+              newThumb.style.cursor = 'pointer';
+              newThumb.innerHTML = `<img src="${src}" class="thumb-img" alt="Uploaded photo" /><div class="thumb-close" onclick="event.stopPropagation(); this.parentElement.remove()">×</div>`;
+              newThumb.addEventListener('click', () => {
+                if (aiCropImg) aiCropImg.src = src;
+              });
+              thumbRow.appendChild(newThumb);
+            });
+          }
+
+          // 2. Call our developed Vision-AI + RAG Potato Quality Grading Backend
+          const response = await fetch('http://localhost:8000/api/potato/analyze', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              crop: 'Potato',
+              quantity_kg: 1000.0,
+              images: imageSources,
+              batch_notes: 'Uploaded via Farmer Grade & Sell interface'
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(`Server returned HTTP ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          // Check if validation failed (non-potato or blurry)
+          if (data.is_valid_potato === false) {
+            if (aiBadge) {
+              aiBadge.style.background = '#FEF2F2';
+              aiBadge.style.color = '#B91C1C';
+              aiBadge.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Unclear Sample`;
             }
+            if (aiConf) aiConf.innerText = 'Low Confidence — Re-upload';
+            const alertTitleEl = document.querySelector('.alert-text h4');
+            const alertTextEl = document.querySelector('.alert-text p');
+            if (alertTitleEl) alertTitleEl.innerText = 'Image Quality Alert';
+            if (alertTextEl) alertTextEl.innerText = data.validation_message || 'Please upload a clearer, well-lit photo of potato tubers.';
+            return;
+          }
 
-            // --- REAL HTML5 CANVAS PIXEL ANALYSIS ---
-            const imgObj = new Image();
-            imgObj.onload = () => {
-              let avgBrightness = 120;
-              try {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = 50;
-                canvas.height = 50;
-                ctx.drawImage(imgObj, 0, 0, 50, 50);
-                const imgData = ctx.getImageData(0, 0, 50, 50).data;
-                let totalBrightness = 0;
-                for (let i = 0; i < imgData.length; i += 4) {
-                  const r = imgData[i];
-                  const g = imgData[i+1];
-                  const b = imgData[i+2];
-                  totalBrightness += (r + g + b) / 3;
-                }
-                avgBrightness = totalBrightness / (imgData.length / 4);
-              } catch (err) {
-                console.log("Canvas read fallback:", err);
-              }
+          const grade = data.grade || 'B';
+          const score = Math.round(data.quality_score || 75);
+          const breakdown = data.score_breakdown || {};
+          const defects = data.defects || [];
 
-              // Determine grade based on visual brightness and cleanliness
-              let result;
-              if (avgBrightness > 135) {
-                result = {
-                  cropName: 'Potato',
-                  grade: 'Grade A+',
-                  conf: '98.2% confidence',
-                  size: 'Uniform (Medium-Large)',
-                  color: 'Bright Golden Yellow',
-                  shape: 'Uniform Oval',
-                  def: '0% (Clean & Washed)',
-                  price: '₹ 24 – 27 / kg',
-                  alertTitle: 'Premium Grade A+ Harvest Detected!',
-                  alertText: 'Pristine, clean & well-sorted tubers. Highest supermarket procurement value.'
-                };
-              } else if (avgBrightness > 105) {
-                result = {
-                  cropName: 'Potato',
-                  grade: 'Grade A',
-                  conf: '94.8% confidence',
-                  size: 'Uniform (Medium)',
-                  color: 'Natural Yellow',
-                  shape: 'Mostly Uniform',
-                  def: 'Minimal (1%)',
-                  price: '₹ 20 – 22 / kg',
-                  alertTitle: 'Grade A Commercial Quality Detected',
-                  alertText: 'Good quality commercial batch ready for APMC auctions.'
-                };
+          // Update Crop Name to Potato across all sync elements
+          document.querySelectorAll('.sync-crop-name').forEach(el => el.innerText = 'Potato');
+
+          // Grade Color Config
+          const gradeStyles = {
+            A: { bg: '#E8F4EC', text: '#165A31', price: '₹ 24 – 27 / kg' },
+            B: { bg: '#EFF6FF', text: '#1D4ED8', price: '₹ 20 – 23 / kg' },
+            C: { bg: '#FFFBEB', text: '#B45309', price: '₹ 15 – 18 / kg' },
+            D: { bg: '#FEF2F2', text: '#B91C1C', price: '₹ 8 – 12 / kg' }
+          };
+          const currentStyle = gradeStyles[grade] || gradeStyles.B;
+
+          // Update Grade Badge
+          if (aiBadge) {
+            aiBadge.style.background = currentStyle.bg;
+            aiBadge.style.color = currentStyle.text;
+            aiBadge.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Grade ${grade}`;
+          }
+
+          // Update Confidence & Quality Score
+          if (aiConf) {
+            const confPct = defects.length > 0 && defects[0].confidence 
+              ? Math.round(defects[0].confidence * 100) 
+              : 95;
+            aiConf.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> ${confPct}% AI Confidence (${score}/100)`;
+          }
+
+          // Update Price Recommendation
+          const priceElem = document.querySelector('.rec-green-block h2');
+          if (priceElem) priceElem.innerText = currentStyle.price;
+
+          const priceSubElem = document.querySelector('.rec-green-block p');
+          if (priceSubElem) priceSubElem.innerText = `Estimated Fair Price for Grade ${grade} Potatoes`;
+
+          // Update Stats List (Size, Color/Freshness, Shape/Ripeness, Defects, Overall Quality)
+          const statRows = document.querySelectorAll('.stats-list .stat-row .stat-val');
+          if (statRows.length >= 5) {
+            statRows[0].innerText = `Uniform (${breakdown.uniformity ?? 15}/20)`;
+            statRows[1].innerText = `Freshness (${breakdown.freshness ?? 28}/35)`;
+            statRows[2].innerText = `Ripeness (${breakdown.ripeness ?? 16}/20)`;
+            if (defects.length > 0) {
+              statRows[3].innerText = `${defects[0].name} (${defects[0].severity.toUpperCase()})`;
+            } else {
+              statRows[3].innerText = 'Minimal / Defect-Free (0%)';
+            }
+            statRows[4].innerText = `Grade ${grade} (${score}/100)`;
+          }
+
+          // Update Alert / Explanation Box
+          const alertBox = document.querySelector('.alert-green');
+          if (alertBox) {
+            if (grade === 'D') {
+              alertBox.style.background = '#FEF2F2';
+              alertBox.style.border = '1.5px solid #FECACA';
+            } else if (grade === 'C') {
+              alertBox.style.background = '#FFFBEB';
+              alertBox.style.border = '1.5px solid #FDE68A';
+            } else {
+              alertBox.style.background = '#E8F4EC';
+              alertBox.style.border = '1.5px solid #A7F3D0';
+            }
+          }
+
+          const alertTitleEl = document.querySelector('.alert-text h4');
+          const alertTextEl = document.querySelector('.alert-text p');
+          if (alertTitleEl) {
+            alertTitleEl.innerText = data.overall_assessment || `Grade ${grade} Potato Assessment`;
+          }
+          if (alertTextEl) {
+            alertTextEl.innerText = data.quality_reason || data.explanation || 'Graded by Vision AI model paired with local agricultural knowledge base.';
+          }
+
+          // Fetch Transport Matches from Logistics Backend
+          const transportSub = document.getElementById('transport-sub');
+          const transportContainer = document.getElementById('transport-matches-container');
+          
+          if (transportSub && transportContainer) {
+            try {
+              const transportRes = await fetch('http://localhost:8000/api/logistics/providers/nearby?lat=16.506&lng=80.648&radius_km=50');
+              const transportData = await transportRes.json();
+              
+              if (transportData.success && transportData.providers.length > 0) {
+                transportSub.innerText = `${transportData.count} Trucks available nearby`;
+                transportContainer.innerHTML = transportData.providers.slice(0,3).map(p => `
+                  <div class="buyer-item">
+                    <div class="b-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div>
+                    <div class="b-mid">
+                      <h5 class="b-name">${p.name}</h5>
+                      <div class="b-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> ${p.distance_km.toFixed(1)} km away</div>
+                      <div class="b-needs">${p.vehicle_type} (${p.capacity_kg} kg)</div>
+                    </div>
+                    <div class="b-right">
+                      <div class="b-price">₹ ${p.rate_per_km}/km</div>
+                      <div style="height: 14px;"></div>
+                      <a href="/farmer-collective-logistics.html" class="btn-contact"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Book</a>
+                    </div>
+                  </div>
+                `).join('');
               } else {
-                result = {
-                  cropName: 'Potato',
-                  grade: 'Grade B+',
-                  conf: '95.4% confidence',
-                  size: 'Mixed (Small to Large)',
-                  color: 'Natural Tan / Earthy',
-                  shape: 'Irregular / Mixed',
-                  def: 'Minimal Soil Adhesion (2%)',
-                  price: '₹ 16 – 18 / kg',
-                  alertTitle: 'Mixed Size Harvest Detected (Grade B+)',
-                  alertText: 'Grade B+ due to size variation. Separate large & baby tubers to upgrade to Grade A (₹20/kg).'
-                };
+                transportSub.innerText = 'No trucks available nearby right now.';
+                transportContainer.innerHTML = '';
               }
+            } catch (err) {
+              console.error('Logistics fetch error:', err);
+              transportSub.innerText = 'Logistics offline.';
+            }
+          }
 
-              // Update Crop Name
-              document.querySelectorAll('.sync-crop-name').forEach(el => el.innerText = result.cropName);
-
-              if (aiBadge) aiBadge.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> ${result.grade}`;
-              if (aiConf) aiConf.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> ${result.conf}`;
-
-              const priceElem = document.querySelector('.rec-green-block h2');
-              if (priceElem) priceElem.innerText = result.price;
-
-              // Update stats list
-              const statRows = document.querySelectorAll('.stats-list .stat-row .stat-val');
-              if (statRows.length >= 4) {
-                statRows[0].innerText = result.size;
-                statRows[1].innerText = result.color;
-                if (statRows[2]) statRows[2].innerText = result.shape;
-                if (statRows[3]) statRows[3].innerText = result.def;
-              }
-
-              // Update alert block
-              const alertTitleEl = document.querySelector('.alert-text h4');
-              const alertTextEl = document.querySelector('.alert-text p');
-              if (alertTitleEl) alertTitleEl.innerText = result.alertTitle;
-              if (alertTextEl) alertTextEl.innerText = result.alertText;
-
-              alert(`🎉 AI Quality Analysis Complete!\nCrop: ${result.cropName}\nResult: ${result.grade}\nConfidence: ${result.conf}\nRecommended Market Price: ${result.price}\n\n💡 Advisory: ${result.alertText}`);
-            }; // End imgObj.onload
-          }, 2200);
-        };
-        reader.readAsDataURL(file);
+        } catch (err) {
+          console.error('Vision AI Grading error:', err);
+          const alertTitleEl = document.querySelector('.alert-text h4');
+          const alertTextEl = document.querySelector('.alert-text p');
+          if (alertTitleEl) alertTitleEl.innerText = 'AI Service Connection Alert';
+          if (alertTextEl) alertTextEl.innerText = 'Unable to reach the Potato AI Backend at http://localhost:8000. Please ensure the backend server is running.';
+        } finally {
+          // Restore Dropzone
+          dropzone.innerHTML = `
+            <svg class="dz-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+            <h4 class="dz-title" style="color: #1B4D35;">Analysis Complete! Upload another image</h4>
+            <div class="dz-subtitle">Click or drag & drop to re-analyze</div>
+          `;
+        }
       }
     });
   </script>
 
+  <!-- Ask Vyapti & Guided Tour (Re-injected) -->
   <script src="/src/ask-vyapti.js"></script>
   <script src="/src/guided-tour.js"></script>
+
 </body>
 </html>
+

@@ -470,8 +470,6 @@ function googleTranslateElementInit() {
 }
 </script>
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-  <link rel="stylesheet" href="/src/ask-vyapti.css">
 </head>
 <body data-page="collectiveLogistics">
 <div id="google_translate_element" style="display:none;"></div>
@@ -499,6 +497,12 @@ function googleTranslateElementInit() {
         <a href="/farmer-market.html" class="sidebar-nav-link">
           <svg class="nav-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
           <span>Market & Fair Price</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-production-alerts.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          <span>Crop Production Alerts</span>
         </a>
       </li>
       <li>
@@ -560,14 +564,10 @@ function googleTranslateElementInit() {
       </div>
       </div>
       <div class="header-right">
-        <select id="header-lang-select" class="header-pill" style="border: 1px solid #E4EBE6; appearance: none; -webkit-appearance: none; padding-right: 32px; background: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 stroke=%22%2311261A%22 fill=%22none%22 stroke-width=%222%22 viewBox=%220 0 24 24%22><polyline points=%226 9 12 15 18 9%22></polyline></svg>') no-repeat right 12px center; background-color: #FFFFFF; font-family: inherit; font-size: 13.5px; font-weight: 600; color: #163323; cursor: pointer; outline: none; margin: 0; box-sizing: border-box; display: inline-flex; height: 40px;">
-        <option value="en">English</option>
-        <option value="hi">हिंदी (Hindi)</option>
-        <option value="te">తెలుగు (Telugu)</option>
-        <option value="ta">தமிழ் (Tamil)</option>
-        <option value="kn">ಕನ್ನಡ (Kannada)</option>
-        <option value="mr">मराठी (Marathi)</option>
-      </select>
+        <div class="header-pill">
+          <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          English <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
         <button type="button" class="header-pill btn-read-aloud">
           <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
           Read Aloud
@@ -580,7 +580,7 @@ function googleTranslateElementInit() {
           <img src="/assets/farmer_portrait.jpg" alt="Ramesh Kumar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" />
           <div style="display: flex; flex-direction: column;">
             <span style="font-size: 14px; font-weight: 700; color: #11261A;" class="sync-farmer-name">Ramesh Kumar</span>
-            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Kolar, KA</span>
+            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Krishna District, AP</span>
           </div>
           <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
@@ -616,7 +616,7 @@ function googleTranslateElementInit() {
         <div>
           <h3 class="stat-val">12</h3>
           <p class="stat-lbl">Active Farmer Groups</p>
-          <p class="stat-sub">In Kolar District</p>
+          <p class="stat-sub">In Krishna District</p>
         </div>
       </div>
       <div class="stat-card">
@@ -659,7 +659,7 @@ function googleTranslateElementInit() {
 
         <div class="filters-inline">
           Filter by: 
-          <div class="filter-btn">From: Kolar <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <div class="filter-btn">From: Krishna <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
           <div class="filter-btn">To: All Markets <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
           <div class="filter-btn">Crop: <span class="sync-crop-name">Tomato</span> <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
           <div class="filter-btn">Date: This Week <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
@@ -673,21 +673,21 @@ function googleTranslateElementInit() {
           </div>
           <div class="tc-mid">
             <div class="tc-name-row">
-              <h4 class="tc-name">Ravi Transport</h4>
+              <h4 class="tc-name">Mathrusri Logistics</h4>
               <span class="verified-badge"><svg style="width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>
             </div>
             <div class="tc-route">
               <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              Kolar → Bengaluru APMC
+              1.0 km away
             </div>
             <div class="tc-specs">
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 2.5 Ton Capacity</div>
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available: 28 May 2025</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 14-ft Eicher (3500 kg)</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available Now</div>
             </div>
           </div>
           <div class="tc-right">
-            <div class="tc-price">₹ 4,500</div>
-            <div class="tc-est">(₹ 18 / kg est.)</div>
+            <div class="tc-price">₹ 52 / km</div>
+            <div class="tc-est">Mathrusri Logistics</div>
             <a href="#" class="btn-book">Book Now</a>
             <a href="#" class="tc-details-link">View Details <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
           </div>
@@ -700,21 +700,21 @@ function googleTranslateElementInit() {
           </div>
           <div class="tc-mid">
             <div class="tc-name-row">
-              <h4 class="tc-name">Sri Venkateshwara Logistics</h4>
+              <h4 class="tc-name">Kranti Road Transport</h4>
               <span class="verified-badge"><svg style="width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>
             </div>
             <div class="tc-route">
               <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              Kolar → Chikkaballapur
+              1.1 km away
             </div>
             <div class="tc-specs">
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 5 Ton Capacity</div>
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available: 29 May 2025</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> Bada Dost (1500 kg)</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available Now</div>
             </div>
           </div>
           <div class="tc-right">
-            <div class="tc-price">₹ 6,000</div>
-            <div class="tc-est">(₹ 20 / kg est.)</div>
+            <div class="tc-price">₹ 29 / km</div>
+            <div class="tc-est">Kranti Road Transport</div>
             <a href="#" class="btn-book">Book Now</a>
             <a href="#" class="tc-details-link">View Details <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
           </div>
@@ -727,52 +727,26 @@ function googleTranslateElementInit() {
           </div>
           <div class="tc-mid">
             <div class="tc-name-row">
-              <h4 class="tc-name">Nandi Cargo Services</h4>
+              <h4 class="tc-name">Sri Panduranga Lorry Transport</h4>
               <span class="verified-badge"><svg style="width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>
             </div>
             <div class="tc-route">
               <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              Kolar → Hosakote
+              1.4 km away
             </div>
             <div class="tc-specs">
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 3 Ton Capacity</div>
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available: 28 May 2025</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 14-ft Eicher (3500 kg)</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available Now</div>
             </div>
           </div>
           <div class="tc-right">
-            <div class="tc-price">₹ 5,000</div>
-            <div class="tc-est">(₹ 19 / kg est.)</div>
+            <div class="tc-price">₹ 55 / km</div>
+            <div class="tc-est">Sri Panduranga Lorry Transport</div>
             <a href="#" class="btn-book">Book Now</a>
             <a href="#" class="tc-details-link">View Details <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
           </div>
         </div>
 
-        <!-- Card 4 -->
-        <div class="transport-card">
-          <div class="tc-img-wrap">
-            <img src="/assets/transport_vehicle.jpg" class="tc-img truck-w" alt="Truck" />
-          </div>
-          <div class="tc-mid">
-            <div class="tc-name-row">
-              <h4 class="tc-name">Local Farmer Shared Transport</h4>
-              <span class="shared-badge"><svg style="width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Shared</span>
-            </div>
-            <div class="tc-route">
-              <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              Kolar → Bengaluru (Group)
-            </div>
-            <div class="tc-specs">
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 1.5 Ton (Shared)</div>
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available: 30 May 2025</div>
-            </div>
-          </div>
-          <div class="tc-right">
-            <div class="tc-price">₹ 3,000</div>
-            <div class="tc-est">(₹ 15 / kg est.)</div>
-            <a href="#" class="btn-book">Book Seat</a>
-            <a href="#" class="tc-details-link">View Details <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-          </div>
-        </div>
 
         <!-- Banner -->
         <div class="group-promo">
@@ -801,23 +775,23 @@ function googleTranslateElementInit() {
             </svg>
             
             <svg style="position: absolute; top: 110px; left: 40px; width: 14px; height: 14px; stroke: #8F9E96; fill: #8F9E96;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
-            <div style="position: absolute; top: 95px; left: 35px; font-size: 10px; font-weight: 600; color: #4A5C52;">Tumakuru</div>
+            <div style="position: absolute; top: 95px; left: 35px; font-size: 10px; font-weight: 600; color: #4A5C52;">Nuzvid</div>
             
             <svg style="position: absolute; top: 100px; right: 100px; width: 14px; height: 14px; stroke: #8F9E96; fill: #8F9E96;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
-            <div style="position: absolute; top: 115px; right: 85px; font-size: 10px; font-weight: 600; color: #4A5C52;">Hosakote</div>
+            <div style="position: absolute; top: 115px; right: 85px; font-size: 10px; font-weight: 600; color: #4A5C52;">Machilipatnam</div>
             
             <svg style="position: absolute; top: 60px; right: 140px; width: 14px; height: 14px; stroke: #8F9E96; fill: #8F9E96;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
-            <div style="position: absolute; top: 45px; right: 100px; font-size: 10px; font-weight: 600; color: #4A5C52;">Doddaballapur</div>
+            <div style="position: absolute; top: 45px; right: 100px; font-size: 10px; font-weight: 600; color: #4A5C52;">Mylavaram</div>
 
-            <!-- Start Pin (Kolar) -->
+            <!-- Start Pin (Krishna) -->
             <svg style="position: absolute; top: 33px; right: 35px; width: 16px; height: 16px; stroke: #1B4D35; fill: #1B4D35;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
-            <div style="position: absolute; top: 32px; right: -50px; font-size: 12px; font-weight: 800; color: #11261A; width: 80px;">Kolar<br><span style="font-size: 10px; font-weight: 600; color: #65796E;">(Your Location)</span></div>
+            <div style="position: absolute; top: 32px; right: -50px; font-size: 12px; font-weight: 800; color: #11261A; width: 80px;">Krishna<br><span style="font-size: 10px; font-weight: 600; color: #65796E;">(Your Location)</span></div>
 
-            <!-- End Pin (Bengaluru) -->
+            <!-- End Pin (Vijayawada) -->
             <svg style="position: absolute; top: 162px; left: 143px; width: 16px; height: 16px; stroke: #E03131; fill: #E03131;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
-            <div style="position: absolute; top: 180px; left: 110px; font-size: 12px; font-weight: 800; color: #11261A;">Bengaluru</div>
+            <div style="position: absolute; top: 180px; left: 110px; font-size: 12px; font-weight: 800; color: #11261A;">Vijayawada</div>
             
-            <div style="position: absolute; top: 162px; left: 170px; background: white; padding: 4px 8px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-size: 11px; font-weight: 800; color: #11261A;">Bengaluru APMC</div>
+            <div style="position: absolute; top: 162px; left: 170px; background: white; padding: 4px 8px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-size: 11px; font-weight: 800; color: #11261A;">Vijayawada Factory</div>
           </div>
           <div class="map-legend">
             <div class="legend-item"><svg style="width: 12px; height: 12px; stroke: #1B4D35; fill: #1B4D35;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg> Your Location</div>
@@ -836,7 +810,7 @@ function googleTranslateElementInit() {
             <div class="center-item">
               <div class="ci-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
               <div class="ci-mid">
-                <h4 class="ci-name">Kolar Farmer Collection Center</h4>
+                <h4 class="ci-name">Krishna Farmer Collection Center</h4>
                 <div class="ci-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> 5 km</div>
               </div>
               <button class="btn-ci">View Details</button>
@@ -844,7 +818,7 @@ function googleTranslateElementInit() {
             <div class="center-item">
               <div class="ci-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
               <div class="ci-mid">
-                <h4 class="ci-name">Chikkaballapur Cold Storage</h4>
+                <h4 class="ci-name">Gudivada Cold Storage</h4>
                 <div class="ci-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> 28 km</div>
               </div>
               <button class="btn-ci">View Details</button>
@@ -852,7 +826,7 @@ function googleTranslateElementInit() {
             <div class="center-item">
               <div class="ci-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
               <div class="ci-mid">
-                <h4 class="ci-name">Bengaluru APMC Yard</h4>
+                <h4 class="ci-name">Vijayawada Factory Yard</h4>
                 <div class="ci-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> 45 km</div>
               </div>
               <button class="btn-ci">View Details</button>
@@ -963,9 +937,10 @@ function googleTranslateElementInit() {
     });
   </script>
 
+  <!-- Ask Vyapti & Guided Tour (Re-injected) -->
   <script src="/src/ask-vyapti.js"></script>
-
   <script src="/src/guided-tour.js"></script>
+
 </body>
 </html>
 
