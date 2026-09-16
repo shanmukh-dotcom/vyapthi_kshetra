@@ -1,0 +1,33 @@
+# Environment Variables & Secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+*.db
+*.sqlite3
+
+# Node / React Frontend
+node_modules/
+dist/
+build/
+.npm
+*.log
+
+# IDE & System
+.DS_Store
+.idea/
+.vscode/
+
+# Large Datasets (Raw training images - runtime uses backend/models/potato/ instead)
+backend/potato_dataset/
