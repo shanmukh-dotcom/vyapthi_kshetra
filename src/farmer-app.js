@@ -267,7 +267,18 @@ class FarmerApp {
       langSelect.value = currentLang;
 
       langSelect.addEventListener('change', (e) => {
-        localStorage.setItem(LANG_KEY, e.target.value);
+        const selectedLang = e.target.value;
+        localStorage.setItem(LANG_KEY, selectedLang);
+        
+        // Update Google Translate cookie
+        if (selectedLang === 'en') {
+          document.cookie = "googtrans=/en/en; path=/;";
+          document.cookie = "googtrans=/en/en; domain=localhost; path=/;";
+        } else {
+          document.cookie = `googtrans=/en/${selectedLang}; path=/;`;
+          document.cookie = `googtrans=/en/${selectedLang}; domain=localhost; path=/;`;
+        }
+        
         window.location.reload();
       });
     }

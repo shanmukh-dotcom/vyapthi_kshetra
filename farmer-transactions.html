@@ -271,10 +271,14 @@ function googleTranslateElementInit() {
         </div>
       </div>
       <div class="header-right">
-          <div class="header-pill">
-            <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-            English <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </div>
+          <select id="header-lang-select" class="header-pill" style="border: 1px solid #E4EBE6; appearance: none; -webkit-appearance: none; padding-right: 32px; background: url('data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"14\" height=\"14\" stroke=\"%2311261A\" fill=\"none\" stroke-width=\"2\" viewBox=\"0 0 24 24\"><polyline points=\"6 9 12 15 18 9\"></polyline></svg>') no-repeat right 12px center; background-color: #FFFFFF; font-family: inherit; font-size: 13.5px; font-weight: 600; color: #163323; cursor: pointer; outline: none; margin: 0; box-sizing: border-box; display: inline-flex; height: 40px;">
+        <option value="en">English</option>
+        <option value="hi">हिंदी (Hindi)</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        <option value="mr">मराठी (Marathi)</option>
+      </select>
           <button type="button" class="header-pill btn-read-aloud">
             <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
             Read Aloud
