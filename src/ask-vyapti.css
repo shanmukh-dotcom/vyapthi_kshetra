@@ -1,0 +1,255 @@
+/* Ask Vyapti Floating UI Styles */
+
+#ask-vyapti-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #1B4D35;
+  color: #FFFFFF;
+  border-radius: 30px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 0 8px 24px rgba(27, 77, 53, 0.3);
+  cursor: pointer;
+  z-index: 9999;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#ask-vyapti-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(27, 77, 53, 0.4);
+}
+
+.vyapti-icon {
+  font-size: 20px;
+}
+
+/* Panel */
+#ask-vyapti-panel {
+  position: fixed;
+  bottom: 85px;
+  right: 24px;
+  width: 380px;
+  height: 600px;
+  max-height: 80vh;
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  z-index: 9998;
+  overflow: hidden;
+  transition: opacity 0.3s, transform 0.3s;
+  transform-origin: bottom right;
+}
+
+#ask-vyapti-panel.vyapti-hidden {
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+.vyapti-header {
+  background: #1B4D35;
+  color: #FFFFFF;
+  padding: 16px 20px;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#vyapti-close {
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+  opacity: 0.8;
+}
+
+#vyapti-close:hover {
+  opacity: 1;
+}
+
+/* Chat Body */
+#vyapti-chat-body {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: #F9FBF9;
+}
+
+.vyapti-msg {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  animation: vyaptiFadeIn 0.3s ease;
+}
+
+.vyapti-system {
+  background: #FFFFFF;
+  color: #11261A;
+  border: 1px solid #E4EBE6;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.vyapti-user {
+  background: #1B4D35;
+  color: #FFFFFF;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+/* Quick Actions */
+#vyapti-quick-actions {
+  padding: 12px 20px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  background: #FFFFFF;
+  border-top: 1px solid #E4EBE6;
+  scrollbar-width: none;
+}
+#vyapti-quick-actions::-webkit-scrollbar {
+  display: none;
+}
+
+.vyapti-quick-btn {
+  background: #E8F4EC;
+  color: #165A31;
+  border: 1px solid #A8C7B4;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+.vyapti-quick-btn:hover {
+  background: #D1E8DA;
+}
+
+/* Input Area */
+.vyapti-input-area {
+  padding: 16px 20px;
+  background: #FFFFFF;
+  border-top: 1px solid #E4EBE6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vyapti-icon-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  padding: 4px;
+}
+.vyapti-icon-btn:hover {
+  opacity: 1;
+}
+
+#vyapti-input {
+  flex: 1;
+  border: 1px solid #E4EBE6;
+  border-radius: 20px;
+  padding: 10px 16px;
+  font-size: 14px;
+  outline: none;
+  background: #F9FBF9;
+}
+#vyapti-input:focus {
+  border-color: #1B4D35;
+}
+
+#vyapti-send-btn {
+  background: #1B4D35;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Crop Comparison Card */
+.vyapti-comparison-card {
+  background: #FFFFFF;
+  border: 1px solid #A8C7B4;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.vyapti-comparison-card h4 {
+  margin: 0 0 12px 0;
+  font-size: 15px;
+  color: #11261A;
+  border-bottom: 1px solid #E4EBE6;
+  padding-bottom: 8px;
+}
+
+.vyapti-score-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #65796E;
+}
+
+.vyapti-score-val {
+  font-weight: 700;
+  color: #1B4D35;
+}
+
+.vyapti-action-btn {
+  background: #1B4D35;
+  color: #FFFFFF;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 12px;
+  width: 100%;
+}
+
+@keyframes vyaptiFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  #ask-vyapti-panel {
+    width: 100%;
+    right: 0;
+    bottom: 0;
+    height: 85vh;
+    max-height: none;
+    border-radius: 24px 24px 0 0;
+  }
+}
