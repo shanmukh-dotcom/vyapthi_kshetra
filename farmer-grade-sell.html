@@ -647,7 +647,7 @@ function googleTranslateElementInit() {
           }
 
           // 2. Call our developed Vision-AI + RAG Potato Quality Grading Backend
-          const response = await fetch('http://localhost:8000/api/potato/analyze', {
+          const response = await fetch('http://localhost:8001/api/potato/analyze', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -764,7 +764,7 @@ function googleTranslateElementInit() {
           
           if (transportSub && transportContainer) {
             try {
-              const transportRes = await fetch('http://localhost:8000/api/logistics/providers/nearby?lat=16.506&lng=80.648&radius_km=50');
+              const transportRes = await fetch('http://localhost:8001/api/logistics/providers/nearby?lat=16.506&lng=80.648&radius_km=50');
               const transportData = await transportRes.json();
               
               if (transportData.success && transportData.providers.length > 0) {
@@ -799,7 +799,7 @@ function googleTranslateElementInit() {
           const alertTitleEl = document.querySelector('.alert-text h4');
           const alertTextEl = document.querySelector('.alert-text p');
           if (alertTitleEl) alertTitleEl.innerText = 'AI Service Connection Alert';
-          if (alertTextEl) alertTextEl.innerText = 'Unable to reach the Potato AI Backend at http://localhost:8000. Please ensure the backend server is running.';
+          if (alertTextEl) alertTextEl.innerText = 'Unable to reach the Potato AI Backend at http://localhost:8001. Please ensure the backend server is running.';
         } finally {
           // Restore Dropzone
           dropzone.innerHTML = `
