@@ -55,25 +55,21 @@ function renderDashboard() {
   const cardsContainer = document.getElementById('pa-summary-cards');
   if (cardsContainer) {
     cardsContainer.innerHTML = `
-      <div class="card" style="padding: 16px; text-align: center;">
-        <div style="font-size: 24px; margin-bottom: 8px;">🌾</div>
-        <div style="font-size: 12px; color: #65796E; font-weight: 600;">Crops Monitored</div>
-        <div style="font-size: 28px; font-weight: 800; color: #11261A; margin-top: 4px;">${totalCrops}</div>
+      <div class="card" style="padding: 20px; background: linear-gradient(135deg, #F2FAF5 0%, #E6F5EA 100%); border: 1px solid rgba(43,138,62,0.15); box-shadow: 0 4px 12px rgba(43,138,62,0.05);">
+        <div style="font-size: 13px; font-weight: 700; color: #2B8A3E; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;"><svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg> Crops Monitored</div>
+        <div style="font-size: 28px; font-weight: 800; color: #165A31;">${totalCrops}</div>
       </div>
-      <div class="card" style="padding: 16px; text-align: center;">
-        <div style="font-size: 24px; margin-bottom: 8px;">👨‍🌾</div>
-        <div style="font-size: 12px; color: #65796E; font-weight: 600;">Farmers Reporting</div>
-        <div style="font-size: 28px; font-weight: 800; color: #11261A; margin-top: 4px;">${totalFarmers}</div>
+      <div class="card" style="padding: 20px; background: linear-gradient(135deg, #F4F8FA 0%, #E2EEF7 100%); border: 1px solid rgba(0,82,155,0.15); box-shadow: 0 4px 12px rgba(0,82,155,0.05);">
+        <div style="font-size: 13px; font-weight: 700; color: #00529B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;"><svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> Farmers Reporting</div>
+        <div style="font-size: 28px; font-weight: 800; color: #004280;">${totalFarmers}</div>
       </div>
-      <div class="card" style="padding: 16px; text-align: center;">
-        <div style="font-size: 24px; margin-bottom: 8px;">🚨</div>
-        <div style="font-size: 12px; color: #65796E; font-weight: 600;">Active Alerts</div>
-        <div style="font-size: 28px; font-weight: 800; color: #E03131; margin-top: 4px;">${activeAlerts}</div>
+      <div class="card" style="padding: 20px; background: linear-gradient(135deg, #FFF3F3 0%, #FFEBEB 100%); border: 1px solid rgba(224,49,49,0.15); box-shadow: 0 4px 12px rgba(224,49,49,0.05);">
+        <div style="font-size: 13px; font-weight: 700; color: #C92A2A; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;"><svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Active Alerts</div>
+        <div style="font-size: 28px; font-weight: 800; color: #991B1B;">${activeAlerts}</div>
       </div>
-      <div class="card" style="padding: 16px; text-align: center;">
-        <div style="font-size: 24px; margin-bottom: 8px;">📈</div>
-        <div style="font-size: 12px; color: #65796E; font-weight: 600;">Crops Above Threshold</div>
-        <div style="font-size: 28px; font-weight: 800; color: #165A31; margin-top: 4px;">${aboveThreshold}</div>
+      <div class="card" style="padding: 20px; background: linear-gradient(135deg, #FFF8E6 0%, #FFF4D6 100%); border: 1px solid rgba(245,159,0,0.15); box-shadow: 0 4px 12px rgba(245,159,0,0.05);">
+        <div style="font-size: 13px; font-weight: 700; color: #D97706; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;"><svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg> Above Threshold</div>
+        <div style="font-size: 28px; font-weight: 800; color: #B45309;">${aboveThreshold}</div>
       </div>
     `;
   }
@@ -86,24 +82,28 @@ function renderDashboard() {
       alertsContainer.innerHTML = `<div style="font-size: 13px; color: #65796E;">No active alerts at this time. All crops are at expected levels.</div>`;
     } else {
       alertsContainer.innerHTML = alerts.map(alert => {
-        const icon = alert.status === 'CRITICAL' ? '🚨 CRITICAL' : '⚠️ WARNING';
-        const color = alert.status === 'CRITICAL' ? '#991B1B' : '#92400E';
+        const isCritical = alert.status === 'CRITICAL';
+        const color = isCritical ? '#E03131' : '#F59F00';
+        const bg = isCritical ? '#FFF5F5' : '#FFF9E6';
+        const svgIcon = isCritical 
+            ? `<svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>` 
+            : `<svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path></svg>`;
+        
         const absDiff = Math.abs(alert.production - alert.threshold);
         const absPct = Math.abs(alert.percentageDiff).toFixed(1);
         
         return `
-          <div style="background: white; border: 1px solid #FECACA; border-radius: 8px; padding: 16px; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap;">
+          <div style="background: ${bg}; border-left: 4px solid ${color}; border-radius: 8px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,0,0,0.03); border-right: 1px solid rgba(0,0,0,0.03); border-bottom: 1px solid rgba(0,0,0,0.03);">
             <div>
-              <h4 style="margin: 0 0 8px; font-size: 14px; font-weight: 800; color: ${color};">${icon} — ${alert.crop}</h4>
-              <div style="font-size: 12px; color: #65796E; margin-bottom: 8px;">${alert.district} District</div>
-              <div style="font-size: 13px; color: #11261A; line-height: 1.5;">
-                <strong>Expected production:</strong> ${alert.production} tonnes<br>
-                <strong>Threshold:</strong> ${alert.threshold} tonnes<br>
-                <strong>Shortfall:</strong> ${absDiff.toFixed(1)} tonnes (${absPct}% below threshold)
+              <h4 style="margin: 0 0 8px; font-size: 16px; font-weight: 800; color: ${color}; display: flex; align-items: center; gap: 8px;">${svgIcon} ${alert.crop} Shortfall</h4>
+              <div style="font-size: 12.5px; font-weight: 600; color: #4A5C52; margin-bottom: 12px;">${alert.district} District</div>
+              <div style="font-size: 13.5px; color: #11261A; line-height: 1.6;">
+                <span style="display:inline-block; width: 140px; color:#65796E;">Expected production:</span> <strong>${alert.production} tonnes</strong><br>
+                <span style="display:inline-block; width: 140px; color:#65796E;">Required Threshold:</span> <strong>${alert.threshold} tonnes</strong><br>
+                <span style="display:inline-block; width: 140px; color:${color}; font-weight: 700;">Current Shortfall:</span> <strong style="color:${color};">${absDiff.toFixed(1)} tonnes (${absPct}%)</strong>
               </div>
-              <div style="font-size: 11px; color: #8F9E96; margin-top: 8px;">Source: Demo farmer production data</div>
             </div>
-            <button onclick="window.paViewDetails('${alert.crop}')" class="btn-solid" style="background: ${color}; border: none; font-size: 12px; padding: 8px 16px;">View Details</button>
+            <button onclick="window.paViewDetails('${alert.crop}')" style="background: ${color}; color: white; border: none; font-size: 13px; font-weight: 600; padding: 10px 24px; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: opacity 0.2s;">View Details</button>
           </div>
         `;
       }).join('');
