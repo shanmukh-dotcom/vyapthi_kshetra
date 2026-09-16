@@ -134,7 +134,50 @@
     .acc-pill-wrap { display: flex; align-items: center; gap: 0; background: #FFFFFF; border-radius: 30px; padding: 6px; box-shadow: 0 6px 24px rgba(20,60,45,0.06); border: 1px solid rgba(20,70,50,0.09); }
     .acc-btn { display: flex; align-items: center; gap: 8px; padding: 6px 16px; color: #12231C; font-size: 13px; font-weight: 600; text-decoration: none; border-right: 1px solid #EAF5EC; }
     .acc-btn:last-child { border: none; }
+  
+    /* Modal & Toast Styles */
+    .farm-modal-backdrop {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(11,61,46,0.6);
+      backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .farm-modal-backdrop.show { display: flex; opacity: 1; }
+    
+    .farm-modal-card {
+      background: #FFFFFF; width: 90%; max-width: 500px; border-radius: 24px; padding: 32px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15); transform: translateY(20px); transition: transform 0.3s ease;
+      position: relative;
+    }
+    .farm-modal-backdrop.show .farm-modal-card { transform: translateY(0); }
+    
+    .fm-title { font-size: 24px; font-weight: 800; color: #12231C; margin: 0 0 8px; }
+    .fm-subtitle { font-size: 14px; color: #64766E; margin: 0 0 24px; }
+    
+    .fm-upload-zone {
+      border: 2px dashed rgba(31,107,70,0.3); background: #FAFCFA; border-radius: 16px; padding: 32px 20px;
+      text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 24px;
+    }
+    .fm-upload-zone:hover { background: #EAF5EC; border-color: #1F6B46; }
+    .fm-upload-icon { color: #1F6B46; margin-bottom: 12px; }
+    
+    .fm-form-group { margin-bottom: 16px; text-align: left; }
+    .fm-label { display: block; font-size: 13px; font-weight: 700; color: #12231C; margin-bottom: 8px; }
+    .fm-input { width: 100%; box-sizing: border-box; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(20,70,50,0.15); font-family: inherit; font-size: 14.5px; outline: none; transition: border-color 0.2s; }
+    .fm-input:focus { border-color: #1F6B46; box-shadow: 0 0 0 3px rgba(31,107,70,0.1); }
+    
+    .fm-actions { display: flex; gap: 12px; margin-top: 32px; }
+    .fm-btn-cancel { flex: 1; padding: 14px; border-radius: 14px; font-size: 15px; font-weight: 700; background: #FAFCFA; color: #64766E; border: 1px solid rgba(20,70,50,0.15); cursor: pointer; }
+    .fm-btn-save { flex: 1; padding: 14px; border-radius: 14px; font-size: 15px; font-weight: 700; background: #0B3D2E; color: #FFFFFF; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(11,61,46,0.2); }
+    
+    .farm-toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: #12231C; color: #FFFFFF; padding: 14px 24px; border-radius: 30px; font-size: 14.5px;
+      font-weight: 600; display: flex; align-items: center; gap: 12px; z-index: 3000; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .farm-toast.show { transform: translateX(-50%) translateY(0); }
   </style>
+
 </head>
 <body>
 
@@ -246,7 +289,7 @@
             <!-- Photo -->
             <div class="farm-photo-wrapper">
               <img src="/assets/farm_landscape.jpg" alt="Farm" class="farm-photo">
-              <button class="btn-change-photo">
+              <button class="btn-change-photo action-btn" data-action="Change Photo">
                 <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
                 Change Photo
               </button>
@@ -262,7 +305,7 @@
                     Verified
                   </div>
                 </div>
-                <button class="btn-edit-farm">
+                <button class="btn-edit-farm action-btn" data-action="Edit Farm">
                   <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                   Edit
                 </button>
@@ -302,10 +345,10 @@
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3" fill="white"></circle></svg>
                 <div class="map-label">Krishna District, AP</div>
               </div>
-              <button class="btn-expand-map">
+              <button class="btn-expand-map action-btn" data-action="Expand Map">
                 <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
               </button>
-              <button class="btn-update-loc">Update Location</button>
+              <button class="btn-update-loc action-btn" data-action="Update Location">Update Location</button>
             </div>
 
           </div>
@@ -318,7 +361,7 @@
               <h3 class="section-title"><svg style="width: 24px; height: 24px; stroke: #1F6B46; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 7.477 2 13s4.477 10 10 10z"></path><path d="M12 22c-3.314 0-6-4.477-6-10S8.686 2 12 2s6 4.477 6 10-2.686 10-6 10z"></path><path d="M2 12h20"></path></svg> My Crops</h3>
               <p class="section-subtitle">View and manage all your crops</p>
             </div>
-            <button class="btn-primary">
+            <button class="btn-primary btn-add-crop">
               <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
               Add New Crop
             </button>
@@ -404,7 +447,7 @@
             </div>
           </div>
 
-          <button class="btn-weather">View 5-Day Forecast &rarr;</button>
+          <button class="btn-weather action-btn" data-action="Weather Forecast">View 5-Day Forecast &rarr;</button>
         </div>
 
         <!-- Quick Actions -->
@@ -413,7 +456,7 @@
           Quick Actions
         </h3>
         
-        <a href="#" class="qa-row">
+        <a href="javascript:void(0)" class="qa-row action-link">
           <div class="qa-icon-wrap" style="background: #EAF5EC; color: #1F6B46;">
             <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
           </div>
@@ -424,7 +467,7 @@
           <svg class="qa-arrow" style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </a>
 
-        <a href="#" class="qa-row">
+        <a href="javascript:void(0)" class="qa-row action-link">
           <div class="qa-icon-wrap" style="background: #EAF5EC; color: #1F6B46;">
             <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
           </div>
@@ -435,7 +478,7 @@
           <svg class="qa-arrow" style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </a>
 
-        <a href="#" class="qa-row">
+        <a href="javascript:void(0)" class="qa-row action-link">
           <div class="qa-icon-wrap" style="background: #EAF5EC; color: #1F6B46;">
             <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
           </div>
@@ -471,6 +514,119 @@
       </div>
     </div>
   </main>
+
+  
+  <!-- Add Crop Modal -->
+  <div class="farm-modal-backdrop" id="addCropModal">
+    <div class="farm-modal-card">
+      <h2 class="fm-title">Add New Crop</h2>
+      <p class="fm-subtitle">Enter details and upload a photo of your new crop.</p>
+      
+      <div class="fm-upload-zone" id="cropUploadZone">
+        <svg class="fm-upload-icon" style="width: 48px; height: 48px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        <div style="font-size: 15px; font-weight: 700; color: #12231C;">Click to upload crop photo</div>
+        <div style="font-size: 13px; color: #64766E; margin-top: 4px;">JPG, PNG or HEIC (Max 5MB)</div>
+      </div>
+      
+      <div class="fm-form-group">
+        <label class="fm-label">Crop Name</label>
+        <input type="text" class="fm-input" placeholder="e.g. Potato, Tomato, Maize">
+      </div>
+      
+      <div style="display: flex; gap: 16px;">
+        <div class="fm-form-group" style="flex: 1;">
+          <label class="fm-label">Land Area (Acres)</label>
+          <input type="number" class="fm-input" placeholder="e.g. 2.5">
+        </div>
+        <div class="fm-form-group" style="flex: 1;">
+          <label class="fm-label">Planting Date</label>
+          <input type="date" class="fm-input">
+        </div>
+      </div>
+      
+      <div class="fm-actions">
+        <button type="button" class="fm-btn-cancel" id="btnCancelCrop">Cancel</button>
+        <button type="button" class="fm-btn-save" id="btnSaveCrop">Save Crop</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="farm-toast" id="farmToast">
+    <svg style="width: 20px; height: 20px; color: #55B85A;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <span id="toastMsg">Action completed successfully!</span>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const modal = document.getElementById('addCropModal');
+      const toast = document.getElementById('farmToast');
+      const toastMsg = document.getElementById('toastMsg');
+      
+      function showToast(msg, isSuccess = true) {
+        toastMsg.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }
+
+      // Add Crop Modal Logic
+      document.querySelectorAll('.btn-add-crop, .qa-row').forEach(el => {
+        if (el.textContent.includes('Add New Crop')) {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('show');
+          });
+        }
+      });
+      
+      document.getElementById('btnCancelCrop').addEventListener('click', () => {
+        modal.classList.remove('show');
+      });
+      
+      document.getElementById('btnSaveCrop').addEventListener('click', () => {
+        modal.classList.remove('show');
+        showToast('New crop added successfully!');
+      });
+      
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('show');
+      });
+
+      // Quick Actions & Other Buttons Logic
+      document.querySelectorAll('.qa-row').forEach(el => {
+        if (!el.textContent.includes('Add New Crop')) {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            const title = el.querySelector('.qa-title').textContent;
+            showToast('Opening ' + title + '...');
+          });
+        }
+      });
+      
+      document.querySelectorAll('.action-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          showToast('Action triggered: ' + btn.getAttribute('data-action'));
+        });
+      });
+
+      // Tabs Logic
+      const tabs = document.querySelectorAll('.tab-item');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          e.preventDefault();
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          showToast('Loading ' + tab.textContent.trim() + ' data...');
+        });
+      });
+      
+      // Upload zone mock interaction
+      document.getElementById('cropUploadZone').addEventListener('click', () => {
+         showToast('File picker opened...');
+      });
+    });
+  </script>
 
   <!-- Ask Vyapti & Drawer are maintained dynamically by scripts -->
   <script type="module" src="/src/farmer-app.js"></script>
