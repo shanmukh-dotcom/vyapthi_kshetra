@@ -18,7 +18,7 @@ const DEFAULT_FARMER_STATE = {
   farmer: {
     name: 'Ramesh Kumar',
     role: 'Farmer',
-    location: 'Kolar, Karnataka',
+    location: 'Krishna District, Andhra Pradesh',
     farmName: 'Chennuboina Farm',
     mobile: '9876543210',
     experience: '6 Years',
@@ -76,9 +76,9 @@ const DEFAULT_FARMER_STATE = {
     }
   ],
   transactions: [
-    { id: 'TXN-8842', date: '14 May 2025', type: 'SALE', crop: 'Tomato (500 kg lot)', buyer: 'Kolar Fresh Mart', amount: 11500, method: 'UPI Payment', status: 'Received' },
+    { id: 'TXN-8842', date: '14 May 2025', type: 'SALE', crop: 'Tomato (500 kg lot)', buyer: 'Krishna Fresh Mart', amount: 11500, method: 'UPI Payment', status: 'Received' },
     { id: 'TXN-8839', date: '10 May 2025', type: 'SALE', crop: 'Tomato (1,200 kg lot)', buyer: 'South India Fresh Foods', amount: 27600, method: 'Bank Transfer', status: 'Pending' },
-    { id: 'TXN-8820', date: '02 May 2025', type: 'SALE', crop: 'Chilli (800 kg lot)', buyer: 'Bengaluru Organic Hub', amount: 28000, method: 'UPI Payment', status: 'Received' },
+    { id: 'TXN-8820', date: '02 May 2025', type: 'SALE', crop: 'Chilli (800 kg lot)', buyer: 'Vijayawada Organic Hub', amount: 28001, method: 'UPI Payment', status: 'Received' },
     { id: 'TXN-8815', date: '28 Apr 2025', type: 'PAYOUT', crop: 'Bank Payout', buyer: 'Escrow → SBI Account (•••• 4892)', amount: 39500, method: 'IMPS Transfer', status: 'Completed' },
     { id: 'TXN-8790', date: '18 Apr 2025', type: 'SALE', crop: 'Tomato (800 kg lot)', buyer: 'Karnataka Institutional Buyer', amount: 18400, method: 'Bank Transfer', status: 'Received' },
     { id: 'TXN-8762', date: '05 Apr 2025', type: 'SALE', crop: 'Chilli (500 kg lot)', buyer: 'Chikkaballapur Produce Buyer', amount: 17500, method: 'Direct Transfer', status: 'Pending' }
@@ -92,7 +92,7 @@ const PAGE_READ_DATA = {
     te: "శుభోదయం రమేష్ కుమార్. నేడు మీ అమ్మకానికి సిద్ధంగా ఉన్న టమాటా లాట్ 500 కిలోలు. సూచిక మార్కెట్ ధర కిలోకు 22 రూపాయలు."
   },
   myFarm: {
-    en: "My Farm Overview. Chennuboina Farm, verified 2.5 acres in Kolar, Karnataka. You have 3 crops: Tomato 12,000 kg expected with 500 kg sellable lot harvesting, Chilli 3,000 kg growing, and Maize in planning stage.",
+    en: "My Farm Overview. Chennuboina Farm, verified 2.5 acres in Krishna District, Andhra Pradesh. You have 3 crops: Tomato 12,000 kg expected with 500 kg sellable lot harvesting, Chilli 3,000 kg growing, and Maize in planning stage.",
     te: "నా పొలం వివరాలు. చెన్నుబోయిన ఫార్మ్, కోలార్, కర్ణాటక. మీ వద్ద టమాటా, మిర్చి మరియు మొక్కజొన్న సాగులో ఉన్నాయి."
   },
   market: {
@@ -104,11 +104,11 @@ const PAGE_READ_DATA = {
     te: "గ్రేడ్ మరియు సేల్. టమాటా AI గ్రేడింగ్ ఫలితం గ్రేడ్ A."
   },
   findBuyers: {
-    en: "Find Buyers. Demo marketplace with 128 available buyer profiles in Karnataka. Top matches include Kolar Fresh Mart offering 24 rupees per kilogram, and South India Fresh Foods offering 26 rupees per kilogram.",
+    en: "Find Buyers. Demo marketplace with 128 available buyer profiles in Andhra Pradesh. Top matches include Krishna Fresh Mart offering 24 rupees per kilogram, and South India Fresh Foods offering 26 rupees per kilogram.",
     te: "కొనుగోలుదారులను కనుగొనండి. కర్ణాటకలో 128 మంది కొనుగోలు ప్రొఫైల్స్ అందుబాటులో ఉన్నాయి."
   },
   logistics: {
-    en: "Collective and Logistics. 12 active farmer groups and 8 demo transport partners available in Kolar. Shared transport allows lower transport costs per kilogram.",
+    en: "Collective and Logistics. 12 active farmer groups and 8 demo transport partners available in Krishna District. Shared transport allows lower transport costs per kilogram.",
     te: "రవాణా మరియు లాజిస్టిక్స్. ఉమ్మడి రవాణా ద్వారా ఖర్చులు తగ్గించుకోవచ్చు."
   },
   transactions: {
@@ -130,9 +130,9 @@ class FarmerApp {
       
       let state = savedState ? JSON.parse(savedState) : DEFAULT_FARMER_STATE;
 
-      // Force Master Profile Kolar Location
+      // Force Master Profile Krishna Location
       state.farmer.name = profileSaved.name || 'Ramesh Kumar';
-      state.farmer.location = 'Kolar, Karnataka';
+      state.farmer.location = 'Krishna District, Andhra Pradesh';
       state.farmer.farmName = 'Chennuboina Farm';
       
       if (profileSaved.mobile) state.farmer.mobile = profileSaved.mobile;
@@ -267,70 +267,29 @@ class FarmerApp {
       langSelect.value = currentLang;
 
       langSelect.addEventListener('change', (e) => {
-        const selectedLang = e.target.value;
-        localStorage.setItem(LANG_KEY, selectedLang);
-        
-        // Update Google Translate cookie
-        if (selectedLang === 'en') {
-          document.cookie = "googtrans=/en/en; path=/;";
-          document.cookie = "googtrans=/en/en; domain=localhost; path=/;";
-        } else {
-          document.cookie = `googtrans=/en/${selectedLang}; path=/;`;
-          document.cookie = `googtrans=/en/${selectedLang}; domain=localhost; path=/;`;
-        }
-        
+        localStorage.setItem(LANG_KEY, e.target.value);
         window.location.reload();
       });
     }
   }
 
   /**
-   * Play Custom Pre-recorded Audio for current page
+   * Web Speech Synthesis Read Aloud for current page
    */
   setupReadAloud() {
     const readBtns = Array.from(document.querySelectorAll('.btn-read-aloud'));
-    let currentAudio = null;
-    let isPlaying = false;
-
-    // Determine the current language
-    const currentLang = localStorage.getItem(LANG_KEY) || 'en';
-
-    // Map page keys to the actual uploaded audio files based on language
-    const getAudioSrc = (pageKey) => {
-      if (currentLang === 'hi') {
-        const HINDI_FILES = {
-          home: 'hindi mp3/hindi home.mpeg',
-          myFarm: 'hindi mp3/hindi my farm.mpeg',
-          market: 'hindi mp3/hindi market and price.mpeg',
-          gradeSell: 'hindi mp3/hindi grade.mpeg',
-          findBuyers: 'hindi mp3/hindi find buyers.mpeg',
-          logistics: 'hindi mp3/hindi collective logistics.mpeg',
-          transactions: 'hindi mp3/hindi transcations.mpeg'
-        };
-        return HINDI_FILES[pageKey];
-      } else {
-        // Default to English
-        const ENGLISH_FILES = {
-          home: 'mp3/farmer_home.mpeg',
-          myFarm: 'mp3/my_farm.mpeg',
-          market: 'mp3/market_fair price.mpeg',
-          gradeSell: 'mp3/grade and scale.mpeg',
-          findBuyers: 'mp3/find buyers.mpeg',
-          logistics: 'mp3/collective logistics.mpeg',
-          transactions: 'mp3/my transcations.mpeg'
-        };
-        return ENGLISH_FILES[pageKey];
-      }
-    };
+    let isSpeaking = false;
 
     readBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        if (isPlaying && currentAudio) {
-          // Stop audio if it's currently playing
-          currentAudio.pause();
-          currentAudio.currentTime = 0;
-          isPlaying = false;
-          
+        if (!('speechSynthesis' in window)) {
+          alert('Read Aloud is not supported in this browser.');
+          return;
+        }
+
+        if (isSpeaking) {
+          window.speechSynthesis.cancel();
+          isSpeaking = false;
           btn.classList.remove('speaking');
           btn.innerHTML = `
             <svg class="icon-read" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
@@ -339,39 +298,35 @@ class FarmerApp {
           return;
         }
 
-        // Determine which page we are on
         const pageKey = document.body.getAttribute('data-page') || 'home';
-        const audioSrc = getAudioSrc(pageKey);
+        const currentLang = localStorage.getItem(LANG_KEY) || 'en';
+        const pageData = PAGE_READ_DATA[pageKey] || PAGE_READ_DATA.home;
+        const speechText = pageData[currentLang] || pageData.en;
 
-        if (!audioSrc) {
-          alert('No audio file found for this page.');
-          return;
-        }
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(speechText);
+        utterance.lang = currentLang === 'te' ? 'te-IN' : (currentLang === 'hi' ? 'hi-IN' : 'en-IN');
+        utterance.rate = 0.95;
 
-        // Initialize and play the new audio
-        currentAudio = new Audio(audioSrc);
-        
-        currentAudio.play().then(() => {
-          isPlaying = true;
+        utterance.onstart = () => {
+          isSpeaking = true;
           btn.classList.add('speaking');
           btn.innerHTML = `
             <svg class="icon-read" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="1" y1="1" x2="23" y2="23"></line></svg>
             <span>Stop Audio</span>
           `;
-        }).catch(err => {
-          console.error("Audio playback failed:", err);
-          alert("Could not play the audio file. Make sure you are interacting with the page first.");
-        });
+        };
 
-        // Reset button when audio finishes
-        currentAudio.onended = () => {
-          isPlaying = false;
+        utterance.onend = utterance.onerror = () => {
+          isSpeaking = false;
           btn.classList.remove('speaking');
           btn.innerHTML = `
             <svg class="icon-read" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
             <span>Read Aloud</span>
           `;
         };
+
+        window.speechSynthesis.speak(utterance);
       });
     });
   }
@@ -452,6 +407,363 @@ class FarmerApp {
     }
   }
 }
+
+// ============================================================
+// FUTURE CROPS MODULE
+// ============================================================
+
+// --- Modal open/close ---
+window.openFutureCropForm = function() {
+  document.getElementById('fc-id').value = '';
+  document.getElementById('fc-modal-title').textContent = '🌱 Plan Your Next Crop';
+  document.getElementById('fc-modal-subtitle').textContent = 'Enter the details of the crop you plan to grow next.';
+  document.getElementById('future-crop-form').reset();
+  document.getElementById('fc-custom-crop-wrap').style.display = 'none';
+  hideValidation();
+  document.getElementById('future-crop-modal').style.display = 'flex';
+};
+window.closeFutureCropForm = function() {
+  document.getElementById('future-crop-modal').style.display = 'none';
+  document.getElementById('future-crop-form').reset();
+  document.getElementById('fc-custom-crop-wrap').style.display = 'none';
+  hideValidation();
+};
+window.closeViewCropModal = function() {
+  document.getElementById('future-crop-view-modal').style.display = 'none';
+};
+
+// --- Validation helper ---
+function showValidation(msg) {
+  const el = document.getElementById('fc-validation-msg');
+  if (el) { el.textContent = msg; el.style.display = 'block'; }
+}
+function hideValidation() {
+  const el = document.getElementById('fc-validation-msg');
+  if (el) { el.textContent = ''; el.style.display = 'none'; }
+}
+
+// --- Success toast ---
+function showSuccessToast(msg) {
+  const toast = document.createElement('div');
+  toast.textContent = msg;
+  Object.assign(toast.style, {
+    position: 'fixed', bottom: '24px', left: '50%', transform: 'translateX(-50%)',
+    background: '#165A31', color: '#fff', padding: '10px 24px', borderRadius: '8px',
+    fontSize: '14px', fontWeight: '600', zIndex: '9999', boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+  });
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+// --- Synthetic demo data ---
+let demoFutureCrops = [
+  {
+    id: 1,
+    crop_name: 'Rice',
+    variety: 'BPT 5204',
+    previous_crop: 'Tomato',
+    planned_area: 1.5,
+    expected_sowing: '2026-07-15',
+    expected_harvest: '2026-10-20',
+    expected_production: 3.5,
+    production_unit: 'Tonnes',
+    notes: 'Planning to plant after tomato harvest.',
+    status: 'PLANNED'
+  }
+];
+
+// --- Date formatting ---
+function formatDate(dateStr) {
+  if (!dateStr) return 'Not specified';
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// --- Get resolved crop name (handles 'Other') ---
+function getResolvedCropName() {
+  const sel = document.getElementById('fc-crop-name');
+  if (sel.value === 'Other') {
+    return document.getElementById('fc-custom-crop').value.trim();
+  }
+  return sel.value;
+}
+
+// --- Render all future crop cards ---
+window.renderFutureCrops = function() {
+  const listDiv = document.getElementById('future-crops-list');
+  if (!listDiv) return;
+
+  if (demoFutureCrops.length === 0) {
+    listDiv.innerHTML = `
+      <div style="border: 1px dashed #A8C7B4; border-radius: 8px; padding: 32px; text-align: center;">
+        <h4 style="color: #11261A; font-size: 16px; margin: 0 0 8px 0;">🌱 No Future Crop Planned</h4>
+        <p style="color: #65796E; font-size: 14px; margin: 0;">Plan your next crop after your current harvest.</p>
+      </div>
+    `;
+    return;
+  }
+
+  listDiv.innerHTML = demoFutureCrops.map(crop => {
+    const prodDisplay = (crop.expected_production != null && crop.expected_production !== '')
+      ? `${crop.expected_production} ${crop.production_unit || 'Tonnes'}`
+      : 'Not specified';
+
+    return `
+    <div style="border: 1px solid #E4EBE6; border-radius: 8px; padding: 16px; background: #fff;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <div style="font-size: 18px; font-weight: 700; color: #11261A; display: flex; align-items: center; gap: 8px;">
+          🌾 ${crop.crop_name}
+        </div>
+        <div style="font-size: 11px; font-weight: 700; background: #E8F4EC; color: #165A31; padding: 4px 10px; border-radius: 12px; text-transform: uppercase;">
+          🌱 ${crop.status}
+        </div>
+      </div>
+      
+      <div style="font-size: 13px; color: #65796E; margin-bottom: 16px;">
+        Next crop after <strong>${crop.previous_crop}</strong> harvest
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px;">
+        <div>
+          <div style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700; margin-bottom: 4px;">VARIETY</div>
+          <div style="font-size: 14px; color: #11261A; font-weight: 600;">${crop.variety || 'Not specified'}</div>
+        </div>
+        <div>
+          <div style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700; margin-bottom: 4px;">PLANNED AREA</div>
+          <div style="font-size: 14px; color: #11261A; font-weight: 600;">${crop.planned_area} Acres</div>
+        </div>
+        <div>
+          <div style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700; margin-bottom: 4px;">EXPECTED SOWING</div>
+          <div style="font-size: 14px; color: #11261A; font-weight: 600;">${formatDate(crop.expected_sowing)}</div>
+        </div>
+        <div>
+          <div style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700; margin-bottom: 4px;">EXPECTED HARVEST</div>
+          <div style="font-size: 14px; color: #11261A; font-weight: 600;">${formatDate(crop.expected_harvest)}</div>
+        </div>
+        <div>
+          <div style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700; margin-bottom: 4px;">EXPECTED PRODUCTION</div>
+          <div style="font-size: 14px; color: #11261A; font-weight: 600;">${prodDisplay}</div>
+        </div>
+      </div>
+      
+      <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+        <button onclick="viewFutureCrop(${crop.id})" class="btn-action-sm" style="background: #F4F8FA; color: #11261A; border: 1px solid #E4EBE6; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600;">View Plan</button>
+        <button onclick="editFutureCrop(${crop.id})" class="btn-action-sm" style="background: #F4F8FA; color: #11261A; border: 1px solid #E4EBE6; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600;">Edit</button>
+        <a href="/farmer-market.html" class="btn-action-sm" style="background: transparent; color: #165A31; border: none; font-weight: 600; padding: 6px 12px; text-decoration: none; margin-left: auto;">See Market Outlook →</a>
+      </div>
+      
+      <div style="font-size: 10px; color: #A8C7B4; margin-top: 12px; text-align: right;">Demo Plan</div>
+    </div>
+  `;
+  }).join('');
+};
+
+// --- Edit a future crop ---
+window.editFutureCrop = function(id) {
+  const crop = demoFutureCrops.find(c => c.id === id);
+  if (!crop) return;
+  
+  document.getElementById('fc-id').value = crop.id;
+  document.getElementById('fc-modal-title').textContent = '✏️ Edit Crop Plan';
+  document.getElementById('fc-modal-subtitle').textContent = 'Update the details of your planned crop.';
+  
+  // Set crop name — check if it's a standard option or custom
+  const cropSelect = document.getElementById('fc-crop-name');
+  const standardOptions = Array.from(cropSelect.options).map(o => o.value);
+  if (standardOptions.includes(crop.crop_name)) {
+    cropSelect.value = crop.crop_name;
+    document.getElementById('fc-custom-crop-wrap').style.display = 'none';
+  } else {
+    cropSelect.value = 'Other';
+    document.getElementById('fc-custom-crop-wrap').style.display = 'block';
+    document.getElementById('fc-custom-crop').value = crop.crop_name;
+  }
+  
+  document.getElementById('fc-prev-crop').value = crop.previous_crop;
+  document.getElementById('fc-variety').value = crop.variety || '';
+  document.getElementById('fc-area').value = crop.planned_area;
+  document.getElementById('fc-sowing').value = crop.expected_sowing || '';
+  document.getElementById('fc-harvest').value = crop.expected_harvest || '';
+  document.getElementById('fc-production').value = crop.expected_production || '';
+  document.getElementById('fc-unit').value = crop.production_unit || 'Tonnes';
+  document.getElementById('fc-notes').value = crop.notes || '';
+  
+  hideValidation();
+  document.getElementById('future-crop-modal').style.display = 'flex';
+};
+
+// --- View a future crop ---
+window.viewFutureCrop = function(id) {
+  const crop = demoFutureCrops.find(c => c.id === id);
+  if (!crop) return;
+  
+  const prodDisplay = (crop.expected_production != null && crop.expected_production !== '')
+    ? `${crop.expected_production} ${crop.production_unit || 'Tonnes'}`
+    : 'Not specified';
+
+  const content = `
+    <div style="margin-bottom: 12px;">
+      <span style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700;">FUTURE CROP</span>
+      <div style="font-size: 18px; font-weight: 700; color: #11261A;">🌾 ${crop.crop_name}</div>
+    </div>
+    <div style="margin-bottom: 12px;">
+      <span style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700;">STATUS</span>
+      <div style="font-size: 14px; color: #165A31; font-weight: 600;">🌱 ${crop.status}</div>
+    </div>
+    <div style="margin-bottom: 12px;">
+      <span style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700;">AFTER</span>
+      <div style="font-size: 14px; color: #11261A;">${crop.previous_crop} Harvest</div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+      <div>
+        <span style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700;">VARIETY</span>
+        <div style="font-size: 14px; color: #11261A;">${crop.variety || 'Not specified'}</div>
+      </div>
+      <div>
+        <span style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700;">PLANNED AREA</span>
+        <div style="font-size: 14px; color: #11261A;">${crop.planned_area} Acres</div>
+      </div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px;">
+      <div>
+        <span style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700;">EXPECTED SOWING</span>
+        <div style="font-size: 14px; color: #11261A;">${formatDate(crop.expected_sowing)}</div>
+      </div>
+      <div>
+        <span style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700;">EXPECTED HARVEST</span>
+        <div style="font-size: 14px; color: #11261A;">${formatDate(crop.expected_harvest)}</div>
+      </div>
+    </div>
+    <div style="margin-bottom: 12px;">
+      <span style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700;">EXPECTED PRODUCTION</span>
+      <div style="font-size: 14px; color: #11261A;">${prodDisplay}</div>
+    </div>
+    ${crop.notes ? `
+    <div style="margin-bottom: 0;">
+      <span style="font-size: 10px; text-transform: uppercase; color: #8F9E96; font-weight: 700;">NOTES</span>
+      <div style="font-size: 14px; color: #11261A;">${crop.notes}</div>
+    </div>
+    ` : ''}
+  `;
+  document.getElementById('view-crop-content').innerHTML = content;
+  
+  // Wire up delete button
+  const deleteBtn = document.getElementById('view-modal-delete-btn');
+  deleteBtn.onclick = function() {
+    if (confirm('Are you sure you want to remove this future crop plan?')) {
+      demoFutureCrops = demoFutureCrops.filter(c => c.id !== id);
+      window.renderFutureCrops();
+      window.closeViewCropModal();
+      showSuccessToast('Future crop plan deleted.');
+    }
+  };
+  
+  document.getElementById('future-crop-view-modal').style.display = 'flex';
+};
+
+// --- DOMContentLoaded: form submit + Other toggle + Escape key ---
+document.addEventListener("DOMContentLoaded", () => {
+  const futureForm = document.getElementById('future-crop-form');
+  const cropSelect = document.getElementById('fc-crop-name');
+  
+  // Toggle custom crop name input when "Other" is selected
+  if (cropSelect) {
+    cropSelect.addEventListener('change', () => {
+      const wrap = document.getElementById('fc-custom-crop-wrap');
+      if (cropSelect.value === 'Other') {
+        wrap.style.display = 'block';
+      } else {
+        wrap.style.display = 'none';
+        document.getElementById('fc-custom-crop').value = '';
+      }
+    });
+  }
+  
+  // Escape key to close modals
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (document.getElementById('future-crop-modal').style.display === 'flex') {
+        closeFutureCropForm();
+      }
+      if (document.getElementById('future-crop-view-modal').style.display === 'flex') {
+        closeViewCropModal();
+      }
+    }
+  });
+
+  if (futureForm) {
+    futureForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      hideValidation();
+      
+      // Resolve crop name
+      const cropName = getResolvedCropName();
+      if (!cropName) {
+        showValidation('Please select or enter a crop name.');
+        return;
+      }
+      
+      // Validate area
+      const area = parseFloat(document.getElementById('fc-area').value);
+      if (!area || area <= 0) {
+        showValidation('Planned area must be greater than 0.');
+        return;
+      }
+      
+      // Validate dates
+      const sowingVal = document.getElementById('fc-sowing').value;
+      const harvestVal = document.getElementById('fc-harvest').value;
+      if (!sowingVal || !harvestVal) {
+        showValidation('Both sowing and harvest dates are required.');
+        return;
+      }
+      if (new Date(harvestVal) <= new Date(sowingVal)) {
+        showValidation('Expected harvest date must be after sowing date.');
+        return;
+      }
+      
+      // Validate production if entered
+      const prodVal = document.getElementById('fc-production').value;
+      if (prodVal && parseFloat(prodVal) < 0) {
+        showValidation('Expected production cannot be negative.');
+        return;
+      }
+      
+      const idVal = document.getElementById('fc-id').value;
+      const isEdit = !!idVal;
+      
+      const planData = {
+        crop_name: cropName,
+        variety: document.getElementById('fc-variety').value.trim() || '',
+        previous_crop: document.getElementById('fc-prev-crop').value,
+        planned_area: area,
+        expected_sowing: sowingVal,
+        expected_harvest: harvestVal,
+        expected_production: prodVal ? parseFloat(prodVal) : null,
+        production_unit: document.getElementById('fc-unit').value,
+        notes: document.getElementById('fc-notes').value.trim(),
+        status: 'PLANNED'
+      };
+      
+      if (isEdit) {
+        const cropIndex = demoFutureCrops.findIndex(c => c.id == idVal);
+        if (cropIndex !== -1) {
+          demoFutureCrops[cropIndex] = { ...demoFutureCrops[cropIndex], ...planData };
+        }
+        showSuccessToast('Crop plan updated successfully.');
+      } else {
+        demoFutureCrops.push({ id: Date.now(), ...planData });
+        showSuccessToast('Future crop plan saved successfully.');
+      }
+      
+      window.renderFutureCrops();
+      window.closeFutureCropForm();
+    });
+    
+    // Initial Render
+    window.renderFutureCrops();
+  }
+});
 
 // Export singleton instance
 export const farmerApp = new FarmerApp();

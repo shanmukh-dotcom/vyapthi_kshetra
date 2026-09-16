@@ -14,7 +14,7 @@ const INITIAL_DB = {
     'farmer-ramesh': {
       id: 'farmer-ramesh',
       name: 'Ramesh Kumar',
-      location: 'Kolar, Karnataka',
+      location: 'Krishna District, Andhra Pradesh',
       role: 'Farmer',
       farmName: 'Chennuboina Farm',
       mobile: '9876543210'
@@ -22,7 +22,7 @@ const INITIAL_DB = {
     'farmer-lakshmi': {
       id: 'farmer-lakshmi',
       name: 'Lakshmi Devi',
-      location: 'Malur, Karnataka',
+      location: 'Krishna District, Andhra Pradesh',
       role: 'Farmer',
       farmName: 'Sri Venkateshwara Farm',
       mobile: '9876543211'
@@ -36,7 +36,7 @@ const INITIAL_DB = {
       quantity: 5000,
       grade: 'Grade A',
       availability: 'Available',
-      location: 'Kolar, Karnataka'
+      location: 'Krishna District, Andhra Pradesh'
     },
     'supply-lakshmi-tomato': {
       id: 'supply-lakshmi-tomato',
@@ -45,7 +45,7 @@ const INITIAL_DB = {
       quantity: 3500,
       grade: 'Grade A',
       availability: 'Available',
-      location: 'Malur, Karnataka'
+      location: 'Krishna District, Andhra Pradesh'
     }
   },
   buyers: {
@@ -54,7 +54,7 @@ const INITIAL_DB = {
       name: 'Sharan',
       role: 'Procurement Manager',
       company: 'GreenBite Foods Pvt. Ltd.',
-      location: 'Bengaluru, Karnataka'
+      location: 'Vijayawada, Andhra Pradesh'
     }
   },
   requirements: {}, // Will be populated by the buyer
