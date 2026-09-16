@@ -163,6 +163,302 @@
       opacity: 1;
       pointer-events: auto;
     }
+
+    /* ===== TRANSPORT BOOKING FEATURE ===== */
+    .booking-section {
+      background: linear-gradient(135deg, #1B4D35 0%, #163323 100%);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 32px rgba(27, 77, 53, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .booking-section::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .booking-section::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -30px;
+      width: 220px; height: 220px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 50%;
+    }
+    .booking-section-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 22px;
+    }
+    .booking-section-header .bsh-icon {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+    .booking-section-header h3 {
+      font-size: 20px; font-weight: 800;
+      color: #ffffff; margin: 0 0 3px;
+    }
+    .booking-section-header p { font-size: 13px; color: rgba(255,255,255,0.7); margin: 0; }
+
+    .booking-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .booking-form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .bf-group { display: flex; flex-direction: column; gap: 6px; }
+    .bf-group label {
+      font-size: 11px; font-weight: 700;
+      color: rgba(255,255,255,0.75);
+      text-transform: uppercase; letter-spacing: 0.6px;
+    }
+    .bf-group input, .bf-group select {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 14px; font-weight: 500;
+      color: #ffffff;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      font-family: inherit;
+      appearance: none; -webkit-appearance: none;
+    }
+    .bf-group input::placeholder { color: rgba(255,255,255,0.45); }
+    .bf-group select option { color: #11261A; background: white; }
+    .bf-group input:focus, .bf-group select:focus {
+      border-color: rgba(255,255,255,0.55);
+      background: rgba(255,255,255,0.18);
+    }
+    .bf-group input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1); opacity: 0.7; cursor: pointer;
+    }
+
+    .btn-find-vehicles {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #ffffff;
+      color: #1B4D35;
+      border: none;
+      border-radius: 10px;
+      padding: 13px 28px;
+      font-size: 15px; font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      width: 100%;
+    }
+    .btn-find-vehicles:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .btn-find-vehicles:active { transform: translateY(0); }
+
+    /* Spinner */
+    .search-spinner {
+      display: none; align-items: center; justify-content: center;
+      gap: 12px; padding: 12px 0; color: rgba(255,255,255,0.85);
+      font-size: 14px; font-weight: 600;
+    }
+    .search-spinner.visible { display: flex; }
+    .spinner-ring {
+      width: 28px; height: 28px;
+      border: 3px solid rgba(255,255,255,0.25);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Vehicle Result Cards */
+    .vehicle-results { display: none; margin-top: 4px; }
+    .vehicle-results.visible { display: block; }
+    .vr-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .vr-header h4 { font-size: 17px; font-weight: 800; color: #11261A; margin: 0; }
+    .vr-header span { font-size: 12.5px; font-weight: 600; color: #65796E; }
+
+    .vehicle-card {
+      background: #FFFFFF;
+      border: 1.5px solid #E8ECEF;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 16px rgba(27,77,53,0.06);
+      display: flex; align-items: center; gap: 18px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      animation: slideUp 0.35s ease both;
+    }
+    .vehicle-card:nth-child(2) { animation-delay: 0.08s; }
+    .vehicle-card:nth-child(3) { animation-delay: 0.16s; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .vehicle-card:hover { box-shadow: 0 8px 28px rgba(27,77,53,0.12); border-color: #C8D4CF; }
+    .vc-icon-wrap {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, #E8F4EC 0%, #d5ebe0 100%);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .vc-icon-wrap svg { width: 30px; height: 30px; stroke: #1B4D35; fill: none; stroke-width: 2; }
+    .vc-body { flex: 1; }
+    .vc-type-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .vc-type { font-size: 15px; font-weight: 800; color: #11261A; margin: 0; }
+    .vc-capacity {
+      background: #F0F6EA; color: #1B4D35;
+      padding: 2px 8px; border-radius: 4px;
+      font-size: 11px; font-weight: 700;
+    }
+    .vc-driver { font-size: 13px; color: #4A5C52; margin-bottom: 4px; }
+    .vc-driver strong { color: #11261A; font-weight: 700; }
+    .vc-rating {
+      display: inline-flex; align-items: center; gap: 3px;
+      background: #FFF8E7; color: #D97706;
+      padding: 2px 7px; border-radius: 4px;
+      font-size: 12px; font-weight: 700;
+      margin-left: 8px;
+    }
+    .vc-meta { font-size: 12px; color: #65796E; display: flex; align-items: center; gap: 14px; }
+    .vc-right { text-align: right; flex-shrink: 0; }
+    .vc-price { font-size: 22px; font-weight: 900; color: #11261A; margin-bottom: 2px; }
+    .vc-eta { font-size: 12px; color: #65796E; margin-bottom: 12px; }
+    .btn-book-now {
+      background: #1B4D35; color: white;
+      border: none; border-radius: 8px;
+      padding: 9px 20px;
+      font-size: 13px; font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .btn-book-now:hover { background: #163323; transform: scale(1.03); }
+    .btn-book-now:active { transform: scale(0.98); }
+
+    /* Tracking Section */
+    .tracking-section {
+      background: #FFFFFF;
+      border: 1.5px solid #E8ECEF;
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-top: 4px;
+      display: none;
+      animation: slideUp 0.4s ease;
+    }
+    .tracking-section.visible { display: block; }
+    .tracking-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .tracking-header .th-badge {
+      background: #E8F4EC; color: #1B4D35;
+      padding: 3px 10px; border-radius: 6px;
+      font-size: 12px; font-weight: 700;
+    }
+    .tracking-header h4 { font-size: 16px; font-weight: 800; color: #11261A; margin: 0; }
+    .tracking-booked-info {
+      background: #F8FAF9; border-radius: 10px;
+      padding: 14px 16px; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .tbi-icon {
+      width: 40px; height: 40px;
+      background: #E8F4EC; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .tbi-icon svg { width: 20px; height: 20px; stroke: #1B4D35; fill: none; stroke-width: 2; }
+    .tbi-info h5 { font-size: 14px; font-weight: 700; color: #11261A; margin: 0 0 3px; }
+    .tbi-info p { font-size: 12.5px; color: #65796E; margin: 0; }
+
+    /* Timeline */
+    .tracking-timeline { display: flex; align-items: flex-start; justify-content: space-between; position: relative; }
+    .tt-track { display: flex; align-items: flex-start; flex: 1; }
+    .tt-step { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; z-index: 1; }
+    .tt-connector { flex: 1; height: 3px; background: #E8ECEF; margin-top: 17px; border-radius: 2px; }
+    .tt-connector.done { background: #1B4D35; }
+    .tt-dot {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .tt-dot.done { background: #1B4D35; color: white; box-shadow: 0 4px 12px rgba(27,77,53,0.25); }
+    .tt-dot.active { background: #1B4D35; color: white; animation: pulse 1.5s ease-in-out infinite; }
+    .tt-dot.pending { background: #E8ECEF; color: #8F9E96; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 6px rgba(27,77,53,0.15); } 50% { box-shadow: 0 0 0 10px rgba(27,77,53,0.08); } }
+    .tt-label { font-size: 11px; font-weight: 700; color: #65796E; text-align: center; line-height: 1.3; }
+    .tt-label.active-lbl { color: #1B4D35; }
+    .tt-time { font-size: 10px; color: #8F9E96; }
+
+    /* Confirmation Modal Overlay */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(13,33,20,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .modal-box {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 36px 32px;
+      max-width: 420px; width: 90%;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+      transform: scale(0.88);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .modal-overlay.open .modal-box { transform: scale(1); }
+    .modal-check {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, #E8F4EC 0%, #d5ebe0 100%);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 34px;
+      box-shadow: 0 8px 24px rgba(27,77,53,0.18);
+    }
+    .modal-title { font-size: 22px; font-weight: 900; color: #11261A; margin: 0 0 8px; }
+    .modal-sub { font-size: 14px; color: #4A5C52; margin: 0 0 10px; line-height: 1.6; }
+    .modal-phone {
+      background: #F0F6EA; border-radius: 8px;
+      padding: 10px 16px; font-size: 15px;
+      font-weight: 800; color: #1B4D35;
+      margin: 0 0 22px; display: inline-block;
+    }
+    .modal-details {
+      background: #F8FAF9; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 20px;
+      text-align: left; font-size: 13px; color: #4A5C52; line-height: 1.8;
+    }
+    .modal-details strong { color: #11261A; }
+    .modal-close {
+      background: #1B4D35; color: white;
+      border: none; border-radius: 10px;
+      padding: 12px 32px;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer; width: 100%;
+      transition: background 0.15s;
+    }
+    .modal-close:hover { background: #163323; }
   </style>
 <style>
 body { top: 0 !important; }
@@ -607,6 +903,59 @@ function googleTranslateElementInit() {
   </div>
 
   <script type="module" src="/src/farmer-app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const bookButtons = document.querySelectorAll('.btn-book');
+      bookButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const card = btn.closest('.transport-card');
+          const driverName = card ? card.querySelector('.tc-name')?.innerText || 'Ravi Kumar' : 'Ravi Kumar';
+          const price = card ? card.querySelector('.tc-price')?.innerText || '₹ 1,200' : '₹ 1,200';
+
+          const modalHtml = `
+            <div id="booking-modal-backdrop" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+              <div style="background: white; border-radius: 16px; padding: 28px; max-width: 450px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center;">
+                <div style="width: 56px; height: 56px; background: #E8F4EC; color: #1B4D35; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                  <svg style="width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 800; color: #11261A; margin: 0 0 6px;">Confirm Transport Booking</h3>
+                <p style="font-size: 13.5px; color: #65796E; margin: 0 0 20px;">Shared Logistics Ride with ${driverName}</p>
+
+                <div style="background: #F8FAF9; border: 1px solid #E8ECEF; border-radius: 12px; padding: 16px; text-align: left; margin-bottom: 20px;">
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52; margin-bottom: 8px;"><span>Vehicle</span><strong style="color: #11261A;">Tata Ace (AP 16 AB 1234)</strong></div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52; margin-bottom: 8px;"><span>Driver</span><strong style="color: #11261A;">${driverName} (⭐ 4.8)</strong></div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52; margin-bottom: 8px;"><span>Estimated Fare</span><strong style="color: #165A31; font-size: 16px;">${price}</strong></div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52;"><span>Pickup ETA</span><strong style="color: #D97706;">Today, 4:30 PM (in 45 mins)</strong></div>
+                </div>
+
+                <div style="display: flex; gap: 12px;">
+                  <button id="cancel-booking-btn" style="flex: 1; padding: 12px; border: 1px solid #E8ECEF; background: white; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; color: #65796E;">Cancel</button>
+                  <button id="confirm-booking-btn" style="flex: 1; padding: 12px; border: none; background: #1B4D35; color: white; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;">Confirm Booking</button>
+                </div>
+              </div>
+            </div>
+          `;
+          document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+          document.getElementById('cancel-booking-btn').addEventListener('click', () => {
+            document.getElementById('booking-modal-backdrop').remove();
+          });
+
+          document.getElementById('confirm-booking-btn').addEventListener('click', () => {
+            const btnConfirm = document.getElementById('confirm-booking-btn');
+            btnConfirm.innerText = "Assigning Driver...";
+            btnConfirm.disabled = true;
+
+            setTimeout(() => {
+              document.getElementById('booking-modal-backdrop').remove();
+              alert(`🎉 Transport Booking Confirmed!\nDriver: ${driverName}\nContact: +91 98765 43210\nVehicle: Tata Ace (AP 16 AB 1234)\n\nLive tracking link sent to your phone!`);
+            }, 1500);
+          });
+        });
+      });
+    });
+  </script>
 </body>
 </html>
 

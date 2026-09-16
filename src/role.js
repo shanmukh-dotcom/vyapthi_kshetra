@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Continue Button Handler — Direct redirect, no login
+  // Continue Button Handler — Redirect to login with role param
   if (continueBtn) {
     continueBtn.addEventListener('click', () => {
       const selectedCard = document.querySelector('.role-option-card.selected');
@@ -117,11 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
       continueBtn.style.transform = 'scale(0.98)';
 
       setTimeout(() => {
-        if (selectedRole === 'farmer') {
-          window.location.href = '/farmer-home.html';
-        } else {
-          window.location.href = '/consumer-home.html';
-        }
+        window.location.href = '/login.html?role=' + selectedRole;
       }, 150);
     });
   }

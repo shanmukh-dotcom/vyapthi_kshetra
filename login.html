@@ -127,12 +127,36 @@
     </div>
 
     <script>
-        // ── Tab switching ──────────────────────────────────────────────
+        // ── Read ?role= query param and derive redirect destinations ───
+        const urlParams   = new URLSearchParams(window.location.search);
+        const roleParam   = urlParams.get('role'); // 'farmer' | 'consumer' | null
+        const farmerDest  = 'farmer-home.html';
+        const consumerDest = 'consumer-home.html';
+
+        // ── Tab references ────────────────────────────────────────────
         const tabFarmer   = document.getElementById('tab-farmer');
         const tabConsumer = document.getElementById('tab-consumer');
         const farmerSec   = document.getElementById('farmer-section');
         const consumerSec = document.getElementById('consumer-section');
 
+        // ── Lock UI to the role passed in the URL ─────────────────────
+        if (roleParam === 'farmer') {
+            // Show only the Farmer tab — hide Consumer tab button entirely
+            tabConsumer.style.display = 'none';
+            consumerSec.classList.add('hidden');
+            farmerSec.classList.remove('hidden');
+            tabFarmer.classList.add('bg-white', 'text-green-700', 'shadow');
+            tabFarmer.classList.remove('text-gray-400');
+        } else if (roleParam === 'consumer') {
+            // Show only the Consumer tab — hide Farmer tab button entirely
+            tabFarmer.style.display = 'none';
+            farmerSec.classList.add('hidden');
+            consumerSec.classList.remove('hidden');
+            tabConsumer.classList.add('bg-white', 'text-green-700', 'shadow');
+            tabConsumer.classList.remove('text-gray-400');
+        }
+
+        // ── Tab switching (only relevant when no role param is set) ───
         tabFarmer.addEventListener('click', () => {
             tabFarmer.classList.add('bg-white','text-green-700','shadow');
             tabFarmer.classList.remove('text-gray-400');
@@ -203,10 +227,10 @@
 
             setTimeout(() => {
                 if (code === '123456') {
-                    // Show success screen briefly, then redirect
+                    // Show success screen briefly, then redirect based on role param
                     document.getElementById('step-otp').classList.add('hidden');
                     document.getElementById('step-success').classList.remove('hidden');
-                    setTimeout(() => goTo('farmer-home.html'), 1200);
+                    setTimeout(() => goTo(farmerDest), 1200);
                 } else {
                     err.innerText = 'Incorrect OTP. Please try again.';
                     err.classList.remove('hidden');
@@ -236,7 +260,7 @@
             const btn = document.getElementById('btn-google');
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner" style="border-top-color:#4285F4; border-color:rgba(0,0,0,0.15);"></span>Signing in...';
-            setTimeout(() => goTo('consumer-home.html'), 2000);
+            setTimeout(() => goTo(consumerDest), 2000);
         });
 
         // ── CONSUMER: Email/Password ──────────────────────────────────
@@ -254,7 +278,7 @@
 
             const btn = document.getElementById('btn-email-login');
             setBtn(btn, true, 'Signing in...');
-            setTimeout(() => goTo('consumer-home.html'), 1800);
+            setTimeout(() => goTo(consumerDest), 1800);
         });
         document.getElementById('pass-input').addEventListener('keydown', e => {
             if (e.key === 'Enter') document.getElementById('btn-email-login').click();
