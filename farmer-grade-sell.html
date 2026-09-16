@@ -218,11 +218,71 @@
       opacity: 1;
       pointer-events: auto;
     }
+  
+    /* SUBTLE TINTED CARDS TO FIX WHITE-WASHED LOOK */
+    .stepper-container {
+        background-color: #FAFCF8 !important;
+        border-color: #E2E8DF !important;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.03) !important;
+    }
+    
+    .card {
+        border-color: rgba(0,0,0,0.04) !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.04) !important;
+    }
+    
+    .main-grid-3 > .card:nth-child(1) {
+        background-color: #F4F8FA !important; /* Subtle slate blue for Upload */
+    }
+    .main-grid-3 > .card:nth-child(2) {
+        background-color: #F2F9F2 !important; /* Subtle fresh green for Grading */
+    }
+    .main-grid-3 > .card:nth-child(3) {
+        background-color: #FFFDF5 !important; /* Subtle cream/yellow for Transport */
+    }
+    
+    .main-grid-2 > .card:nth-child(1) {
+        background-color: #F7F5FA !important; /* Subtle lavender for Price Rec */
+    }
+    .main-grid-2 > .card:nth-child(2) {
+        background-color: #FDF6F4 !important; /* Subtle warm peach for Next Steps */
+    }
+
   </style>
 <style>
 body { top: 0 !important; }
 .skiptranslate { display: none !important; }
-</style>
+
+    /* SUBTLE TINTED CARDS TO FIX WHITE-WASHED LOOK */
+    .stepper-container {
+        background-color: #FAFCF8 !important;
+        border-color: #E2E8DF !important;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.03) !important;
+    }
+    
+    .card {
+        border-color: rgba(0,0,0,0.04) !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.04) !important;
+    }
+    
+    .main-grid-3 > .card:nth-child(1) {
+        background-color: #F4F8FA !important; /* Subtle slate blue for Upload */
+    }
+    .main-grid-3 > .card:nth-child(2) {
+        background-color: #F2F9F2 !important; /* Subtle fresh green for Grading */
+    }
+    .main-grid-3 > .card:nth-child(3) {
+        background-color: #FFFDF5 !important; /* Subtle cream/yellow for Transport */
+    }
+    
+    .main-grid-2 > .card:nth-child(1) {
+        background-color: #F7F5FA !important; /* Subtle lavender for Price Rec */
+    }
+    .main-grid-2 > .card:nth-child(2) {
+        background-color: #FDF6F4 !important; /* Subtle warm peach for Next Steps */
+    }
+
+  </style>
 <script type="text/javascript">
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
