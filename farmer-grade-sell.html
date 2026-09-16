@@ -667,98 +667,97 @@ function googleTranslateElementInit() {
             }
 
             // --- REAL HTML5 CANVAS PIXEL ANALYSIS ---
-            let avgBrightness = 120;
-            let isCleanWashed = false;
-
-            try {
-              const canvas = document.createElement('canvas');
-              const ctx = canvas.getContext('2d');
-              canvas.width = 50;
-              canvas.height = 50;
-              const imgObj = new Image();
-              imgObj.src = imageSrc;
-              ctx.drawImage(imgObj, 0, 0, 50, 50);
-              const imgData = ctx.getImageData(0, 0, 50, 50).data;
-              let totalBrightness = 0;
-              for (let i = 0; i < imgData.length; i += 4) {
-                const r = imgData[i];
-                const g = imgData[i+1];
-                const b = imgData[i+2];
-                totalBrightness += (r + g + b) / 3;
+            const imgObj = new Image();
+            imgObj.onload = () => {
+              let avgBrightness = 120;
+              try {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 50;
+                canvas.height = 50;
+                ctx.drawImage(imgObj, 0, 0, 50, 50);
+                const imgData = ctx.getImageData(0, 0, 50, 50).data;
+                let totalBrightness = 0;
+                for (let i = 0; i < imgData.length; i += 4) {
+                  const r = imgData[i];
+                  const g = imgData[i+1];
+                  const b = imgData[i+2];
+                  totalBrightness += (r + g + b) / 3;
+                }
+                avgBrightness = totalBrightness / (imgData.length / 4);
+              } catch (err) {
+                console.log("Canvas read fallback:", err);
               }
-              avgBrightness = totalBrightness / (imgData.length / 4);
-            } catch (err) {
-              console.log("Canvas read fallback:", err);
-            }
 
-            // Determine grade based on visual brightness and cleanliness
-            let result;
-            if (avgBrightness > 135) {
-              result = {
-                cropName: 'Potato',
-                grade: 'Grade A+',
-                conf: '98.2% confidence',
-                size: 'Uniform (Medium-Large)',
-                color: 'Bright Golden Yellow',
-                shape: 'Uniform Oval',
-                def: '0% (Clean & Washed)',
-                price: '₹ 24 – 27 / kg',
-                alertTitle: 'Premium Grade A+ Harvest Detected!',
-                alertText: 'Pristine, clean & well-sorted tubers. Highest supermarket procurement value.'
-              };
-            } else if (avgBrightness > 105) {
-              result = {
-                cropName: 'Potato',
-                grade: 'Grade A',
-                conf: '94.8% confidence',
-                size: 'Uniform (Medium)',
-                color: 'Natural Yellow',
-                shape: 'Mostly Uniform',
-                def: 'Minimal (1%)',
-                price: '₹ 20 – 22 / kg',
-                alertTitle: 'Grade A Commercial Quality Detected',
-                alertText: 'Good quality commercial batch ready for APMC auctions.'
-              };
-            } else {
-              result = {
-                cropName: 'Potato',
-                grade: 'Grade B+',
-                conf: '95.4% confidence',
-                size: 'Mixed (Small to Large)',
-                color: 'Natural Tan / Earthy',
-                shape: 'Irregular / Mixed',
-                def: 'Minimal Soil Adhesion (2%)',
-                price: '₹ 16 – 18 / kg',
-                alertTitle: 'Mixed Size Harvest Detected (Grade B+)',
-                alertText: 'Grade B+ due to size variation. Separate large & baby tubers to upgrade to Grade A (₹20/kg).'
-              };
-            }
+              // Determine grade based on visual brightness and cleanliness
+              let result;
+              if (avgBrightness > 135) {
+                result = {
+                  cropName: 'Potato',
+                  grade: 'Grade A+',
+                  conf: '98.2% confidence',
+                  size: 'Uniform (Medium-Large)',
+                  color: 'Bright Golden Yellow',
+                  shape: 'Uniform Oval',
+                  def: '0% (Clean & Washed)',
+                  price: '₹ 24 – 27 / kg',
+                  alertTitle: 'Premium Grade A+ Harvest Detected!',
+                  alertText: 'Pristine, clean & well-sorted tubers. Highest supermarket procurement value.'
+                };
+              } else if (avgBrightness > 105) {
+                result = {
+                  cropName: 'Potato',
+                  grade: 'Grade A',
+                  conf: '94.8% confidence',
+                  size: 'Uniform (Medium)',
+                  color: 'Natural Yellow',
+                  shape: 'Mostly Uniform',
+                  def: 'Minimal (1%)',
+                  price: '₹ 20 – 22 / kg',
+                  alertTitle: 'Grade A Commercial Quality Detected',
+                  alertText: 'Good quality commercial batch ready for APMC auctions.'
+                };
+              } else {
+                result = {
+                  cropName: 'Potato',
+                  grade: 'Grade B+',
+                  conf: '95.4% confidence',
+                  size: 'Mixed (Small to Large)',
+                  color: 'Natural Tan / Earthy',
+                  shape: 'Irregular / Mixed',
+                  def: 'Minimal Soil Adhesion (2%)',
+                  price: '₹ 16 – 18 / kg',
+                  alertTitle: 'Mixed Size Harvest Detected (Grade B+)',
+                  alertText: 'Grade B+ due to size variation. Separate large & baby tubers to upgrade to Grade A (₹20/kg).'
+                };
+              }
 
-            // Update Crop Name
-            document.querySelectorAll('.sync-crop-name').forEach(el => el.innerText = result.cropName);
+              // Update Crop Name
+              document.querySelectorAll('.sync-crop-name').forEach(el => el.innerText = result.cropName);
 
-            if (aiBadge) aiBadge.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> ${result.grade}`;
-            if (aiConf) aiConf.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> ${result.conf}`;
+              if (aiBadge) aiBadge.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> ${result.grade}`;
+              if (aiConf) aiConf.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> ${result.conf}`;
 
-            const priceElem = document.querySelector('.rec-green-block h2');
-            if (priceElem) priceElem.innerText = result.price;
+              const priceElem = document.querySelector('.rec-green-block h2');
+              if (priceElem) priceElem.innerText = result.price;
 
-            // Update stats list
-            const statRows = document.querySelectorAll('.stats-list .stat-row .stat-val');
-            if (statRows.length >= 4) {
-              statRows[0].innerText = result.size;
-              statRows[1].innerText = result.color;
-              if (statRows[2]) statRows[2].innerText = result.shape;
-              if (statRows[3]) statRows[3].innerText = result.def;
-            }
+              // Update stats list
+              const statRows = document.querySelectorAll('.stats-list .stat-row .stat-val');
+              if (statRows.length >= 4) {
+                statRows[0].innerText = result.size;
+                statRows[1].innerText = result.color;
+                if (statRows[2]) statRows[2].innerText = result.shape;
+                if (statRows[3]) statRows[3].innerText = result.def;
+              }
 
-            // Update alert block
-            const alertTitleEl = document.querySelector('.alert-text h4');
-            const alertTextEl = document.querySelector('.alert-text p');
-            if (alertTitleEl) alertTitleEl.innerText = result.alertTitle;
-            if (alertTextEl) alertTextEl.innerText = result.alertText;
+              // Update alert block
+              const alertTitleEl = document.querySelector('.alert-text h4');
+              const alertTextEl = document.querySelector('.alert-text p');
+              if (alertTitleEl) alertTitleEl.innerText = result.alertTitle;
+              if (alertTextEl) alertTextEl.innerText = result.alertText;
 
-            alert(`🎉 AI Quality Analysis Complete!\nCrop: ${result.cropName}\nResult: ${result.grade}\nConfidence: ${result.conf}\nRecommended Market Price: ${result.price}\n\n💡 Advisory: ${result.alertText}`);
+              alert(`🎉 AI Quality Analysis Complete!\nCrop: ${result.cropName}\nResult: ${result.grade}\nConfidence: ${result.conf}\nRecommended Market Price: ${result.price}\n\n💡 Advisory: ${result.alertText}`);
+            }; // End imgObj.onload
           }, 2200);
         };
         reader.readAsDataURL(file);
