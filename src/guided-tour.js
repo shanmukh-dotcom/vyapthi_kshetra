@@ -99,20 +99,68 @@ class GuidedAssistant {
       element.classList.add('guided-highlight');
     }
 
-    const utterance = new SpeechSynthesisUtterance(step.text);
+    // Language mapping
+    const langKey = localStorage.getItem('vyapti_selected_language') || 'en';
+    const langCodes = { 'en': 'en-IN', 'hi': 'hi-IN', 'te': 'te-IN', 'ta': 'ta-IN', 'kn': 'kn-IN', 'mr': 'mr-IN' };
     
-    // Use an Indian English voice if available, else default
+    const translations = {
+      'hi': {
+        'Look here, this is where you enter your full name.': 'यहाँ देखें, यहाँ आपको अपना पूरा नाम दर्ज करना है।',
+        'Here, enter your ten digit mobile number.': 'यहाँ अपना दस अंकों का मोबाइल नंबर दर्ज करें।',
+        'This is where you type the name of your village and district.': 'यहाँ आप अपने गाँव और जिले का नाम टाइप करें।',
+        'This is where you enter your crop detail, like tomato or rice.': 'यहाँ अपनी फसल का विवरण दर्ज करें, जैसे टमाटर या चावल।',
+        'Here, enter the approximate quantity you want to sell.': 'यहाँ वह अनुमानित मात्रा दर्ज करें जिसे आप बेचना चाहते हैं।',
+        'Once you are done filling these details, click the continue button to go to your farm dashboard.': 'विवरण भरने के बाद, अपने फार्म डैशबोर्ड पर जाने के लिए जारी रखें बटन पर क्लिक करें।',
+        'First, click or drag here to upload clear photos of your crop so the AI can analyze it.': 'सबसे पहले, अपनी फसल की स्पष्ट तस्वीरें अपलोड करने के लिए यहाँ क्लिक करें।',
+        'Next, the AI will grade your crop automatically and show you the quality and confidence score here.': 'इसके बाद, एआई स्वचालित रूप से आपकी फसल की ग्रेडिंग करेगा और यहाँ गुणवत्ता स्कोर दिखाएगा।',
+        'Based on the grade, we will show you the fair market price and find matching buyers instantly.': 'ग्रेड के आधार पर, हम आपको उचित बाजार मूल्य दिखाएंगे और तुरंत खरीदार खोजेंगे।',
+        'Finally, click the green button to list your crop for sale and view the buyers!': 'अंत में, अपनी फसल को बिक्री के लिए सूचीबद्ध करने और खरीदारों को देखने के लिए हरे बटन पर क्लिक करें!',
+        'Welcome to your farm dashboard. Here is your daily summary.': 'आपके फार्म डैशबोर्ड में आपका स्वागत है। यह आपका दैनिक सारांश है।',
+        'This card shows your active crop and how much is ready to harvest.': 'यह कार्ड आपकी सक्रिय फसल को दर्शाता है।',
+        'Here you can check today\'s average market price in your area.': 'यहाँ आप अपने क्षेत्र में आज की औसत बाजार कीमत देख सकते हैं।',
+        'This shows how many verified buyers are currently looking for your crop.': 'यह दिखाता है कि कितने खरीदार आपकी फसल की तलाश में हैं।',
+        'Click here when you are ready to grade and sell your produce.': 'जब आप अपनी उपज बेचने के लिए तैयार हों तो यहाँ क्लिक करें।'
+      },
+      'te': {
+        'Look here, this is where you enter your full name.': 'ఇక్కడ చూడండి, ఇక్కడ మీరు మీ పేరును నమోదు చేయాలి.',
+        'Here, enter your ten digit mobile number.': 'ఇక్కడ, మీ మొబైల్ నంబర్‌ను నమోదు చేయండి.',
+        'This is where you type the name of your village and district.': 'ఇక్కడ మీరు మీ గ్రామం మరియు జిల్లా పేరును టైప్ చేయాలి.',
+        'This is where you enter your crop detail, like tomato or rice.': 'ఇక్కడ మీరు మీ పంట వివరాలను నమోదు చేయాలి.',
+        'Here, enter the approximate quantity you want to sell.': 'ఇక్కడ, మీరు విక్రయించదలుచుకున్న పరిమాణాన్ని నమోదు చేయండి.',
+        'Once you are done filling these details, click the continue button to go to your farm dashboard.': 'ఈ వివరాలను పూరించిన తర్వాత, కొనసాగించు బటన్‌ను క్లిక్ చేయండి.',
+        'First, click or drag here to upload clear photos of your crop so the AI can analyze it.': 'మొదట, AI విశ్లేషించడానికి మీ పంట ఫోటోలను అప్‌లోడ్ చేయడానికి ఇక్కడ క్లిక్ చేయండి.',
+        'Next, the AI will grade your crop automatically and show you the quality and confidence score here.': 'తరువాత, AI మీ పంటను గ్రేడ్ చేస్తుంది మరియు నాణ్యత స్కోర్‌ను చూపుతుంది.',
+        'Based on the grade, we will show you the fair market price and find matching buyers instantly.': 'గ్రేడ్ ఆధారంగా, మేము మీకు సరసమైన మార్కెట్ ధరను చూపుతాము.',
+        'Finally, click the green button to list your crop for sale and view the buyers!': 'చివరగా, మీ పంటను అమ్మకానికి ఉంచడానికి ఆకుపచ్చ బటన్‌ను క్లిక్ చేయండి!'
+      }
+    };
+
+    let spokenText = step.text;
+    if (langKey !== 'en' && translations[langKey] && translations[langKey][step.text]) {
+      spokenText = translations[langKey][step.text];
+    }
+
+    const utterance = new SpeechSynthesisUtterance(spokenText);
+    utterance.lang = langCodes[langKey] || 'en-IN';
+    
+    // Attempt to find a native voice for the selected language
     const voices = window.speechSynthesis.getVoices();
+    const nativeVoice = voices.find(v => v.lang.includes(langKey));
     const indVoice = voices.find(v => v.lang.includes('en-IN'));
-    if (indVoice) utterance.voice = indVoice;
     
-    utterance.rate = 0.9; // Slightly slower for clarity
+    if (nativeVoice) {
+      utterance.voice = nativeVoice;
+    } else if (indVoice) {
+      utterance.voice = indVoice;
+    }
+    
+    utterance.rate = 0.9;
     
     utterance.onend = () => {
       setTimeout(() => {
         this.currentStep++;
         this.playNextStep();
-      }, 600); // Pause before highlighting next field
+      }, 600);
     };
 
     window.speechSynthesis.speak(utterance);
