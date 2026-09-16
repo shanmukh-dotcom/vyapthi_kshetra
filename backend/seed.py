@@ -62,23 +62,7 @@ def seed_db():
         rating=4.9
     )
 
-    t2 = TransportProvider(
-        id="tp_002",
-        name="Navata Road Transport",
-        phone="+91 866 666 9999",
-        email="support@navata.com",
-        vehicle_type="20-ft Truck",
-        vehicle_number="AP 16 TU 8821",
-        capacity_kg=6500.0,
-        latitude=16.5120,
-        longitude=80.6280,
-        service_area="Vijayawada & AP Intercity",
-        rate_per_km=45.0,
-        base_cost=0.0,
-        availability_status="AVAILABLE",
-        verified=True,
-        rating=4.8
-    )
+
 
     t3 = TransportProvider(
         id="tp_003",
@@ -116,61 +100,7 @@ def seed_db():
         rating=4.7
     )
 
-    t5 = TransportProvider(
-        id="tp_005",
-        name="Venkateswara Ag-Freight",
-        phone="+91 98665 44321",
-        email="venkateswara.freight@gmail.com",
-        vehicle_type="Tata 1109",
-        vehicle_number="AP 16 TY 3310",
-        capacity_kg=5000.0,
-        latitude=16.4950,
-        longitude=80.6550,
-        service_area="Gudivada & Krishna Basin",
-        rate_per_km=48.0,
-        base_cost=0.0,
-        availability_status="AVAILABLE",
-        verified=True,
-        rating=4.85
-    )
-
-    t6 = TransportProvider(
-        id="tp_006",
-        name="Auto Nagar Heavy Freight",
-        phone="+91 866 244 5566",
-        email="autonagar.freight@vjw.in",
-        vehicle_type="10-Wheeler Truck",
-        vehicle_number="AP 16 TZ 9901",
-        capacity_kg=10000.0,
-        latitude=16.5220,
-        longitude=80.6120,
-        service_area="Vijayawada Auto Nagar Hub",
-        rate_per_km=40.0,
-        base_cost=0.0,
-        availability_status="AVAILABLE",
-        verified=True,
-        rating=4.9
-    )
-
-    t7 = TransportProvider(
-        id="tp_007",
-        name="Krishna Express Carriers",
-        phone="+91 94900 11223",
-        email="krishna.express@carrier.com",
-        vehicle_type="Tata 407",
-        vehicle_number="AP 16 UA 1144",
-        capacity_kg=2500.0,
-        latitude=16.5150,
-        longitude=80.6250,
-        service_area="Vijayawada & Krishna District",
-        rate_per_km=35.0,
-        base_cost=0.0,
-        availability_status="AVAILABLE",
-        verified=True,
-        rating=4.75
-    )
-
-    db.add_all([t1, t2, t3, t4, t5, t6, t7])
+    db.add_all([t1, t3, t4])
     db.commit()
 
     # 3. Crop Listing
@@ -206,9 +136,55 @@ def seed_db():
 
     db.add(deal)
     db.commit()
+
+    # 5. Production Threshold & Dummy Production Data
+    from models import ProductionThreshold, CropProduction
+
+    # Clear old production data if any
+    db.query(ProductionThreshold).delete()
+    db.query(CropProduction).delete()
+    db.commit()
+
+    threshold = ProductionThreshold(
+        crop_name="Potato",
+        state="Andhra Pradesh",
+        district="Krishna District",
+        season="Rabi",
+        year=2026,
+        threshold_quantity_tonnes=100.0,
+        warning_percentage=10.0,
+        critical_percentage=0.0
+    )
+    db.add(threshold)
+
+    # Seed 3 dummy farmers to create a baseline. 
+    # Total so far: 18 + 20 + 15 = 53 tonnes
+    dummy_prods = [
+        CropProduction(
+            farmer_id="usr_dummy_1", crop_name="Potato", state="Andhra Pradesh",
+            district="Krishna District", village="Nuzvid", cultivated_area=10.0,
+            production_quantity=18.0, production_unit="tonnes", normalized_quantity_tonnes=18.0,
+            season="Rabi", year=2026, status="REGISTERED"
+        ),
+        CropProduction(
+            farmer_id="usr_dummy_2", crop_name="Potato", state="Andhra Pradesh",
+            district="Krishna District", village="Gudivada", cultivated_area=12.0,
+            production_quantity=20.0, production_unit="tonnes", normalized_quantity_tonnes=20.0,
+            season="Rabi", year=2026, status="REGISTERED"
+        ),
+        CropProduction(
+            farmer_id="usr_dummy_3", crop_name="Potato", state="Andhra Pradesh",
+            district="Krishna District", village="Machilipatnam", cultivated_area=8.0,
+            production_quantity=15.0, production_unit="tonnes", normalized_quantity_tonnes=15.0,
+            season="Rabi", year=2026, status="REGISTERED"
+        )
+    ]
+    db.add_all(dummy_prods)
+    db.commit()
+
     db.close()
 
-    print("Seed complete! Demo users, Potato deal (2000 kg), and 7 Dual-Hub Transporters initialized.")
+    print("Seed complete! Demo users, Potato deal (2000 kg), 3 Transporters, and Production thresholds initialized.")
 
 if __name__ == "__main__":
     seed_db()

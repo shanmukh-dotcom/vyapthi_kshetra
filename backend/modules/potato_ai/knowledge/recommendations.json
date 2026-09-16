@@ -1,0 +1,20 @@
+[
+  {
+    "id": "recommendation_storage_001",
+    "topic": "Cold Storage & Humidity Control",
+    "guidance": "Store commercial potato consignments at 7°C to 10°C with 85% to 90% relative humidity to prevent shrinkage and sprouting while minimizing sugar accumulation.",
+    "source": "CPRI Storage Handbook Section 3.1"
+  },
+  {
+    "id": "recommendation_handling_002",
+    "topic": "Bruise & Damage Prevention during Transport",
+    "guidance": "Ensure ventilated jute or mesh bags are stacked no higher than 8 layers in 14-ft / 20-ft trucks to prevent bottom-bag compression blackspot bruising.",
+    "source": "Agri-Logistics Freight Best Practices Guide 2024"
+  },
+  {
+    "id": "recommendation_processing_003",
+    "topic": "Factory Processing & Fry Quality",
+    "guidance": "For chip and french fry processing, maintain tuber temperature above 8°C prior to washing to avoid cold-induced sweetening which causes dark frying.",
+    "source": "Factory Buyer Quality Manual 2025"
+  }
+]

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - VYAPTI KSHETRA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%); }
+        .spinner {
+            display: inline-block; width: 18px; height: 18px;
+            border: 2.5px solid rgba(255,255,255,0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle; margin-right: 6px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        input:focus { outline: none; border-color: #16a34a; box-shadow: 0 0 0 2px rgba(22,163,74,0.15); }
+        .otp-input { letter-spacing: 0.6em; font-size: 1.5rem; text-align: center; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white rounded-2xl shadow-xl w-full p-8" style="max-width: 400px;">
+
+        <!-- Logo -->
+        <div class="text-center mb-7">
+            <div class="text-4xl mb-1">🌾</div>
+            <h1 class="text-2xl font-bold text-green-800">VYAPTI KSHETRA</h1>
+            <p class="text-gray-400 text-sm mt-1">Bridging Fields to Fair Markets</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex bg-gray-100 rounded-xl p-1 mb-6">
+            <button id="tab-farmer"
+                class="flex-1 py-2 rounded-lg text-sm font-semibold bg-white text-green-700 shadow transition">
+                🌾 Farmer
+            </button>
+            <button id="tab-consumer"
+                class="flex-1 py-2 rounded-lg text-sm font-semibold text-gray-400 transition">
+                🛒 Consumer
+            </button>
+        </div>
+
+        <!-- ====== FARMER SECTION ====== -->
+        <div id="farmer-section">
+
+            <!-- STEP 1: Phone -->
+            <div id="step-phone">
+                <p class="text-sm text-gray-500 text-center mb-4">Enter your registered mobile number</p>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
+                <div class="flex mb-4">
+                    <span class="inline-flex items-center px-3 bg-gray-50 border border-r-0 border-gray-300 rounded-l-lg text-gray-500 text-sm font-medium">+91</span>
+                    <input type="tel" id="phone-input" maxlength="10" placeholder="98765 43210"
+                        class="flex-1 border border-gray-300 px-3 py-2.5 rounded-r-lg text-sm">
+                </div>
+                <button id="btn-send-otp"
+                    class="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-2.5 px-4 rounded-xl transition">
+                    Send OTP
+                </button>
+                <p id="phone-err" class="text-red-500 text-xs mt-2 hidden text-center"></p>
+            </div>
+
+            <!-- STEP 2: OTP -->
+            <div id="step-otp" class="hidden">
+                <div class="text-center mb-4">
+                    <div class="text-3xl mb-2">📱</div>
+                    <p class="text-sm text-gray-600">OTP sent to</p>
+                    <p class="font-bold text-green-700" id="phone-display"></p>
+                </div>
+                <label class="block text-sm font-medium text-gray-700 mb-1 text-center">Enter 6-digit OTP</label>
+                <input type="text" id="otp-input" maxlength="6" placeholder="• • • • • •"
+                    class="otp-input w-full border border-gray-300 px-3 py-2.5 rounded-xl mb-4">
+                <button id="btn-verify"
+                    class="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-2.5 px-4 rounded-xl transition">
+                    Verify & Login
+                </button>
+                <p id="otp-err" class="text-red-500 text-xs mt-2 hidden text-center"></p>
+                <button id="btn-resend" class="w-full mt-3 text-xs text-green-600 hover:underline">
+                    ← Change number
+                </button>
+            </div>
+
+            <!-- STEP 3: Success -->
+            <div id="step-success" class="hidden text-center">
+                <div class="text-5xl mb-3">✅</div>
+                <p class="font-bold text-green-700 text-lg">Verified!</p>
+                <p class="text-sm text-gray-500 mt-1">Redirecting to your dashboard...</p>
+            </div>
+        </div>
+
+        <!-- ====== CONSUMER SECTION ====== -->
+        <div id="consumer-section" class="hidden">
+            <p class="text-sm text-gray-500 text-center mb-6">Sign in to browse fair market prices and connect with farmers.</p>
+
+            <button id="btn-google"
+                class="w-full flex items-center justify-center gap-3 border border-gray-300 text-gray-700 font-semibold py-2.5 px-4 rounded-xl hover:bg-gray-50 transition shadow-sm mb-3">
+                <svg class="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Continue with Google
+            </button>
+
+            <div class="relative my-4">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div>
+                <div class="relative flex justify-center text-xs text-gray-400 bg-white px-2">or</div>
+            </div>
+
+            <!-- Email login for consumer -->
+            <div>
+                <input type="email" id="email-input" placeholder="Email address"
+                    class="w-full border border-gray-300 px-3 py-2.5 rounded-xl mb-3 text-sm">
+                <input type="password" id="pass-input" placeholder="Password"
+                    class="w-full border border-gray-300 px-3 py-2.5 rounded-xl mb-4 text-sm">
+                <button id="btn-email-login"
+                    class="w-full bg-green-700 hover:bg-green-800 text-white font-bold py-2.5 rounded-xl transition">
+                    Sign In
+                </button>
+                <p id="email-err" class="text-red-500 text-xs mt-2 hidden text-center"></p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ── Read ?role= query param and derive redirect destinations ───
+        const urlParams   = new URLSearchParams(window.location.search);
+        const roleParam   = urlParams.get('role'); // 'farmer' | 'consumer' | null
+        const farmerDest  = 'farmer-home.html';
+        const consumerDest = 'consumer-home.html';
+
+        // ── Tab references ────────────────────────────────────────────
+        const tabFarmer   = document.getElementById('tab-farmer');
+        const tabConsumer = document.getElementById('tab-consumer');
+        const farmerSec   = document.getElementById('farmer-section');
+        const consumerSec = document.getElementById('consumer-section');
+
+        // ── Lock UI to the role passed in the URL ─────────────────────
+        if (roleParam === 'farmer') {
+            // Show only the Farmer tab — hide Consumer tab button entirely
+            tabConsumer.style.display = 'none';
+            consumerSec.classList.add('hidden');
+            farmerSec.classList.remove('hidden');
+            tabFarmer.classList.add('bg-white', 'text-green-700', 'shadow');
+            tabFarmer.classList.remove('text-gray-400');
+        } else if (roleParam === 'consumer') {
+            // Show only the Consumer tab — hide Farmer tab button entirely
+            tabFarmer.style.display = 'none';
+            farmerSec.classList.add('hidden');
+            consumerSec.classList.remove('hidden');
+            tabConsumer.classList.add('bg-white', 'text-green-700', 'shadow');
+            tabConsumer.classList.remove('text-gray-400');
+        }
+
+        // ── Tab switching (only relevant when no role param is set) ───
+        tabFarmer.addEventListener('click', () => {
+            tabFarmer.classList.add('bg-white','text-green-700','shadow');
+            tabFarmer.classList.remove('text-gray-400');
+            tabConsumer.classList.remove('bg-white','text-green-700','shadow');
+            tabConsumer.classList.add('text-gray-400');
+            farmerSec.classList.remove('hidden');
+            consumerSec.classList.add('hidden');
+        });
+        tabConsumer.addEventListener('click', () => {
+            tabConsumer.classList.add('bg-white','text-green-700','shadow');
+            tabConsumer.classList.remove('text-gray-400');
+            tabFarmer.classList.remove('bg-white','text-green-700','shadow');
+            tabFarmer.classList.add('text-gray-400');
+            consumerSec.classList.remove('hidden');
+            farmerSec.classList.add('hidden');
+        });
+
+        // ── Helpers ───────────────────────────────────────────────────
+        function setBtn(btn, loading, label) {
+            btn.disabled = loading;
+            btn.innerHTML = loading
+                ? `<span class="spinner"></span>${label}`
+                : label;
+        }
+
+        function goTo(page) {
+            window.location.href = page;
+        }
+
+        // ── FARMER: Send OTP ──────────────────────────────────────────
+        document.getElementById('btn-send-otp').addEventListener('click', () => {
+            const phone = document.getElementById('phone-input').value.trim().replace(/\s/g,'');
+            const err   = document.getElementById('phone-err');
+
+            if (!/^\d{10}$/.test(phone)) {
+                err.innerText = 'Enter a valid 10-digit number.';
+                err.classList.remove('hidden');
+                return;
+            }
+            err.classList.add('hidden');
+
+            const btn = document.getElementById('btn-send-otp');
+            setBtn(btn, true, 'Sending OTP...');
+
+            // Realistic 2-second delay then show OTP screen
+            setTimeout(() => {
+                setBtn(btn, false, 'Send OTP');
+                document.getElementById('phone-display').innerText = '+91 ' + phone;
+                document.getElementById('step-phone').classList.add('hidden');
+                document.getElementById('step-otp').classList.remove('hidden');
+            }, 2000);
+        });
+
+        // ── FARMER: Verify OTP ────────────────────────────────────────
+        document.getElementById('btn-verify').addEventListener('click', () => {
+            const code = document.getElementById('otp-input').value.trim();
+            const err  = document.getElementById('otp-err');
+
+            if (code.length !== 6) {
+                err.innerText = 'Enter the 6-digit OTP.';
+                err.classList.remove('hidden');
+                return;
+            }
+            err.classList.add('hidden');
+
+            const btn = document.getElementById('btn-verify');
+            setBtn(btn, true, 'Verifying...');
+
+            setTimeout(() => {
+                if (code === '123456') {
+                    // Show success screen briefly, then redirect based on role param
+                    document.getElementById('step-otp').classList.add('hidden');
+                    document.getElementById('step-success').classList.remove('hidden');
+                    setTimeout(() => goTo(farmerDest), 1200);
+                } else {
+                    err.innerText = 'Incorrect OTP. Please try again.';
+                    err.classList.remove('hidden');
+                    setBtn(btn, false, 'Verify & Login');
+                }
+            }, 1500);
+        });
+
+        // ── FARMER: Change number ─────────────────────────────────────
+        document.getElementById('btn-resend').addEventListener('click', () => {
+            document.getElementById('step-otp').classList.add('hidden');
+            document.getElementById('step-phone').classList.remove('hidden');
+            document.getElementById('otp-input').value = '';
+            document.getElementById('otp-err').classList.add('hidden');
+        });
+
+        // Allow pressing Enter on OTP field
+        document.getElementById('otp-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') document.getElementById('btn-verify').click();
+        });
+        document.getElementById('phone-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') document.getElementById('btn-send-otp').click();
+        });
+
+        // ── CONSUMER: Google (simulated) ──────────────────────────────
+        document.getElementById('btn-google').addEventListener('click', () => {
+            const btn = document.getElementById('btn-google');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner" style="border-top-color:#4285F4; border-color:rgba(0,0,0,0.15);"></span>Signing in...';
+            setTimeout(() => goTo(consumerDest), 2000);
+        });
+
+        // ── CONSUMER: Email/Password ──────────────────────────────────
+        document.getElementById('btn-email-login').addEventListener('click', () => {
+            const email = document.getElementById('email-input').value.trim();
+            const pass  = document.getElementById('pass-input').value;
+            const err   = document.getElementById('email-err');
+
+            if (!email.includes('@') || pass.length < 4) {
+                err.innerText = 'Enter a valid email and password.';
+                err.classList.remove('hidden');
+                return;
+            }
+            err.classList.add('hidden');
+
+            const btn = document.getElementById('btn-email-login');
+            setBtn(btn, true, 'Signing in...');
+            setTimeout(() => goTo(consumerDest), 1800);
+        });
+        document.getElementById('pass-input').addEventListener('keydown', e => {
+            if (e.key === 'Enter') document.getElementById('btn-email-login').click();
+        });
+    </script>
+</body>
+</html>

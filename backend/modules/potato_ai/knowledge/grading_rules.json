@@ -1,0 +1,15 @@
+{
+  "grade_thresholds": {
+    "A": { "min_score": 85.0, "max_score": 100.0, "description": "Premium Grade - Exceptional appearance, zero severe defects, suitable for premium retail and export" },
+    "B": { "min_score": 70.0, "max_score": 84.99, "description": "Standard Industrial Grade - High quality, minor skin flaws acceptable for factory processing" },
+    "C": { "min_score": 50.0, "max_score": 69.99, "description": "Processing Grade - Moderate blemishes, suitable for starch extraction or immediate cooking" },
+    "D": { "min_score": 0.0, "max_score": 49.99, "description": "Below Grade - High defect incidence, rejected for standard commercial distribution" }
+  },
+  "score_weights": {
+    "freshness_max": 35.0,
+    "defect_free_max": 25.0,
+    "ripeness_max": 20.0,
+    "uniformity_max": 20.0
+  },
+  "source": "grading_rule_001 (AGMARK Standards & CPRI Commercial Grading Rules)"
+}

@@ -1,0 +1,35 @@
+{
+  "total_images": 3905,
+  "classes": [
+    "black_scurf",
+    "blackleg",
+    "blackspot_bruising",
+    "brown_rot",
+    "common_scab",
+    "dry_rot",
+    "healthy",
+    "miscellaneous",
+    "pink_rot",
+    "soft_rot"
+  ],
+  "class_mapping": {
+    "Black Scurf": "black_scurf",
+    "Blackleg": "blackleg",
+    "Blackspot Bruising": "blackspot_bruising",
+    "Brown Rot": "brown_rot",
+    "Common Scab": "common_scab",
+    "Dry Rot": "dry_rot",
+    "Healthy Potatoes": "healthy",
+    "Miscellaneous": "miscellaneous",
+    "Pink Rot": "pink_rot",
+    "Soft Rot": "soft_rot"
+  },
+  "counts": {
+    "train": 2733,
+    "validation": 586,
+    "test": 586
+  },
+  "train_indices_count": 2733,
+  "val_indices_count": 586,
+  "test_indices_count": 586
+}

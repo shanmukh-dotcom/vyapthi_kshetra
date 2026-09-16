@@ -123,3 +123,51 @@ class Notification(Base):
     message = Column(String, nullable=False)
     is_read = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class CropProduction(Base):
+    __tablename__ = "crop_productions"
+
+    id = Column(String, primary_key=True, default=generate_uuid)
+    farmer_id = Column(String, ForeignKey("users.id"), nullable=False)
+    crop_name = Column(String, nullable=False)
+    state = Column(String, nullable=False)
+    district = Column(String, nullable=False)
+    village = Column(String, nullable=True)
+    cultivated_area = Column(Float, nullable=True)
+    production_quantity = Column(Float, nullable=False)
+    production_unit = Column(String, nullable=False)
+    normalized_quantity_tonnes = Column(Float, nullable=False)
+    season = Column(String, nullable=False)
+    year = Column(Integer, nullable=False)
+    status = Column(String, default="REGISTERED")
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+
+    farmer = relationship("User", foreign_keys=[farmer_id])
+
+class ProductionThreshold(Base):
+    __tablename__ = "production_thresholds"
+
+    id = Column(String, primary_key=True, default=generate_uuid)
+    crop_name = Column(String, nullable=False)
+    state = Column(String, nullable=False)
+    district = Column(String, nullable=False)
+    season = Column(String, nullable=False)
+    year = Column(Integer, nullable=False)
+    threshold_quantity_tonnes = Column(Float, nullable=False)
+    warning_percentage = Column(Float, nullable=False, default=10.0)
+    critical_percentage = Column(Float, nullable=False, default=0.0)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+
+class ProductionAlert(Base):
+    __tablename__ = "production_alerts"
+
+    id = Column(String, primary_key=True, default=generate_uuid)
+    crop_name = Column(String, nullable=False)
+    district = Column(String, nullable=False)
+    season = Column(String, nullable=False)
+    year = Column(Integer, nullable=False)
+    severity = Column(String, nullable=False) # NORMAL, WARNING, CRITICAL
+    deviation_percentage = Column(Float, nullable=False)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)

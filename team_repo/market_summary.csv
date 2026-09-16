@@ -1,0 +1,4 @@
+market,observation_count,date_start,date_end,latest_modal_price,historical_median,historical_min,historical_max,volatility,verified_percentage,synthetic_percentage,confidence
+Vijayawada,1980,2021-01-01,2026-09-16,1605,1488.5,805,2236,276.470938689537,0.76,99.24,MEDIUM
+Machilipatnam,1987,2021-01-01,2026-09-16,1576,1464.0,684,2347,272.7083027439159,0.7,99.3,MEDIUM
+Gudivada,1989,2021-01-01,2026-09-16,1557,1398.0,540,2216,273.0237733420804,0.7,99.3,MEDIUM

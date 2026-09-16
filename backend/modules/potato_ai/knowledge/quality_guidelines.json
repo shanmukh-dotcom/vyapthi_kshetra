@@ -1,0 +1,14 @@
+[
+  {
+    "id": "quality_guideline_001",
+    "title": "FSSAI Tuber Size & Solid Content Criteria",
+    "details": "Table potatoes must exhibit dry matter content >= 18% and tuber diameter between 45mm and 80mm for optimal industrial processing and retail sale.",
+    "source": "FSSAI Agricultural Quality Specs 2024"
+  },
+  {
+    "id": "quality_guideline_002",
+    "title": "Defect Tolerance Thresholds",
+    "details": "Grade A permits maximum 3% aggregate superficial defects. Grade B permits up to 10% minor scab or scuffing with 0% decay or late blight rot.",
+    "source": "AGMARK Quality Standard Manual Table 2"
+  }
+]

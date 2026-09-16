@@ -168,3 +168,81 @@ class PotatoAnalyzeResponse(BaseModel):
     pricing_recommendation_per_kg: float
     rag_knowledge_summary: str
     analyzed_at: datetime
+
+# ==========================================
+# 7. PRODUCTION MONITORING SCHEMAS
+# ==========================================
+
+class ProductionCreateRequest(BaseModel):
+    farmer_id: str
+    crop_name: str
+    state: Optional[str] = None
+    district: Optional[str] = None
+    village: Optional[str] = None
+    cultivated_area: Optional[float] = None
+    production_quantity: float
+    production_unit: str
+    season: str
+    year: int
+
+class ProductionResponse(BaseModel):
+    id: str
+    farmer_id: str
+    crop_name: str
+    state: str
+    district: str
+    village: Optional[str]
+    cultivated_area: Optional[float]
+    production_quantity: float
+    production_unit: str
+    normalized_quantity_tonnes: float
+    season: str
+    year: int
+    status: str
+    created_at: datetime
+    updated_at: datetime
+
+class ProductionSummaryResponse(BaseModel):
+    crop_name: str
+    state: str
+    district: str
+    season: str
+    year: int
+    total_registered_farmers: int
+    total_expected_production_tonnes: float
+
+class ThresholdCreateRequest(BaseModel):
+    crop_name: str
+    state: str
+    district: str
+    season: str
+    year: int
+    threshold_quantity_tonnes: float
+    warning_percentage: Optional[float] = 10.0
+    critical_percentage: Optional[float] = 0.0
+
+class ThresholdResponse(BaseModel):
+    id: str
+    crop_name: str
+    state: str
+    district: str
+    season: str
+    year: int
+    threshold_quantity_tonnes: float
+    warning_percentage: float
+    critical_percentage: float
+    created_at: datetime
+    updated_at: datetime
+
+class AlertResponse(BaseModel):
+    crop_name: str
+    district: str
+    year: int
+    season: str
+    registered_farmers: int
+    expected_production_tonnes: float
+    threshold_tonnes: float
+    difference_tonnes: float
+    deviation_percentage: float
+    severity: str  # NORMAL, WARNING, CRITICAL
+    message: str

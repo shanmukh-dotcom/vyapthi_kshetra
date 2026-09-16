@@ -1,0 +1,92 @@
+[
+  {
+    "id": "defect_scab_001",
+    "name": "Common Scab (Streptomyces scabies)",
+    "type": "common_scab",
+    "symptoms": "Raised, corky, rough lesions or pitted surface spots on potato skin affecting commercial appearance.",
+    "severity": "moderate",
+    "quality_impact_score": 10,
+    "source": "FSSAI Agricultural Quality Manual - Potato Section 4.2"
+  },
+  {
+    "id": "defect_blackspot_004",
+    "name": "Blackspot Bruising",
+    "type": "blackspot_bruising",
+    "symptoms": "Internal grey or black discoloration beneath intact skin resulting from rough handling or mechanical drops during harvest.",
+    "severity": "moderate",
+    "quality_impact_score": 12,
+    "source": "Post-Harvest Handling Guide CPRI 2024"
+  },
+  {
+    "id": "defect_dry_rot_007",
+    "name": "Dry Rot (Fusarium spp.)",
+    "type": "dry_rot",
+    "symptoms": "Sunken, shriveled, dark brown to black surface lesions with internal cavities and white or pink fungal mycelium.",
+    "severity": "severe",
+    "quality_impact_score": 18,
+    "source": "ICAR Potato Post-Harvest Pathology Bulletin"
+  },
+  {
+    "id": "defect_soft_rot_008",
+    "name": "Bacterial Soft Rot (Pectobacterium carotovorum)",
+    "type": "soft_rot",
+    "symptoms": "Water-soaked, cream to tan colored soft macerated pulp with characteristic foul odor, spreading rapidly in warm storage.",
+    "severity": "critical",
+    "quality_impact_score": 25,
+    "source": "FSSAI Tuber Storage & Quality Manual"
+  },
+  {
+    "id": "defect_brown_rot_009",
+    "name": "Bacterial Brown Rot / Bacterial Wilt (Ralstonia solanacearum)",
+    "type": "brown_rot",
+    "symptoms": "Browning of vascular ring in tuber with bacterial slime oozing upon cross-section pressure.",
+    "severity": "severe",
+    "quality_impact_score": 20,
+    "source": "Central Potato Research Institute Bacterial Wilt Guide"
+  },
+  {
+    "id": "defect_blackleg_010",
+    "name": "Blackleg (Dickeya & Pectobacterium)",
+    "type": "blackleg",
+    "symptoms": "Inky black rotting starting from the stolon end progressing inwards into tuber flesh.",
+    "severity": "severe",
+    "quality_impact_score": 18,
+    "source": "ICAR Potato Diagnostic Field Guide"
+  },
+  {
+    "id": "defect_black_scurf_011",
+    "name": "Black Scurf (Rhizoctonia solani)",
+    "type": "black_scurf",
+    "symptoms": "Hard, superficial, irregular dark brown or black sclerotia adhering firmly to the tuber skin like dirt that does not wash off.",
+    "severity": "moderate",
+    "quality_impact_score": 10,
+    "source": "Agricultural Trade Specifications Table 3"
+  },
+  {
+    "id": "defect_pink_rot_012",
+    "name": "Pink Rot (Phytophthora erythroseptica)",
+    "type": "pink_rot",
+    "symptoms": "Rubber-textured tuber flesh turning distinctive salmon-pink color upon exposure to air within 15-20 minutes.",
+    "severity": "severe",
+    "quality_impact_score": 20,
+    "source": "CPRI Phytophthora Management Protocol"
+  },
+  {
+    "id": "standard_healthy_001",
+    "name": "Healthy Premium Potato Standard",
+    "type": "healthy",
+    "symptoms": "Firm texture, smooth uniform golden skin, absence of rot, lesions, corky scabs, or deep blackspot bruising.",
+    "severity": "none",
+    "quality_impact_score": 0,
+    "source": "AGMARK Grade Specifications for Table Potatoes 2024"
+  },
+  {
+    "id": "defect_miscellaneous_013",
+    "name": "Miscellaneous Superficial Blemish",
+    "type": "miscellaneous",
+    "symptoms": "Minor surface scuffing, slight skin russeting, or minor non-pathogenic skin discolorations.",
+    "severity": "minor",
+    "quality_impact_score": 5,
+    "source": "Agri-Commerce Tuber Inspection Spec 2025"
+  }
+]

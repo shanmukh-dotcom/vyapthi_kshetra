@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from database import engine, Base, SessionLocal
 from models import TransportProvider
-from routers import auth, deals, logistics, potato_ai
+from routers import auth, deals, logistics, potato_ai, production
 from seed import seed_db
 
 Base.metadata.create_all(bind=engine)
@@ -43,6 +43,7 @@ app.include_router(auth.router)
 app.include_router(deals.router)
 app.include_router(logistics.router)
 app.include_router(potato_ai.router)
+app.include_router(production.router)
 
 from fastapi.staticfiles import StaticFiles
 team_repo_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "team_repo")
