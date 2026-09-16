@@ -4,38 +4,34 @@
 
 class GuidedAssistant {
   constructor() {
-    this.steps = [
-      {
-        id: 'name-input',
-        text: 'Look here, this is where you enter your full name.'
-      },
-      {
-        id: 'phone-input',
-        text: 'Here, enter your ten digit mobile number.'
-      },
-      {
-        id: 'village-input',
-        text: 'This is where you type the name of your village and district.'
-      },
-      {
-        id: 'crop-input',
-        text: 'This is where you enter your crop detail, like tomato or rice.'
-      },
-      {
-        id: 'quantity-input',
-        text: 'Here, enter the approximate quantity you want to sell.'
-      },
-      {
-        id: 'continue-profile-btn',
-        text: 'Once you are done filling these details, click the continue button to go to your farm dashboard.'
-      }
-    ];
     this.currentStep = 0;
     this.isPlaying = false;
+    
+    const path = window.location.pathname;
+    
+    if (path.includes('farmer-profile')) {
+      this.steps = [
+        { id: 'name-input', text: 'Look here, this is where you enter your full name.' },
+        { id: 'mobile-input', text: 'Here, enter your ten digit mobile number.' },
+        { id: 'village-input', text: 'This is where you type the name of your village and district.' },
+        { id: 'crop-input', text: 'This is where you enter your crop detail, like tomato or rice.' },
+        { id: 'quantity-input', text: 'Here, enter the approximate quantity you want to sell.' },
+        { id: 'continue-profile-btn', text: 'Once you are done filling these details, click the continue button to go to your farm dashboard.' }
+      ];
+    } else if (path.includes('farmer-grade-sell')) {
+      this.steps = [
+        { classSelector: '.dropzone', text: 'First, click or drag here to upload clear photos of your crop so the AI can analyze it.' },
+        { classSelector: '.card:nth-child(2)', text: 'Next, the AI will grade your crop automatically and show you the quality and confidence score here.' },
+        { classSelector: '.match-banner', text: 'Based on the grade, we will show you the fair market price and find matching buyers instantly.' },
+        { classSelector: '.action-btn', text: 'Finally, click the green button to list your crop for sale and view the buyers!' }
+      ];
+    } else {
+      this.steps = [];
+    }
   }
 
   startTour() {
-    if(this.isPlaying) return;
+    if(this.isPlaying || this.steps.length === 0) return;
     this.isPlaying = true;
     this.currentStep = 0;
     this.playNextStep();
@@ -49,7 +45,7 @@ class GuidedAssistant {
     }
 
     const step = this.steps[this.currentStep];
-    const element = document.getElementById(step.id);
+    const element = step.id ? document.getElementById(step.id) : document.querySelector(step.classSelector);
     
     if (element) {
       this.removeHighlights();
