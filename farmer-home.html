@@ -7,7 +7,14 @@
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
   <link rel="stylesheet" href="/src/style.css" />
   <style>
-    body { background-color: var(--bg); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+    body { background-color: var(--bg); font-family: 'Inter', sans-serif; }
+html, body {
+  height: auto !important;
+  min-height: 100vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
     
     /* Side bar specific tweaks for home reference */
     #app-sidebar-drawer {  width: 260px; background: #FFFFFF; border-right: 1px solid #E8ECEF; box-shadow: none; left: 0; position: fixed;  }
@@ -256,10 +263,10 @@ function googleTranslateElementInit() {
     </div>
 
     <!-- Hero Banner (Height ~25vh) -->
-    <div style="background: url('/assets/ramesh_bg.png') center/cover no-repeat; border-radius: 30px; padding: 3vh 3vw; margin-bottom: 2.5vh; flex-shrink: 0; height: 25vh; min-height: 180px; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(20,60,45,0.08);">
+    <div style="background: linear-gradient(90deg, rgba(234, 245, 236, 0.9) 0%, rgba(234, 245, 236, 0.7) 40%, transparent 100%), url('/assets/ramesh_bg.png') center/cover no-repeat; border-radius: 30px; padding: 3vh 3vw; margin-bottom: 2.5vh; flex-shrink: 0; min-height: clamp(180px, 25vh, 240px); height: auto; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; position: relative; overflow: hidden; box-shadow: 0 10px 30px rgba(20,60,45,0.08);">
       <div style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center;">
-        <h2 style="font-size: clamp(24px, 2.5vw, 36px); font-weight: 700; color: #14231D; margin: 0 0 0.5vh;">Good morning, 🌤️</h2>
-        <h1 style="font-size: clamp(40px, 4vw, 56px); font-weight: 800; color: #0B3D2E; margin: 0 0 1vh; letter-spacing: -1px; display: flex; align-items: center; gap: 1vw;">
+        <h2 style="font-size: clamp(24px, 2.5vw, 36px); font-weight: 700; color: #14231D; margin: 0 0 4px; line-height: 1.1;">Good morning, 🌤️</h2>
+        <h1 style="font-size: clamp(40px, 4vw, 56px); font-weight: 800; color: #0B3D2E; margin: 0 0 8px; line-height: 1.1; letter-spacing: -1px; display: flex; align-items: center; gap: 1vw;">
           <span class="sync-farmer-name">Ramesh Kumar</span> <span style="font-size: clamp(32px, 3.5vw, 48px);">👋</span>
         </h1>
         <p style="font-size: clamp(16px, 1.5vw, 20px); color: #145A3A; margin: 0 0 1.5vh; font-weight: 500;">Here's what matters for your farm today.</p>
@@ -282,7 +289,7 @@ function googleTranslateElementInit() {
     </div>
 
     <!-- 3 Main Cards Grid (Height ~28vh) -->
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5vw; margin-bottom: 2.5vh; flex-shrink: 0; height: 28vh; min-height: 200px;">
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5vw; margin-bottom: 2.5vh; flex-shrink: 0; min-height: clamp(200px, 28vh, 260px); height: auto; flex-shrink: 0;">
       
       <!-- Card 1: Your Crop -->
       <a href="/farmer-my-farm.html" style="background: #EFF8F0; border-radius: 24px; padding: 2.5vh 2vw; text-decoration: none; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 8px 30px rgba(20,60,45,0.07); border: 1px solid rgba(46,139,87,0.15); transition: transform 0.2s;">
@@ -348,7 +355,7 @@ function googleTranslateElementInit() {
     </div>
 
     <!-- Other Options Grid (Height ~10vh) -->
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; margin-bottom: 2.5vh; flex-shrink: 0; height: 10vh; min-height: 80px;">
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1vw; margin-bottom: 2.5vh; flex-shrink: 0; min-height: clamp(80px, 10vh, 120px); height: auto; flex-shrink: 0;">
       
       <a href="/farmer-my-farm.html" style="background: #FFFFFF; border-radius: 16px; padding: 1.5vh 1.5vw; text-decoration: none; display: flex; align-items: center; gap: 1vw; box-shadow: 0 4px 16px rgba(20,60,45,0.05); transition: transform 0.2s; border: 1px solid rgba(46,139,87,0.1);">
         <div style="width: 4vh; height: 4vh; min-width: 32px; min-height: 32px; border-radius: 50%; background: #EAF5EC; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
@@ -396,7 +403,7 @@ function googleTranslateElementInit() {
     </div>
 
     <!-- Join Nearby Farmers (Height ~10vh) -->
-    <a href="/farmer-collective-logistics.html" style="background: linear-gradient(90deg, rgba(20,90,58,1) 0%, rgba(46,139,87,0.85) 50%, rgba(46,139,87,0.1) 100%), url('/assets/farm_landscape.jpg') center/cover no-repeat; border-radius: 20px; padding: 2vh 3vw; display: flex; align-items: center; justify-content: space-between; text-decoration: none; box-shadow: 0 8px 24px rgba(20,60,45,0.08); position: relative; overflow: hidden; flex-shrink: 0; height: 10vh; min-height: 80px;">
+    <a href="/farmer-collective-logistics.html" style="background: linear-gradient(90deg, rgba(20,90,58,1) 0%, rgba(46,139,87,0.85) 50%, rgba(46,139,87,0.1) 100%), url('/assets/farm_landscape.jpg') center/cover no-repeat; border-radius: 20px; padding: 2vh 3vw; display: flex; align-items: center; justify-content: space-between; text-decoration: none; box-shadow: 0 8px 24px rgba(20,60,45,0.08); position: relative; overflow: hidden; flex-shrink: 0; min-height: clamp(80px, 10vh, 120px); height: auto; flex-shrink: 0;">
       <div style="display: flex; align-items: center; gap: 1.5vw; z-index: 2;">
         <div style="width: 6vh; height: 6vh; border-radius: 50%; background: rgba(255,255,255,0.25); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center;">
           <svg style="width: 3vh; height: 3vh; stroke: #FFFFFF; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
