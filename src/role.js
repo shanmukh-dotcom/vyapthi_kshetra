@@ -1,3 +1,17 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAN_HRT-WM9ciTB0q6BdDJ8q5jcRXpJbZQ",
+    authDomain: "vyapti-kshetra.firebaseapp.com",
+    projectId: "vyapti-kshetra",
+    storageBucket: "vyapti-kshetra.firebasestorage.app",
+    messagingSenderId: "524985728411",
+    appId: "1:524985728411:web:4c60cc21987df8eca6b53e"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 const LANG_KEY = 'vyapti_selected_language';
 const ROLE_KEY = 'vyapti_selected_role';
 const DEFAULT_LANG = 'te';
@@ -91,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Continue Button Handler
+  // Continue Button Handler (Transitions to Auth)
   if (continueBtn) {
     continueBtn.addEventListener('click', () => {
       const selectedCard = document.querySelector('.role-option-card.selected');
@@ -104,10 +118,24 @@ document.addEventListener('DOMContentLoaded', () => {
       continueBtn.style.transform = 'scale(0.98)';
 
       setTimeout(() => {
+        // Hide role selection UI
+        document.querySelector('.role-grid').style.display = 'none';
+        document.querySelector('.card-header').style.display = 'none';
+        continueBtn.style.display = 'none';
+
+        // Show auth container
+        const authContainer = document.getElementById('auth-container');
+        authContainer.classList.remove('hidden');
+        authContainer.style.display = 'block';
+
         if (selectedRole === 'farmer') {
-          window.location.href = '/farmer-home.html';
+            document.getElementById('farmer-auth-ui').classList.remove('hidden');
+            document.getElementById('farmer-auth-ui').style.display = 'block';
+            document.getElementById('consumer-auth-ui').style.display = 'none';
         } else {
-          window.location.href = '/consumer-home.html';
+            document.getElementById('consumer-auth-ui').classList.remove('hidden');
+            document.getElementById('consumer-auth-ui').style.display = 'block';
+            document.getElementById('farmer-auth-ui').style.display = 'none';
         }
       }, 150);
     });
@@ -207,5 +235,85 @@ document.addEventListener('DOMContentLoaded', () => {
     if (persist && targetCard) {
       localStorage.setItem(ROLE_KEY, targetCard.getAttribute('data-role'));
     }
+  }
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  // --- FIREBASE AUTH LOGIC ---
+  
+  // Consumer Google Auth
+  const googleBtn = document.getElementById('google-login-btn');
+  if(googleBtn) {
+    googleBtn.addEventListener('click', () => {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                window.location.href = '/consumer-home.html';
+            }).catch((error) => {
+                console.error('Google Auth Error:', error);
+                alert('Error signing in with Google.');
+            });
+    });
+  }
+
+  // Farmer Phone Auth
+  let confirmationResult = null;
+  const recaptchaEl = document.getElementById('recaptcha-container');
+  if(recaptchaEl) {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+          'size': 'invisible'
+      });
+  }
+
+  const sendOtpBtn = document.getElementById('send-otp-btn');
+  const verifyOtpBtn = document.getElementById('verify-otp-btn');
+  const phoneInput = document.getElementById('phone-number');
+  const otpInput = document.getElementById('otp-code');
+  const errorMsg = document.getElementById('error-message');
+  const otpErrorMsg = document.getElementById('otp-error-message');
+
+  if(sendOtpBtn) {
+      sendOtpBtn.addEventListener('click', () => {
+          const phoneNumber = '+91' + phoneInput.value.trim();
+          errorMsg.style.display = 'none';
+          sendOtpBtn.innerText = 'Sending...';
+          sendOtpBtn.disabled = true;
+
+          signInWithPhoneNumber(auth, phoneNumber, window.recaptchaVerifier)
+              .then((result) => {
+                  confirmationResult = result;
+                  document.getElementById('phone-ui').style.display = 'none';
+                  document.getElementById('otp-ui').style.display = 'block';
+                  document.getElementById('otp-ui').classList.remove('hidden');
+              }).catch((error) => {
+                  console.error(error);
+                  errorMsg.innerText = 'Error sending OTP.';
+                  errorMsg.style.display = 'block';
+                  sendOtpBtn.innerText = 'Send OTP';
+                  sendOtpBtn.disabled = false;
+                  window.recaptchaVerifier.render().then(function(widgetId) {
+                      grecaptcha.reset(widgetId);
+                  });
+              });
+      });
+  }
+
+  if(verifyOtpBtn) {
+      verifyOtpBtn.addEventListener('click', () => {
+          const code = otpInput.value.trim();
+          otpErrorMsg.style.display = 'none';
+          verifyOtpBtn.innerText = 'Verifying...';
+          verifyOtpBtn.disabled = true;
+
+          confirmationResult.confirm(code).then((result) => {
+              window.location.href = '/farmer-home.html';
+          }).catch((error) => {
+              otpErrorMsg.innerText = 'Invalid OTP code.';
+              otpErrorMsg.style.display = 'block';
+              verifyOtpBtn.innerText = 'Verify & Login';
+              verifyOtpBtn.disabled = false;
+          });
+      });
   }
 });
