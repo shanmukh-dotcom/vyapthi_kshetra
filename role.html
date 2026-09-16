@@ -6,8 +6,19 @@
   <title>VYAPTI KSHETRA - Select Your Role</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
   <link rel="stylesheet" href="/src/style.css" />
+<style>
+body { top: 0 !important; }
+.skiptranslate { display: none !important; }
+</style>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body>
+<div id="google_translate_element" style="display:none;"></div>
   <div class="page-container">
     <main class="language-card role-card">
       
@@ -97,10 +108,10 @@
       </button>
 
       <!-- AUTHENTICATION CONTAINER (Hidden initially) -->
-      <div id="auth-container" class="hidden" style="margin-top: 2rem; padding: 1.5rem; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0;">
+      <div id="auth-container" style="display: none; margin-top: 2rem; padding: 1.5rem; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0;">
         
         <!-- Farmer Auth UI -->
-        <div id="farmer-auth-ui" class="hidden">
+        <div id="farmer-auth-ui" style="display: none;">
             <h2 class="text-lg font-semibold text-center mb-4 text-gray-700" style="color: #1b4d35; font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem;">Farmer Phone Verification</h2>
             <div id="phone-ui">
                 <label style="display: block; font-size: 0.875rem; color: #4a5568; margin-bottom: 0.5rem;">Mobile Number</label>
@@ -123,7 +134,7 @@
         </div>
 
         <!-- Consumer Auth UI -->
-        <div id="consumer-auth-ui" class="hidden" style="text-align: center;">
+        <div id="consumer-auth-ui" style="display: none; text-align: center;">
             <h2 style="color: #1b4d35; font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem;">Buyer Login</h2>
             <p style="color: #718096; font-size: 0.875rem; margin-bottom: 1.5rem;">Sign in to procure crops directly from verified farmers.</p>
             <button type="button" id="google-login-btn" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.75rem; background: white; border: 1px solid #cbd5e0; color: #4a5568; font-weight: bold; padding: 0.75rem; border-radius: 0.375rem; cursor: pointer;">
@@ -144,3 +155,4 @@
   <script type="module" src="/src/role.js"></script>
 </body>
 </html>
+

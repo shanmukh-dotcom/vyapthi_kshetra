@@ -160,8 +160,19 @@
       pointer-events: auto;
     }
   </style>
+<style>
+body { top: 0 !important; }
+.skiptranslate { display: none !important; }
+</style>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </head>
 <body data-page="market">
+<div id="google_translate_element" style="display:none;"></div>
   <div id="app-drawer-backdrop" class="drawer-backdrop"></div>
 
   <aside id="app-sidebar-drawer" aria-label="Main Navigation">
@@ -619,3 +630,4 @@
   <script type="module" src="/src/farmer-app.js"></script>
 </body>
 </html>
+

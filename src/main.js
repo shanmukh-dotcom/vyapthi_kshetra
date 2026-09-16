@@ -139,6 +139,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (persist && targetOption) {
       const selectedLang = targetOption.getAttribute('data-lang');
       localStorage.setItem(STORAGE_KEY, selectedLang);
+      
+      // Magic Trick: Set the Google Translate cookie for the entire app!
+      if (selectedLang === 'en') {
+        document.cookie = "googtrans=/en/en; path=/;";
+        document.cookie = "googtrans=/en/en; domain=localhost; path=/;";
+      } else {
+        document.cookie = `googtrans=/en/${selectedLang}; path=/;`;
+        document.cookie = `googtrans=/en/${selectedLang}; domain=localhost; path=/;`;
+      }
     }
 
     // Apply translations to the page
