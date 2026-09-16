@@ -281,15 +281,35 @@ class FarmerApp {
     let currentAudio = null;
     let isPlaying = false;
 
-    // Map page keys to the actual uploaded audio files
-    const PAGE_AUDIO_FILES = {
-      home: 'mp3/farmer_home.mpeg',
-      myFarm: 'mp3/my_farm.mpeg',
-      market: 'mp3/market_fair price.mpeg',
-      gradeSell: 'mp3/grade and scale.mpeg',
-      findBuyers: 'mp3/find buyers.mpeg',
-      logistics: 'mp3/collective logistics.mpeg',
-      transactions: 'mp3/my transcations.mpeg'
+    // Determine the current language
+    const currentLang = localStorage.getItem(LANG_KEY) || 'en';
+
+    // Map page keys to the actual uploaded audio files based on language
+    const getAudioSrc = (pageKey) => {
+      if (currentLang === 'hi') {
+        const HINDI_FILES = {
+          home: 'hindi mp3/hindi home.mpeg',
+          myFarm: 'hindi mp3/hindi my farm.mpeg',
+          market: 'hindi mp3/hindi market and price.mpeg',
+          gradeSell: 'hindi mp3/hindi grade.mpeg',
+          findBuyers: 'hindi mp3/hindi find buyers.mpeg',
+          logistics: 'hindi mp3/hindi collective logistics.mpeg',
+          transactions: 'hindi mp3/hindi transcations.mpeg'
+        };
+        return HINDI_FILES[pageKey];
+      } else {
+        // Default to English
+        const ENGLISH_FILES = {
+          home: 'mp3/farmer_home.mpeg',
+          myFarm: 'mp3/my_farm.mpeg',
+          market: 'mp3/market_fair price.mpeg',
+          gradeSell: 'mp3/grade and scale.mpeg',
+          findBuyers: 'mp3/find buyers.mpeg',
+          logistics: 'mp3/collective logistics.mpeg',
+          transactions: 'mp3/my transcations.mpeg'
+        };
+        return ENGLISH_FILES[pageKey];
+      }
     };
 
     readBtns.forEach((btn) => {
@@ -310,7 +330,7 @@ class FarmerApp {
 
         // Determine which page we are on
         const pageKey = document.body.getAttribute('data-page') || 'home';
-        const audioSrc = PAGE_AUDIO_FILES[pageKey];
+        const audioSrc = getAudioSrc(pageKey);
 
         if (!audioSrc) {
           alert('No audio file found for this page.');
