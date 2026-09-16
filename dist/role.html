@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VYAPTI KSHETRA - Select Your Role</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
+  <script type="module" crossorigin src="/assets/role-iCAxINLl.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/style-vPCe4iK7.js">
+  <link rel="stylesheet" crossorigin href="/assets/style-C0Qmbr-M.css">
+</head>
+<body>
+  <div class="page-container">
+    <main class="language-card role-card">
+      
+      <!-- Voice Accessibility Button (Top Right) -->
+      <button type="button" id="voice-btn" class="voice-button" aria-label="Listen to audio instructions in selected language">
+        <svg class="speaker-icon" viewBox="0 0 24 24">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path class="sound-wave" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path class="sound-wave-outer" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+        <span id="voice-label">Listen (Telugu)</span>
+      </button>
+
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="globe-badge people-badge">
+          <svg class="people-icon" viewBox="0 0 24 24">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <h1 class="card-title">How do you want to use<br />Vyapti Kshetra?</h1>
+        <p class="card-subtitle">Select your role to continue</p>
+      </div>
+
+      <!-- Role Selection Options (Side-by-Side Cards) -->
+      <div class="role-grid" role="radiogroup" aria-label="Select your role">
+        
+        <!-- Farmer Role Card -->
+        <div 
+          class="role-option-card selected" 
+          role="radio" 
+          aria-checked="true" 
+          tabindex="0" 
+          data-role="farmer"
+        >
+          <input type="radio" name="role" id="role-farmer" value="farmer" class="sr-only-radio" checked aria-hidden="true" />
+          <div class="role-avatar-frame">
+            <img src="/assets/farmer-role.png" alt="Farmer illustration" class="role-img" />
+          </div>
+          <h2 class="role-title">Farmer</h2>
+          <p class="role-subtitle">I grow and sell<br />my produce</p>
+          <div class="radio-outer">
+            <div class="radio-inner"></div>
+          </div>
+        </div>
+
+        <!-- Buyer Role Card -->
+        <div 
+          class="role-option-card" 
+          role="radio" 
+          aria-checked="false" 
+          tabindex="-1" 
+          data-role="buyer"
+        >
+          <input type="radio" name="role" id="role-buyer" value="buyer" class="sr-only-radio" aria-hidden="true" />
+          <div class="role-avatar-frame">
+            <img src="/assets/buyer-role.png" alt="Buyer illustration" class="role-img" />
+          </div>
+          <h2 class="role-title">Buyer</h2>
+          <p class="role-subtitle">I want to buy<br />fresh produce</p>
+          <div class="radio-outer">
+            <div class="radio-inner"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Continue Button -->
+      <button type="button" id="continue-role-btn" class="continue-button" aria-label="Continue with selected role">
+        <span>Continue</span>
+        <svg class="arrow-icon" viewBox="0 0 24 24">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+
+      <!-- Back Link -->
+      <button type="button" id="back-btn" class="back-link-btn" aria-label="Go back to language selection">
+        <svg class="back-arrow-icon" viewBox="0 0 24 24">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>Back</span>
+      </button>
+
+    </main>
+  </div>
+
+</body>
+</html>

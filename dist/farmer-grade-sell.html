@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VYAPTI KSHETRA - Grade & Sell</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
+  <style>
+    body { background-color: #F8F9FA; font-family: var(--font-main); overflow-x: hidden; }
+    
+    /* Sidebar */
+    #app-sidebar-drawer {  width: 260px; background: #FFFFFF; border-right: 1px solid #E8ECEF; box-shadow: none; left: 0; position: fixed; bottom: 0; top: 0; display: flex; flex-direction: column;  }
+    .app-main-layout { margin-left: 0; max-width: 1400px; padding: 30px 40px 100px; min-height: 100vh; display: flex; flex-direction: column; }
+    
+    /* Top Header */
+    .top-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .search-bar { background: #F0F3F5; border: 1px solid #E8ECEF; border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; width: 400px; }
+    .search-bar input { border: none; background: transparent; outline: none; width: 100%; font-size: 14px; font-family: inherit; color: #163323; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .header-pill { background: #F0F3F5; border: none; padding: 8px 16px; border-radius: 20px; font-size: 13.5px; font-weight: 600; color: #163323; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .header-bell { background: #FFFFFF; border: 1px solid #E4EBE6; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .bell-badge { position: absolute; top: -2px; right: -2px; background: #E03131; color: white; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
+    .profile-pill { background: #F0F3F5; padding: 4px 12px 4px 4px; border-radius: 24px; display: flex; align-items: center; gap: 10px; cursor: pointer; margin-left: 8px; }
+    
+    /* Page Title */
+    .page-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+    .page-title-left h1 { font-size: 32px; font-weight: 800; color: #0D2114; margin: 0 0 4px; display: flex; align-items: center; gap: 12px; letter-spacing: -0.5px; }
+    .page-title-left p { font-size: 15px; color: #65796E; margin: 0; }
+    .update-banner { background: #E8F4EC; padding: 12px 20px; border-radius: 12px; display: flex; align-items: center; gap: 16px; }
+    .update-banner-icon { color: #1B4D35; }
+    .update-banner-text { font-size: 14px; color: #163323; line-height: 1.4; }
+    
+    /* Stepper */
+    .stepper-container { display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; padding: 16px 32px; border-radius: 16px; border: 1px solid #E8ECEF; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .step-item { display: flex; align-items: center; gap: 10px; }
+    .step-circle { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+    .step-active .step-circle { background: #1B4D35; color: white; }
+    .step-inactive .step-circle { background: #F0F3F5; color: #65796E; }
+    .step-label { font-size: 13.5px; font-weight: 700; }
+    .step-active .step-label { color: #11261A; }
+    .step-inactive .step-label { color: #65796E; font-weight: 600; }
+    .step-line { flex: 1; height: 1px; background: #E8ECEF; margin: 0 16px; }
+    
+    /* Grids */
+    .main-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 24px; }
+    .main-grid-2 { display: grid; grid-template-columns: 2fr 1.2fr; gap: 24px; margin-bottom: 24px; }
+    
+    /* Cards */
+    .card { background: #FFFFFF; border: 1px solid #E8ECEF; border-radius: 16px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .card-title { font-size: 16px; font-weight: 700; color: #11261A; margin: 0; }
+    
+    /* Card 1: Upload Photos */
+    .upload-sub { font-size: 13px; color: #65796E; margin-bottom: 16px; }
+    .dropzone { border: 2px dashed #C8D4CF; background: #F8F9FA; border-radius: 12px; padding: 30px 20px; text-align: center; margin-bottom: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: background 0.2s; }
+    .dropzone:hover { background: #F0F3F5; }
+    .dz-icon { color: #1B4D35; margin-bottom: 4px; }
+    .dz-title { font-size: 14.5px; font-weight: 700; color: #11261A; margin: 0; }
+    .dz-or { font-size: 12px; color: #65796E; }
+    .dz-subtitle { font-size: 12px; color: #8F9E96; margin-top: 4px; }
+    .thumb-row { display: flex; gap: 12px; justify-content: space-between; }
+    .thumb-wrap { position: relative; width: calc(25% - 9px); aspect-ratio: 1; border-radius: 8px; overflow: hidden; border: 1px solid #E8ECEF; }
+    .thumb-img { width: 100%; height: 100%; object-fit: cover; }
+    .thumb-close { position: absolute; top: 4px; right: 4px; width: 16px; height: 16px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #11261A; cursor: pointer; font-size: 10px; font-weight: bold; }
+    
+    /* Card 2: AI Grading Results */
+    .ai-badge { background: #E8F4EC; color: #165A31; padding: 4px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+    .ai-top-row { display: flex; gap: 20px; margin-bottom: 24px; align-items: stretch; }
+    .ai-crop-img { width: 100px; height: 100px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .ai-crop-info { display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+    .ai-crop-title { font-size: 20px; font-weight: 800; color: #11261A; margin: 0; }
+    .ai-conf { font-size: 12.5px; color: #1B4D35; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+    .stats-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; flex: 1; }
+    .stat-row { display: flex; justify-content: space-between; align-items: center; font-size: 13.5px; }
+    .stat-lbl { color: #65796E; display: flex; align-items: center; gap: 8px; }
+    .stat-val { color: #11261A; font-weight: 600; }
+    .alert-green { background: #F0F6EA; border-radius: 12px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
+    .alert-icon { width: 24px; height: 24px; background: #2B6B39; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .alert-text h4 { margin: 0 0 4px; font-size: 14.5px; font-weight: 700; color: #165A31; }
+    .alert-text p { margin: 0; font-size: 12px; color: #4A5C52; line-height: 1.4; }
+    
+    /* Card 3: Buyer Matches */
+    .buyer-sub { font-size: 13px; color: #65796E; margin-bottom: 20px; }
+    .buyer-list { display: flex; flex-direction: column; gap: 20px; }
+    .buyer-item { display: flex; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid #F0F3F5; }
+    .buyer-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .b-icon { width: 40px; height: 40px; background: #F0F6EA; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #2B6B39; flex-shrink: 0; }
+    .b-mid { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .b-name { font-size: 14.5px; font-weight: 700; color: #11261A; margin: 0; line-height: 1.2; }
+    .b-loc { font-size: 12px; color: #65796E; display: flex; align-items: center; gap: 4px; }
+    .b-needs { font-size: 12.5px; color: #4A5C52; margin-top: 2px; }
+    .b-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 8px; }
+    .b-price { font-size: 16px; font-weight: 800; color: #11261A; }
+    .pref-badge { background: #E8F4EC; color: #165A31; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+    .btn-contact { background: #1B4D35; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; text-decoration: none; }
+    
+    /* Bottom Grid Left: Price Recommendation */
+    .rec-box { display: flex; gap: 24px; align-items: center; height: 100%; }
+    .rec-green-block { background: #E8F4EC; border-radius: 12px; padding: 24px; flex: 1; text-align: left; }
+    .rec-green-block p { margin: 0 0 8px; font-size: 13.5px; font-weight: 600; color: #165A31; }
+    .rec-green-block h2 { margin: 0; font-size: 36px; font-weight: 800; color: #1B4D35; }
+    .rec-list { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+    .rec-list-item { font-size: 13.5px; color: #4A5C52; display: flex; align-items: center; gap: 10px; }
+    
+    /* Bottom Grid Right: Next Steps */
+    .ns-sub { font-size: 13.5px; color: #65796E; margin-bottom: 20px; }
+    .ns-btns { display: flex; gap: 12px; margin-top: auto; }
+    .btn-lg { flex: 1; padding: 12px; border-radius: 8px; font-size: 13.5px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; text-decoration: none; }
+    .btn-solid { background: #1B4D35; color: white; border: 1px solid #1B4D35; }
+    .btn-outline { background: white; color: #1B4D35; border: 1px solid #E8ECEF; }
+    
+    /* Footer Help Block */
+    .help-footer-block { background: white; border-radius: 16px; border: 1px solid #E8ECEF; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-top: auto; overflow: hidden; position: relative; }
+    .hf-left { display: flex; align-items: center; gap: 16px; flex: 1; }
+    .hf-icon { width: 48px; height: 48px; background: #F0F3F5; color: #1B4D35; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .hf-text h3 { margin: 0 0 4px; font-size: 16px; font-weight: 800; color: #11261A; }
+    .hf-text p { margin: 0; font-size: 13px; color: #65796E; }
+    
+    .hf-mid { display: flex; gap: 12px; z-index: 2; position: relative; }
+    .hf-btn { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: white; border: 1px solid #E8ECEF; border-radius: 8px; font-size: 13px; font-weight: 600; color: #11261A; cursor: pointer; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    
+    .hf-right { position: relative; height: 80px; width: 250px; display: flex; justify-content: flex-end; align-items: flex-end; }
+    .hf-speech { background: white; border: 1px solid #E8ECEF; border-radius: 12px; padding: 8px 12px; font-family: cursive, sans-serif; font-size: 14px; font-weight: bold; color: #1B4D35; position: absolute; right: 100px; top: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transform: rotate(-3deg); }
+    .hf-img { width: 120px; height: 100px; object-fit: contain; object-position: bottom; position: absolute; bottom: -20px; right: -20px; }
+    
+    .card-link { font-size: 12.5px; font-weight: 700; color: #1B4D35; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+    
+    /* Sidebar Footer solid for consistency with other pages */
+    .sidebar-footer-solid { margin: auto 20px 20px; background: #E8F4EC; padding: 16px; border-radius: 12px; }
+    .sidebar-footer-solid h5 { margin: 0 0 8px; font-size: 13px; color: #165A31; display: flex; align-items: flex-start; gap: 8px; line-height: 1.3; }
+  
+    /* Drawer Styles */
+    #app-sidebar-drawer {
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+    }
+    #app-sidebar-drawer.open {
+      transform: translateX(0);
+    }
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 33, 20, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .drawer-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+  <script type="module" crossorigin src="/assets/style-vPCe4iK7.js"></script>
+  <script type="module" crossorigin src="/assets/farmer-app-CyacvP8E.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/style-C0Qmbr-M.css">
+</head>
+<body data-page="gradeSell">
+  <div id="app-drawer-backdrop" class="drawer-backdrop"></div>
+
+  <aside id="app-sidebar-drawer" aria-label="Main Navigation">
+    <div class="sidebar-header" style="padding: 24px 20px 16px; display: flex; justify-content: center; align-items: center; min-height: 100px;">
+      <a href="/role.html" title="Switch Role" style="display:block; text-align:center;"><img src="/assets/app_logo.png" alt="Vyapti Kshetra" style="width: 180px; height: auto; object-fit: contain; image-rendering: -webkit-optimize-contrast;" /></a>
+    </div>
+    
+    <ul class="sidebar-nav-list">
+      <li>
+        <a href="/farmer-home.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-my-farm.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+          <span>My Farm</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-market.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span>Market & Fair Price</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-grade-sell.html" class="sidebar-nav-link active" style="background: #1B4D35; color: white; border-radius: 12px; box-shadow: none;">
+          <svg class="nav-icon" style="stroke: white;" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          <span>Grade & Sell</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-find-buyers.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Find Buyers</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-collective-logistics.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span>Collective & Logistics</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-transactions.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span>My Transactions</span>
+        </a>
+      </li>
+      <li class="sidebar-divider"></li>
+      <li>
+        <a href="#" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Help & Support</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+    
+    <div class="sidebar-footer-solid">
+      <h5><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg> Stronger Farmers<br>Brighter Tomorrows</h5>
+    </div>
+    <div style="padding: 0 20px 20px; font-size: 10px; color: #8F9E96;">Version 1.0.0</div>
+  </aside>
+
+  <main class="app-main-layout">
+    
+    <div class="top-header-row">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button type="button" id="app-menu-toggle" style="background: #FFFFFF; border: 1px solid #E8ECEF; border-radius: 8px; width: 42px; height: 42px; cursor: pointer; color: #163323; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><svg style="width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+        <div class="search-bar">
+        <svg style="width: 18px; height: 18px; stroke: #65796E; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" placeholder="Search crops, buyers, markets, documents..." />
+      </div>
+      </div>
+      <div class="header-right">
+        <div class="header-pill">
+          <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          English <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <button type="button" class="header-pill btn-read-aloud">
+          <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          Read Aloud
+        </button>
+        <div class="header-bell">
+          <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="bell-badge">3</span>
+        </div>
+        <div class="profile-pill">
+          <img src="/assets/farmer_portrait.jpg" alt="Ramesh Kumar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" />
+          <div style="display: flex; flex-direction: column;">
+            <span style="font-size: 14px; font-weight: 700; color: #11261A;" class="sync-farmer-name">Ramesh Kumar</span>
+            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Kolar, KA</span>
+          </div>
+          <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-title-row">
+      <div class="page-title-left">
+        <h1>Grade & Sell <svg style="width: 36px; height: 36px; stroke: #1B4D35; fill: none; stroke-width: 2.5; margin-left: 8px;" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></h1>
+        <p>Check your crop quality, get an estimated grade and find the best buyers.</p>
+      </div>
+      <div class="update-banner">
+        <svg class="update-banner-icon" style="width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
+        <div class="update-banner-text">
+          <strong>Better quality. Better prices.</strong><br>
+          <span style="color: #4A5C52;">Get fair value by knowing your crop grade.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stepper-container">
+      <div class="step-item step-active">
+        <div class="step-circle">1</div>
+        <div class="step-label">Upload Photos</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item step-inactive">
+        <div class="step-circle">2</div>
+        <div class="step-label">AI Analysis</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item step-inactive">
+        <div class="step-circle">3</div>
+        <div class="step-label">View Results</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item step-inactive">
+        <div class="step-circle">4</div>
+        <div class="step-label">Find Buyers</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item step-inactive">
+        <div class="step-circle">5</div>
+        <div class="step-label">Sell & Arrange Pickup</div>
+      </div>
+    </div>
+
+    <div class="main-grid-3">
+      
+      <!-- Card 1: Upload Photos -->
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 8px;">
+          <h3 class="card-title">1. Upload Crop Photos</h3>
+        </div>
+        <div class="upload-sub">Take clear photos of your crop from different angles.</div>
+        
+        <div class="dropzone">
+          <svg class="dz-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+          <h4 class="dz-title">Drag & drop images here</h4>
+          <span class="dz-or">or</span>
+          <h4 class="dz-title" style="color: #1B4D35;">Click to upload</h4>
+          <div class="dz-subtitle">Upload 2-5 clear images for better accuracy</div>
+        </div>
+        
+        <div class="thumb-row">
+          <div class="thumb-wrap">
+            <img src="/assets/tomato_crop.jpg" class="thumb-img" alt="thumb1" />
+            <div class="thumb-close">×</div>
+          </div>
+          <div class="thumb-wrap">
+            <img src="/assets/tomato_card_bg.jpg" class="thumb-img" alt="thumb2" />
+            <div class="thumb-close">×</div>
+          </div>
+          <div class="thumb-wrap">
+            <img src="/assets/tomato_crop.jpg" class="thumb-img" alt="thumb3" style="transform: scaleX(-1);" />
+            <div class="thumb-close">×</div>
+          </div>
+          <div class="thumb-wrap">
+            <img src="/assets/tomato_card_bg.jpg" class="thumb-img" alt="thumb4" style="transform: scaleY(-1);" />
+            <div class="thumb-close">×</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: AI Grading Results -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">2. AI Grading Results</h3>
+          <div class="ai-badge"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Analysis Complete</div>
+        </div>
+        
+        <div class="ai-top-row">
+          <img src="/assets/tomato_crop.jpg" class="ai-crop-img" alt="Tomato analyzed" />
+          <div class="ai-crop-info">
+            <h4 class="ai-crop-title sync-crop-name">Tomato</h4>
+            <div class="ai-badge" style="width: fit-content; margin: 4px 0;"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Grade A</div>
+            <div class="ai-conf"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> 94% confidence</div>
+          </div>
+        </div>
+        
+        <div class="stats-list">
+          <div class="stat-row">
+            <div class="stat-lbl"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg> Size</div>
+            <div class="stat-val">Uniform (Medium)</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-lbl"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg> Color</div>
+            <div class="stat-val">Good (Bright Red)</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-lbl"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="6.5"></line></svg> Shape</div>
+            <div class="stat-val">Mostly Uniform</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-lbl"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg> Defects</div>
+            <div class="stat-val">Minimal (2%)</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-lbl"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Overall Quality</div>
+            <div class="stat-val">Excellent</div>
+          </div>
+        </div>
+        
+        <div class="alert-green">
+          <div class="alert-icon"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+          <div class="alert-text">
+            <h4>Your crop looks good!</h4>
+            <p>This grade is based on visual analysis. Final grade may vary at the marketplace.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Buyer Matches -->
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 8px;">
+          <h3 class="card-title">3. Buyer Matches</h3>
+          <a href="/farmer-find-buyers.html" class="card-link">View All <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        </div>
+        <div class="buyer-sub">Buyers interested in Grade A <span class="sync-crop-name">Tomato</span>es</div>
+        
+        <div class="buyer-list">
+          <div class="buyer-item">
+            <div class="b-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg></div>
+            <div class="b-mid">
+              <h5 class="b-name">Kolar Fresh Mart</h5>
+              <div class="b-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Kolar (12 km)</div>
+              <div class="b-needs">Wants 500 – 2,000 kg</div>
+            </div>
+            <div class="b-right">
+              <div class="b-price">₹ 23 / kg</div>
+              <div class="pref-badge"><svg style="width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Preferred Buyer</div>
+              <a href="#" class="btn-contact"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Contact Buyer</a>
+            </div>
+          </div>
+          
+          <div class="buyer-item">
+            <div class="b-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></div>
+            <div class="b-mid">
+              <h5 class="b-name">Bengaluru Organic Hub</h5>
+              <div class="b-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Bengaluru (45 km)</div>
+              <div class="b-needs">Wants 1,000 – 5,000 kg</div>
+            </div>
+            <div class="b-right">
+              <div class="b-price">₹ 24 / kg</div>
+              <div style="height: 14px;"></div>
+              <a href="#" class="btn-contact"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Contact Buyer</a>
+            </div>
+          </div>
+
+          <div class="buyer-item">
+            <div class="b-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg></div>
+            <div class="b-mid">
+              <h5 class="b-name">Chikkaballapur Traders</h5>
+              <div class="b-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Chikkaballapur (28 km)</div>
+              <div class="b-needs">Wants 300 – 1,000 kg</div>
+            </div>
+            <div class="b-right">
+              <div class="b-price">₹ 22 / kg</div>
+              <div style="height: 14px;"></div>
+              <a href="#" class="btn-contact"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Contact Buyer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="main-grid-2">
+      <!-- Price Recommendation -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none; margin-right: 4px;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Price Recommendation</h3>
+        </div>
+        <div class="rec-box">
+          <div class="rec-green-block">
+            <p>Estimated Fair Price for Grade A <span class="sync-crop-name">Tomato</span>es</p>
+            <h2>₹ 22 – 24 / kg</h2>
+          </div>
+          <div class="rec-list">
+            <div class="rec-list-item"><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white; flex-shrink: 0;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Based on current market prices</div>
+            <div class="rec-list-item"><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white; flex-shrink: 0;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Considering your crop grade</div>
+            <div class="rec-list-item"><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white; flex-shrink: 0;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Nearby market demand</div>
+            <div class="rec-list-item"><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white; flex-shrink: 0;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Updated today (26 May 2025)</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Next Steps -->
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 8px;">
+          <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none; margin-right: 4px;" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Next Steps</h3>
+        </div>
+        <div class="ns-sub">Happy with the results? Proceed to connect with buyers.</div>
+        <div class="ns-btns">
+          <a href="/farmer-find-buyers.html" class="btn-lg btn-solid"><svg style="width: 16px; height: 16px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> View All Buyers <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <a href="/farmer-collective-logistics.html" class="btn-lg btn-outline"><svg style="width: 16px; height: 16px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg> Arrange Pickup <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Footer Block -->
+    <div class="help-footer-block">
+      <div class="hf-left">
+        <div class="hf-icon">
+          <svg style="width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+        </div>
+        <div class="hf-text">
+          <h3>Need Help?</h3>
+          <p>Talk to Vyapti for guidance on grading, pricing or selling.</p>
+        </div>
+      </div>
+      
+      <div class="hf-mid">
+        <button class="hf-btn">
+          <svg style="width: 16px; height: 16px; stroke: #1B4D35; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg> Speak / Voice Input
+        </button>
+        <a href="tel:18001234567" class="hf-btn">
+          <svg style="width: 16px; height: 16px; stroke: #1B4D35; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Call Vyapti
+        </a>
+        <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="hf-btn">
+          <svg style="width: 16px; height: 16px; stroke: #1B4D35; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> WhatsApp Vyapti
+        </a>
+      </div>
+      
+      <div class="hf-right">
+        <div class="hf-speech">"Farmer's<br>Voice Matters"</div>
+        <img src="/assets/farmer_illustration.jpg" class="hf-img" alt="Farmer illustration" />
+      </div>
+    </div>
+
+  </main>
+
+</body>
+</html>

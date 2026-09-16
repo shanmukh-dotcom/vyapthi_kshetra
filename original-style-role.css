@@ -1,0 +1,619 @@
+/* Google Fonts Import for Latin and Indian Scripts */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-telugu: 'Noto Sans Telugu', var(--font-main);
+  --font-hindi: 'Noto Sans Devanagari', var(--font-main);
+  --font-kannada: 'Noto Sans Kannada', var(--font-main);
+  --font-tamil: 'Noto Sans Tamil', var(--font-main);
+  --font-marathi: 'Noto Sans Devanagari', var(--font-main);
+  --font-bengali: 'Noto Sans Bengali', var(--font-main);
+
+  --color-primary: #1B4D35;
+  --color-primary-hover: #143E2A;
+  --color-primary-active: #0F3020;
+  --color-primary-tint: #EEF8F2;
+  --color-primary-border: #1E5637;
+
+  --color-text-dark: #163323;
+  --color-text-body: #273E31;
+  --color-text-muted: #65796E;
+  --color-text-light: #6C8274;
+
+  --color-border-unselected: #E4EBE6;
+  --color-bg-unselected: #FAFCFA;
+  --color-bg-hover: #F1F7F3;
+  --color-border-hover: #A8C7B4;
+  --color-radio-neutral: #C4D1C9;
+
+  --shadow-card: 0 20px 45px -10px rgba(10, 35, 20, 0.18), 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-button: 0 4px 12px rgba(27, 77, 53, 0.25);
+  --shadow-button-hover: 0 6px 16px rgba(27, 77, 53, 0.35);
+
+  --radius-card: 20px;
+  --radius-row: 12px;
+  --radius-button: 10px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Strictly lock body & HTML to 100vh with no scrollbars on desktop */
+html, body {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden !important;
+  font-family: var(--font-main);
+  background-color: #0b1d14;
+  color: var(--color-text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Full Viewport Background Container */
+.page-container {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  overflow: hidden !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(8px, 1.5vh, 16px);
+  /* Top center alignment guarantees top-left VYAPTI KSHETRA logo is fully visible */
+  background-image: url('/language select/language selection reference bg.png');
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Language Selection Card */
+.language-card {
+  width: 100%;
+  max-width: 380px;
+  max-height: calc(100vh - 24px);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 16px 20px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn 0.35s ease-out forwards;
+  position: relative;
+}
+
+/* Role Card Specific Expansion */
+.role-card {
+  max-width: 530px;
+  padding: 22px 24px 16px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Voice Accessibility Button (Top Right of Card) */
+.voice-button {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background-color: #E8F4EC;
+  border: 1px solid rgba(27, 77, 53, 0.15);
+  color: var(--color-primary);
+  font-family: var(--font-main);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.voice-button:hover {
+  background-color: #DDF0E3;
+  transform: scale(1.02);
+}
+
+.voice-button.speaking {
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  border-color: var(--color-primary);
+  animation: pulseSpeaking 1.5s infinite ease-in-out;
+}
+
+.voice-button.speaking .speaker-icon {
+  stroke: #FFFFFF;
+}
+
+@keyframes pulseSpeaking {
+  0% { box-shadow: 0 0 0 0 rgba(27, 77, 53, 0.4); }
+  70% { box-shadow: 0 0 0 8px rgba(27, 77, 53, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(27, 77, 53, 0); }
+}
+
+.speaker-icon {
+  width: 15px;
+  height: 15px;
+  stroke: var(--color-primary);
+  stroke-width: 2;
+  fill: none;
+  flex-shrink: 0;
+}
+
+/* Card Header */
+.card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 14px;
+  width: 100%;
+}
+
+.globe-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #E8F4EC;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  color: var(--color-primary);
+  box-shadow: inset 0 0 0 1px rgba(27, 77, 53, 0.08);
+  flex-shrink: 0;
+}
+
+.people-icon {
+  width: 20px;
+  height: 20px;
+  stroke: var(--color-primary);
+  stroke-width: 1.8;
+  fill: none;
+}
+
+.globe-icon {
+  width: 20px;
+  height: 20px;
+  stroke: var(--color-primary);
+  stroke-width: 1.8;
+  fill: none;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  letter-spacing: -0.02em;
+  margin-bottom: 3px;
+  line-height: 1.25;
+}
+
+.card-subtitle {
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  line-height: 1.25;
+}
+
+/* Language List (Radio Group) */
+.language-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+/* Language Row */
+.language-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border-radius: var(--radius-row);
+  background-color: var(--color-bg-unselected);
+  border: 1.5px solid var(--color-border-unselected);
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  user-select: none;
+  outline: none;
+}
+
+.language-option:hover {
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+}
+
+.language-option:focus-visible {
+  border-color: var(--color-primary-border);
+  box-shadow: 0 0 0 2px rgba(30, 86, 55, 0.2);
+}
+
+/* Selected Row State */
+.language-option.selected {
+  background-color: var(--color-primary-tint);
+  border-color: var(--color-primary-border);
+}
+
+/* Left Content Block */
+.option-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Avatar Badge */
+.avatar-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13.5px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+.language-option:hover .avatar-badge {
+  transform: scale(1.04);
+}
+
+/* Specific Badge Colors matching Reference */
+.badge-telugu {
+  background-color: #E1F5E6;
+  color: #165A31;
+  font-family: var(--font-telugu);
+}
+
+.badge-hindi {
+  background-color: #FEEED9;
+  color: #9C540C;
+  font-family: var(--font-hindi);
+}
+
+.badge-kannada {
+  background-color: #EEEBFB;
+  color: #5945B6;
+  font-family: var(--font-kannada);
+}
+
+.badge-tamil {
+  background-color: #E2F1F8;
+  color: #17638B;
+  font-family: var(--font-tamil);
+}
+
+.badge-marathi {
+  background-color: #FEF6D8;
+  color: #8D6708;
+  font-family: var(--font-marathi);
+}
+
+.badge-bengali {
+  background-color: #FCE8E6;
+  color: #B02A24;
+  font-family: var(--font-bengali);
+}
+
+.badge-english {
+  background-color: #E3ECE7;
+  color: #344C3D;
+  font-family: var(--font-main);
+}
+
+/* Text Container */
+.option-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.native-name {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  line-height: 1.2;
+}
+
+/* Font Families for Native Names */
+.lang-te .native-name { font-family: var(--font-telugu); }
+.lang-hi .native-name { font-family: var(--font-hindi); }
+.lang-kn .native-name { font-family: var(--font-kannada); }
+.lang-ta .native-name { font-family: var(--font-tamil); }
+.lang-mr .native-name { font-family: var(--font-marathi); }
+.lang-bn .native-name { font-family: var(--font-bengali); }
+.lang-en .native-name { font-family: var(--font-main); }
+
+.english-name {
+  font-size: 10.5px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  line-height: 1.1;
+}
+
+/* Custom Radio Circle */
+.radio-outer {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.6px solid var(--color-radio-neutral);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.radio-inner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-primary-border);
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.1s ease;
+}
+
+/* Selected Radio State */
+.language-option.selected .radio-outer,
+.role-option-card.selected .radio-outer {
+  border-color: var(--color-primary-border);
+}
+
+.language-option.selected .radio-inner,
+.role-option-card.selected .radio-inner {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Hidden Native Radio Input (for accessibility) */
+.sr-only-radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Role Selection Grid (Side-by-Side Cards) */
+.role-grid {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.role-option-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 16px 14px 14px;
+  border-radius: 16px;
+  background-color: var(--color-bg-unselected);
+  border: 1.5px solid var(--color-border-unselected);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+  outline: none;
+}
+
+.role-option-card:hover {
+  background-color: var(--color-bg-hover);
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+}
+
+.role-option-card.selected {
+  background-color: var(--color-primary-tint);
+  border-color: var(--color-primary-border);
+  box-shadow: 0 4px 12px rgba(30, 86, 55, 0.08);
+}
+
+.role-option-card:focus-visible {
+  border-color: var(--color-primary-border);
+  box-shadow: 0 0 0 3px rgba(30, 86, 55, 0.25);
+}
+
+.role-avatar-frame {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  border: 2px solid #FFFFFF;
+  background-color: #E8F4EC;
+  transition: transform 0.2s ease;
+}
+
+.role-option-card:hover .role-avatar-frame {
+  transform: scale(1.03);
+}
+
+.role-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.role-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-text-dark);
+  margin-bottom: 4px;
+}
+
+.role-subtitle {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  line-height: 1.3;
+  margin-bottom: 12px;
+  min-height: 32px;
+}
+
+.role-option-card .radio-outer {
+  margin-top: auto;
+}
+
+/* Continue Button */
+.continue-button {
+  width: 100%;
+  padding: 11px 16px;
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+  font-family: var(--font-main);
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-button);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: var(--shadow-button);
+  transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.continue-button:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-button-hover);
+  transform: translateY(-1px);
+}
+
+.continue-button:active {
+  background-color: var(--color-primary-active);
+  transform: translateY(0);
+  box-shadow: var(--shadow-button);
+}
+
+.continue-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(30, 86, 55, 0.4), var(--shadow-button);
+}
+
+.arrow-icon {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  fill: none;
+  transition: transform 0.15s ease;
+}
+
+.continue-button:hover .arrow-icon {
+  transform: translateX(3px);
+}
+
+/* Back Link Button */
+.back-link-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-text-body);
+  font-family: var(--font-main);
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.back-link-btn:hover {
+  color: var(--color-primary);
+  transform: translateX(-2px);
+}
+
+.back-arrow-icon {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* Responsive adjustments for mobile/tablet */
+@media (max-width: 560px) {
+  html, body {
+    overflow: auto !important; /* Allow mobile vertical scrolling if screen height is tiny */
+  }
+  .page-container {
+    height: auto;
+    min-height: 100vh;
+    padding: 16px 12px;
+  }
+  .role-card {
+    max-width: 100%;
+    padding: 20px 16px 14px;
+  }
+  .voice-button {
+    top: 12px;
+    right: 12px;
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  .role-grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .role-option-card {
+    flex-direction: row;
+    text-align: left;
+    padding: 12px 14px;
+    align-items: center;
+  }
+  .role-avatar-frame {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 0;
+    margin-right: 12px;
+  }
+  .role-subtitle {
+    min-height: auto;
+    margin-bottom: 0;
+  }
+  .role-option-card .radio-outer {
+    margin-top: 0;
+    margin-left: auto;
+  }
+}

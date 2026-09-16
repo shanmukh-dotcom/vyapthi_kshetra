@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VYAPTI KSHETRA - Choose Your Language</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <div class="page-container">
+    <main class="language-card">
+      
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="globe-badge">
+          <svg class="globe-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+        </div>
+        <h1 class="card-title">Choose Your Language</h1>
+        <p class="card-subtitle">Select your preferred language to continue</p>
+      </div>
+
+      <!-- Language Options (Radio Group) -->
+      <div class="language-list" role="radiogroup" aria-label="Select your language">
+        
+        <!-- Telugu -->
+        <div 
+          class="language-option lang-te selected" 
+          role="radio" 
+          aria-checked="true" 
+          tabindex="0" 
+          data-lang="te"
+          data-name="Telugu"
+          data-native="తెలుగు"
+        >
+          <input type="radio" name="language" id="lang-te" value="te" class="sr-only-radio" checked aria-hidden="true" />
+          <div class="option-left">
+            <div class="avatar-badge badge-telugu">అ</div>
+            <div class="option-text">
+              <span class="native-name">తెలుగు</span>
+              <span class="english-name">Telugu</span>
+            </div>
+          </div>
+          <div class="radio-outer">
+            <div class="radio-inner"></div>
+          </div>
+        </div>
+
+        <!-- Hindi -->
+        <div 
+          class="language-option lang-hi" 
+          role="radio" 
+          aria-checked="false" 
+          tabindex="-1" 
+          data-lang="hi"
+          data-name="Hindi"
+          data-native="हिन्दी"
+        >
+          <input type="radio" name="language" id="lang-hi" value="hi" class="sr-only-radio" aria-hidden="true" />
+          <div class="option-left">
+            <div class="avatar-badge badge-hindi">अ</div>
+            <div class="option-text">
+              <span class="native-name">हिन्दी</span>
+              <span class="english-name">Hindi</span>
+            </div>
+          </div>
+          <div class="radio-outer">
+            <div class="radio-inner"></div>
+          </div>
+        </div>
+
+        <!-- Kannada -->
+        <div 
+          class="language-option lang-kn" 
+          role="radio" 
+          aria-checked="false" 
+          tabindex="-1" 
+          data-lang="kn"
+          data-name="Kannada"
+          data-native="ಕನ್ನಡ"
+        >
+          <input type="radio" name="language" id="lang-kn" value="kn" class="sr-only-radio" aria-hidden="true" />
+          <div class="option-left">
+            <div class="avatar-badge badge-kannada">ಕ</div>
+            <div class="option-text">
+              <span class="native-name">ಕನ್ನಡ</span>
+              <span class="english-name">Kannada</span>
+            </div>
+          </div>
+          <div class="radio-outer">
+            <div class="radio-inner"></div>
+          </div>
+        </div>
+
+        <!-- Tamil -->
+        <div 
+          class="language-option lang-ta" 
+          role="radio" 
+          aria-checked="false" 
+          tabindex="-1" 
+          data-lang="ta"
+          data-name="Tamil"
+          data-native="தமிழ்"
+        >
+          <input type="radio" name="language" id="lang-ta" value="ta" class="sr-only-radio" aria-hidden="true" />
+          <div class="option-left">
+            <div class="avatar-badge badge-tamil">த</div>
+            <div class="option-text">
+              <span class="native-name">தமிழ்</span>
+              <span class="english-name">Tamil</span>
+            </div>
+          </div>
+          <div class="radio-outer">
+            <div class="radio-inner"></div>
+          </div>
+        </div>
+
+        <!-- Marathi -->
+        <div 
+          class="language-option lang-mr" 
+          role="radio" 
+          aria-checked="false" 
+          tabindex="-1" 
+          data-lang="mr"
+          data-name="Marathi"
+          data-native="मराठी"
+        >
+          <input type="radio" name="language" id="lang-mr" value="mr" class="sr-only-radio" aria-hidden="true" />
+          <div class="option-left">
+            <div class="avatar-badge badge-marathi">म</div>
+            <div class="option-text">
+              <span class="native-name">मराठी</span>
+              <span class="english-name">Marathi</span>
+            </div>
+          </div>
+          <div class="radio-outer">
+            <div class="radio-inner"></div>
+          </div>
+        </div>
+
+        <!-- Bengali -->
+        <div 
+          class="language-option lang-bn" 
+          role="radio" 
+          aria-checked="false" 
+          tabindex="-1" 
+          data-lang="bn"
+          data-name="Bengali"
+          data-native="বাংলা"
+        >
+          <input type="radio" name="language" id="lang-bn" value="bn" class="sr-only-radio" aria-hidden="true" />
+          <div class="option-left">
+            <div class="avatar-badge badge-bengali">ব</div>
+            <div class="option-text">
+              <span class="native-name">বাংলা</span>
+              <span class="english-name">Bengali</span>
+            </div>
+          </div>
+          <div class="radio-outer">
+            <div class="radio-inner"></div>
+          </div>
+        </div>
+
+        <!-- English -->
+        <div 
+          class="language-option lang-en" 
+          role="radio" 
+          aria-checked="false" 
+          tabindex="-1" 
+          data-lang="en"
+          data-name="English"
+          data-native="English"
+        >
+          <input type="radio" name="language" id="lang-en" value="en" class="sr-only-radio" aria-hidden="true" />
+          <div class="option-left">
+            <div class="avatar-badge badge-english">E</div>
+            <div class="option-text">
+              <span class="native-name">English</span>
+              <span class="english-name">English</span>
+            </div>
+          </div>
+          <div class="radio-outer">
+            <div class="radio-inner"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Continue Button -->
+      <button type="button" id="continue-btn" class="continue-button" aria-label="Continue with selected language">
+        <span>Continue</span>
+        <svg class="arrow-icon" viewBox="0 0 24 24">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </button>
+
+      <!-- Bottom Note -->
+      <div class="bottom-note">
+        <svg class="gear-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span>You can change language later in settings</span>
+      </div>
+
+    </main>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
