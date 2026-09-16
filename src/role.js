@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Continue Button Handler (Transitions to Auth)
+  // Continue Button Handler — Direct redirect, no login
   if (continueBtn) {
     continueBtn.addEventListener('click', () => {
       const selectedCard = document.querySelector('.role-option-card.selected');
@@ -113,29 +113,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       localStorage.setItem(ROLE_KEY, selectedRole);
 
-      // Smooth click animation feedback
       continueBtn.style.opacity = '0.85';
       continueBtn.style.transform = 'scale(0.98)';
 
       setTimeout(() => {
-        // Hide role selection UI
-        document.querySelector('.role-grid').style.display = 'none';
-        document.querySelector('.card-header').style.display = 'none';
-        continueBtn.style.display = 'none';
-
-        // Show auth container
-        const authContainer = document.getElementById('auth-container');
-        authContainer.classList.remove('hidden');
-        authContainer.style.display = 'block';
-
         if (selectedRole === 'farmer') {
-            document.getElementById('farmer-auth-ui').classList.remove('hidden');
-            document.getElementById('farmer-auth-ui').style.display = 'block';
-            document.getElementById('consumer-auth-ui').style.display = 'none';
+          window.location.href = '/farmer-home.html';
         } else {
-            document.getElementById('consumer-auth-ui').classList.remove('hidden');
-            document.getElementById('consumer-auth-ui').style.display = 'block';
-            document.getElementById('farmer-auth-ui').style.display = 'none';
+          window.location.href = '/consumer-home.html';
         }
       }, 150);
     });
@@ -287,10 +272,10 @@ document.addEventListener('DOMContentLoaded', () => {
                   document.getElementById('otp-ui').style.display = 'block';
                   document.getElementById('otp-ui').classList.remove('hidden');
               }).catch((error) => {
-                  console.error(error);
-                  errorMsg.innerText = 'Error sending OTP.';
+                  console.error("Firebase Phone Auth Error: ", error);
+                  errorMsg.innerText = "Error: " + error.message;
                   errorMsg.style.display = 'block';
-                  sendOtpBtn.innerText = 'Send OTP';
+                  sendOtpBtn.innerText = "Send OTP";
                   sendOtpBtn.disabled = false;
                   window.recaptchaVerifier.render().then(function(widgetId) {
                       grecaptcha.reset(widgetId);
