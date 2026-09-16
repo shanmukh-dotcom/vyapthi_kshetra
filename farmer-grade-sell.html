@@ -678,6 +678,18 @@ function googleTranslateElementInit() {
             const alertTextEl = document.querySelector('.alert-text p');
             if (alertTitleEl) alertTitleEl.innerText = 'Image Quality Alert';
             if (alertTextEl) alertTextEl.innerText = data.validation_message || 'Please upload a clearer, well-lit photo of potato tubers.';
+            
+            // Clear out hardcoded stats
+            document.querySelectorAll('.sync-crop-name').forEach(el => el.innerText = 'Unknown Item');
+            const statRows = document.querySelectorAll('.stats-list .stat-row .stat-val');
+            if (statRows.length > 0) {
+              statRows.forEach(el => el.innerText = 'N/A');
+            }
+            const priceElem = document.querySelector('.rec-green-block h2');
+            if (priceElem) priceElem.innerText = 'N/A';
+            const priceSubElem = document.querySelector('.rec-green-block p');
+            if (priceSubElem) priceSubElem.innerText = 'Cannot estimate price for unclear item';
+            
             return;
           }
 
