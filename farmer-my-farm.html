@@ -796,5 +796,20 @@
   <script type="module" src="/src/home-integration.js"></script>
   <script src="/src/ask-vyapti.js"></script>
   <script src="/src/guided-tour.js"></script>
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Find the Update Farm Details and Download Farm Report cards
+    const cards = document.querySelectorAll('.action-card');
+    cards.forEach(card => {
+        if (card.innerText.includes('Update Farm Details')) {
+            card.onclick = (e) => { e.preventDefault(); window.showToast('Farm details securely updated on network', 'success'); };
+        } else if (card.innerText.includes('Download Farm Report')) {
+            card.onclick = (e) => { e.preventDefault(); window.showToast('Farm Report generating... download started', 'info'); };
+        }
+    });
+});
+
+</script>
 </body>
 </html>

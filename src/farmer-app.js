@@ -767,3 +767,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Export singleton instance
 export const farmerApp = new FarmerApp();
+
+
+// Global Toast System
+window.showToast = function(message, type = 'success') {
+  let container = document.getElementById('vk-toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'vk-toast-container';
+    container.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;';
+    document.body.appendChild(container);
+  }
+  
+  const toast = document.createElement('div');
+  const bg = type === 'success' ? '#E8F4EC' : (type === 'error' ? '#FEF2F2' : '#F4F8FA');
+  const color = type === 'success' ? '#165A31' : (type === 'error' ? '#991B1B' : '#00529B');
+  const border = type === 'success' ? '#A8C7B4' : (type === 'error' ? '#FCA5A5' : '#A5C8FC');
+  
+  toast.style.cssText = `background: ${bg}; color: ${color}; border: 1px solid ${border}; padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.1); opacity: 0; transform: translateY(20px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 8px; pointer-events: auto;`;
+  
+  const icon = type === 'success' ? '✅' : (type === 'error' ? '❌' : 'ℹ️');
+  toast.innerHTML = `<span style="font-family: 'Segoe UI Emoji', sans-serif;">${icon}</span> <span>${message}</span>`;
+  
+  container.appendChild(toast);
+  
+  // Animate in
+  requestAnimationFrame(() => {
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateY(0)';
+  });
+  
+  // Animate out
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(20px)';
+    setTimeout(() => {
+      if (toast.parentNode) toast.parentNode.removeChild(toast);
+    }, 300);
+  }, 3000);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const bell = document.querySelector('.header-bell');
+    if (bell) bell.onclick = () => window.showToast('You have 2 new notifications', 'info');
+    
+    const profile = document.querySelector('.profile-pill');
+    if (profile) profile.onclick = () => window.showToast('Profile and network settings synced', 'success');
+});

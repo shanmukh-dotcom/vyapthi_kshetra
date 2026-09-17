@@ -707,6 +707,22 @@ function googleTranslateElementInit() {
   <script src="/src/ask-vyapti.js"></script>
 
   <script src="/src/guided-tour.js"></script>
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Time filters
+    const filterPills = document.querySelectorAll('.filter-pill');
+    filterPills.forEach(pill => {
+        pill.onclick = (e) => {
+            filterPills.forEach(p => { p.style.background = 'white'; p.style.color = '#4A5C52'; });
+            e.target.style.background = '#163323';
+            e.target.style.color = 'white';
+            window.showToast('Fetching latest market data for ' + e.target.innerText, 'info');
+        };
+    });
+});
+
+</script>
 </body>
 </html>
 

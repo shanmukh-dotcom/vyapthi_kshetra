@@ -964,6 +964,30 @@ function googleTranslateElementInit() {
   <script src="/src/ask-vyapti.js"></script>
   <script src="/src/guided-tour.js"></script>
 
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Tabs
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        tab.onclick = (e) => {
+            tabs.forEach(t => t.classList.remove('active'));
+            e.currentTarget.classList.add('active');
+            window.showToast('Loading ' + e.currentTarget.innerText.trim() + '...', 'info');
+        };
+    });
+    
+    // Join Farmer Groups Button
+    const findGroupBtn = document.querySelector('.btn-gp');
+    if (findGroupBtn) {
+        findGroupBtn.onclick = (e) => {
+            e.preventDefault();
+            window.showToast('Searching for verified Farmer Groups within 50km...', 'info');
+        };
+    }
+});
+
+</script>
 </body>
 </html>
 
