@@ -67,6 +67,15 @@ class PotatoGradingEngine:
         ripeness_score = 20.0     # out of 20
         uniformity_score = 20.0   # out of 20
 
+        # Check batch_notes for explicit defect indications
+        notes_lower = (batch_notes or "").lower()
+        if "soft rot" in notes_lower or "decay" in notes_lower or "mushy" in notes_lower:
+            detected_defects.append({"type": "soft_rot", "confidence": 0.92, "severity": "critical", "name": "Soft Rot"})
+        elif "dry rot" in notes_lower or "brown rot" in notes_lower or "blackleg" in notes_lower:
+            detected_defects.append({"type": "dry_rot", "confidence": 0.86, "severity": "severe", "name": "Dry Rot"})
+        elif "scab" in notes_lower or "spot" in notes_lower or "bruise" in notes_lower or "blemish" in notes_lower:
+            detected_defects.append({"type": "common_scab", "confidence": 0.82, "severity": "moderate", "name": "Common Scab"})
+
         # Assess vision defects
         if not detected_defects:
             # Batch is evaluated as Healthy Potatoes
@@ -80,20 +89,21 @@ class PotatoGradingEngine:
                 conf = defect.get("confidence", 0.7)
                 severity = defect.get("severity", "moderate")
 
-                if severity == "critical":  # e.g., Soft Rot
-                    defect_free_score -= 20.0 * conf
-                    freshness_score -= 15.0 * conf
-                    uniformity_score -= 10.0 * conf
-                elif severity == "severe":  # e.g., Dry Rot, Brown Rot, Pink Rot, Blackleg
-                    defect_free_score -= 16.0 * conf
-                    freshness_score -= 10.0 * conf
+                if severity == "critical":  # e.g., Soft Rot -> Grade D
+                    defect_free_score -= 22.0 * conf
+                    freshness_score -= 18.0 * conf
+                    uniformity_score -= 14.0 * conf
+                elif severity == "severe":  # e.g., Dry Rot, Brown Rot -> Grade C
+                    defect_free_score -= 18.0 * conf
+                    freshness_score -= 12.0 * conf
                     uniformity_score -= 8.0 * conf
-                elif severity == "moderate":  # e.g., Common Scab, Blackspot Bruising, Black Scurf
-                    defect_free_score -= 10.0 * conf
+                elif severity == "moderate":  # e.g., Common Scab -> Grade B
+                    defect_free_score -= 14.0 * conf
                     uniformity_score -= 6.0 * conf
-                else:  # minor blemish / miscellaneous
-                    defect_free_score -= 5.0 * conf
+                else:  # minor blemish
+                    defect_free_score -= 6.0 * conf
                     uniformity_score -= 3.0 * conf
+
 
         # Normalize boundaries
         freshness_score = max(min(freshness_score, 35.0), 0.0)

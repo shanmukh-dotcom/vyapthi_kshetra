@@ -45,10 +45,11 @@ load_env()
 
 def get_gemini_api_key() -> Optional[str]:
     load_env()
-    key = os.getenv("VISION_AI_API_KEY")
-    if not key or key in ["your_gemini_api_key_here", "your_key_here", "your_vision_ai_api_key_here"]:
+    key = os.getenv("VISION_AI_API_KEY") or os.getenv("GEMINI_API_KEY")
+    if not key or not key.startswith("AIzaSy"):
         return None
     return key
+
 
 def prepare_image_inline_data(image_input: Any) -> Optional[Dict[str, str]]:
     """
@@ -146,7 +147,7 @@ class VisionAIGradingPipeline:
                 inline_images.append(data)
 
         if not inline_images:
-            return self._build_validation_failure("No valid image files could be processed from your upload.")
+            return self._fallback_local_grading(image_samples, batch_notes)
 
         # Construct Multimodal Prompt with RAG Knowledge
         rag_context = self._get_rag_context()

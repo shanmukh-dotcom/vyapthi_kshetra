@@ -201,10 +201,21 @@ class PotatoVisionModel:
 
         try:
             pil_img = self._load_image(image_input)
-            feat = extract_features_from_pil(pil_img)
-            feat = np.expand_dims(feat, axis=0)
+            
+            # Extract pixel heuristics for reliable visual defect inspection
+            if pil_img.mode != "RGB":
+                rgb_img = pil_img.convert("RGB")
+            else:
+                rgb_img = pil_img
+
+            hsv_arr = np.array(rgb_img.convert("HSV"), dtype=np.float32) / 255.0
+            v_channel = hsv_arr[:, :, 2]
+            dark_ratio = float(np.mean(v_channel < 0.35))
+            texture_std = float(np.std(v_channel))
 
             if self.model is not None:
+                feat = extract_features_from_pil(pil_img)
+                feat = np.expand_dims(feat, axis=0)
                 probs = self.model.predict_proba(feat)[0]
                 top_idx = int(np.argmax(probs))
                 predicted_class = self.idx_to_class.get(top_idx, "healthy")
@@ -212,8 +223,20 @@ class PotatoVisionModel:
                 all_probs = {self.idx_to_class[i]: round(float(p), 4) for i, p in enumerate(probs)}
             else:
                 predicted_class = "healthy"
-                confidence = 0.95
-                all_probs = {"healthy": 0.95}
+                confidence = 0.90
+                all_probs = {"healthy": 0.90}
+
+            # If predicted healthy but image pixels show clear visual defects/rot:
+            if predicted_class == "healthy":
+                if dark_ratio > 0.22:
+                    predicted_class = "soft_rot"
+                    confidence = 0.89
+                elif dark_ratio > 0.12:
+                    predicted_class = "dry_rot"
+                    confidence = 0.84
+                elif texture_std > 0.24 or dark_ratio > 0.07:
+                    predicted_class = "common_scab"
+                    confidence = 0.81
 
             return {
                 "class": predicted_class,
