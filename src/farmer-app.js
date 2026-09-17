@@ -87,36 +87,47 @@ const DEFAULT_FARMER_STATE = {
 
 // Page Summaries for Voice Read Aloud in supported languages
 const PAGE_READ_DATA = {
-  home: {
-    en: "Good morning Ramesh Kumar. Today your sellable lot is Potato, 500 kilograms ready for sale out of 12 thousand kilograms total crop. Indicative market price is 22 rupees per kilogram. 3 strong matches are interested in your lot. Click Sell My Potato to inspect quality and connect with buyers.",
-    te: "శుభోదయం రమేష్ కుమార్. నేడు మీ అమ్మకానికి సిద్ధంగా ఉన్న టమాటా లాట్ 500 కిలోలు. సూచిక మార్కెట్ ధర కిలోకు 22 రూపాయలు."
-  },
-  myFarm: {
-    en: "My Farm Overview. Chennuboina Farm, verified 2.5 acres in Krishna District, Andhra Pradesh. You have 3 crops: Potato 12,000 kg expected with 500 kg sellable lot harvesting, Chilli 3,000 kg growing, and Maize in planning stage.",
-    te: "నా పొలం వివరాలు. చెన్నుబోయిన ఫార్మ్, కోలార్, కర్ణాటక. మీ వద్ద టమాటా, మిర్చి మరియు మొక్కజొన్న సాగులో ఉన్నాయి."
-  },
-  market: {
-    en: "Market and Fair Price. Potato indicative price is 22 rupees per kilogram. Indicative fair-value range for farmers is 21 to 23 rupees per kilogram based on demand and quality analysis.",
-    te: "మార్కెట్ మరియు న్యాయమైన ధర. టమాటా సూచిక ధర కిలోకు 22 రూపాయలు. న్యాయమైన ధర 21 నుండి 23 రూపాయలు."
-  },
-  gradeSell: {
-    en: "Grade and Sell. AI visual pre-grade analysis for Potato: Estimated Visual Grade A with 94 percent model confidence. Indicative fair-value range is 21 to 23 rupees per kilogram.",
-    te: "గ్రేడ్ మరియు సేల్. టమాటా AI గ్రేడింగ్ ఫలితం గ్రేడ్ A."
-  },
-  findBuyers: {
-    en: "Find Buyers. Demo marketplace with 128 available buyer profiles in Andhra Pradesh. Top matches include Krishna Fresh Mart offering 24 rupees per kilogram, and South India Fresh Foods offering 26 rupees per kilogram.",
-    te: "కొనుగోలుదారులను కనుగొనండి. కర్ణాటకలో 128 మంది కొనుగోలు ప్రొఫైల్స్ అందుబాటులో ఉన్నాయి."
-  },
-  logistics: {
-    en: "Collective and Logistics. 12 active farmer groups and 8 demo transport partners available in Krishna District. Shared transport allows lower transport costs per kilogram.",
-    te: "రవాణా మరియు లాజిస్టిక్స్. ఉమ్మడి రవాణా ద్వారా ఖర్చులు తగ్గించుకోవచ్చు."
-  },
-  transactions: {
-    en: "My Transactions. Total sales 1 lakh 3 thousand rupees across 5 sales deals. Amount received 57 thousand 900 rupees. Pending payments 45 thousand 100 rupees.",
-    te: "నా లావాదేవీలు. మొత్తం అమ్మకాలు 1 లక్ష 3 వేల రూపాయలు."
-  }
-};
-
+    home: {
+      en: "Good morning Ramesh Kumar. Today your sellable lot is Potato, 500 kilograms ready for sale out of 12 thousand kilograms total crop. Indicative market price is 22 rupees per kilogram. 3 strong matches are interested in your lot.",
+      te: "శుభోదయం రమేష్ కుమార్. నేడు మీ అమ్మకానికి సిద్ధంగా ఉన్న బంగాళాదుంప లాట్ 500 కిలోలు. సూచిక మార్కెట్ ధర కిలోకు 22 రూపాయలు.",
+      hi: "सुप्रभात रमेश कुमार। आज आपकी बिक्री के लिए तैयार आलू 500 किलो है। बाज़ार का सांकेतिक मूल्य 22 रुपये प्रति किलो है।"
+    },
+    myFarm: {
+      en: "My Farm Overview. Chennuboina Farm, verified 2.5 acres in Krishna District, Andhra Pradesh. You have 3 crops: Potato 12,000 kg expected with 500 kg sellable lot harvesting, Chilli 3,000 kg growing, and Maize in planning stage.",
+      te: "నా పొలం వివరాలు. చెన్నుబోయిన ఫార్మ్, కృష్ణా జిల్లా, ఆంధ్రప్రదేశ్. మీ వద్ద బంగాళాదుంప, మిర్చి మరియు మొక్కజొన్న సాగులో ఉన్నాయి.",
+      hi: "मेरा खेत। चेन्नुबोइना फार्म, कृष्णा जिला, आंध्र प्रदेश में 2.5 एकड़। आपके पास 3 फसलें हैं: आलू, मिर्च, और मक्का।"
+    },
+    market: {
+      en: "Market and Fair Price. Potato indicative price is 22 rupees per kilogram. Indicative fair-value range for farmers is 21 to 23 rupees per kilogram based on demand and quality analysis.",
+      te: "మార్కెట్ మరియు న్యాయమైన ధర. బంగాళాదుంప సూచిక ధర కిలోకు 22 రూపాయలు. న్యాయమైన ధర 21 నుండి 23 రూపాయలు.",
+      hi: "बाज़ार और उचित मूल्य। आलू का सांकेतिक मूल्य 22 रुपये प्रति किलो है। किसानों के लिए उचित मूल्य 21 से 23 रुपये के बीच है।"
+    },
+    productionAlerts: {
+      en: "Crop Production Alerts. Currently monitoring regional crop production. There is a production shortfall for Potato in Krishna District. Please monitor market prices.",
+      te: "పంట ఉత్పత్తి హెచ్చరికలు. ప్రస్తుతం కృష్ణా జిల్లాలో బంగాళాదుంప ఉత్పత్తి తగ్గుదల ఉంది. దయచేసి మార్కెట్ ధరలను గమనించండి.",
+      hi: "फसल उत्पादन अलर्ट। वर्तमान में कृष्णा जिले में आलू के उत्पादन में कमी है। कृपया बाज़ार की कीमतों पर नज़र रखें।"
+    },
+    gradeSell: {
+      en: "Grade and Sell. AI visual pre-grade analysis for Potato: Estimated Visual Grade A with 94 percent model confidence. Indicative fair-value range is 21 to 23 rupees per kilogram.",
+      te: "గ్రేడ్ మరియు సేల్. బంగాళాదుంప AI గ్రేడింగ్ ఫలితం గ్రేడ్ A.",
+      hi: "ग्रेड और बिक्री। आलू के लिए एआई विजुअल विश्लेषण: अनुमानित ग्रेड ए। उचित मूल्य 21 से 23 रुपये प्रति किलो है।"
+    },
+    findBuyers: {
+      en: "Find Buyers. Demo marketplace with 128 available buyer profiles in Andhra Pradesh. Top matches include Krishna Fresh Mart offering 24 rupees per kilogram, and South India Fresh Foods offering 26 rupees per kilogram.",
+      te: "కొనుగోలుదారులను కనుగొనండి. కృష్ణా జిల్లాలో కొనుగోలు ప్రొఫైల్స్ అందుబాటులో ఉన్నాయి.",
+      hi: "खरीदार खोजें। आंध्र प्रदेश में 128 उपलब्ध खरीदार हैं। शीर्ष खरीदार 24 और 26 रुपये प्रति किलो की पेशकश कर रहे हैं।"
+    },
+    logistics: {
+      en: "Collective and Logistics. 12 active farmer groups and 8 demo transport partners available in Krishna District. Shared transport allows lower transport costs per kilogram.",
+      te: "రవాణా మరియు లాజిస్టిక్స్. ఉమ్మడి రవాణా ద్వారా ఖర్చులు తగ్గించుకోవచ్చు.",
+      hi: "लॉजिस्टिक्स। कृष्णा जिले में 12 किसान समूह और 8 ट्रांसपोर्ट पार्टनर उपलब्ध हैं। साझा परिवहन से लागत कम होती है।"
+    },
+    transactions: {
+      en: "My Transactions. Total sales 1 lakh 3 thousand rupees across 5 sales deals. Amount received 57 thousand 900 rupees. Pending payments 45 thousand 100 rupees.",
+      te: "నా లావాదేవీలు. మొత్తం అమ్మకాలు 1 లక్ష 3 వేల రూపాయలు.",
+      hi: "मेरा लेन-देन। कुल बिक्री 1 लाख 3 हजार रुपये। प्राप्त राशि 57 हजार 900 रुपये। शेष राशि 45 हजार 100 रुपये है।"
+    }
+  };
 class FarmerApp {
   constructor() {
     this.state = this.loadState();
