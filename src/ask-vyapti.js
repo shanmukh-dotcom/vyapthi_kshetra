@@ -414,7 +414,12 @@ class AskVyapti {
   }
 }
 
-// Initialize on DOM load
-document.addEventListener('DOMContentLoaded', () => {
-  window.vyaptiInstance = new AskVyapti();
-});
+// Initialize immediately or on DOM load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!window.vyaptiInstance) window.vyaptiInstance = new AskVyapti();
+  });
+} else {
+  if (!window.vyaptiInstance) window.vyaptiInstance = new AskVyapti();
+}
+

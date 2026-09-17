@@ -1,9 +1,8 @@
 // Dynamic import: Capacitor TTS works on native (APK), falls back gracefully on web
 let TextToSpeech = { speak: () => Promise.resolve(), stop: () => {} };
-try {
-  const mod = await import('@capacitor-community/text-to-speech');
+import('@capacitor-community/text-to-speech').then(mod => {
   if (mod && mod.TextToSpeech) TextToSpeech = mod.TextToSpeech;
-} catch(e) { /* Running on web — will use browser speechSynthesis fallback */ }
+}).catch(e => { /* Running on web — will use browser speechSynthesis fallback */ });
 /**
  * VYAPTI KSHETRA — Guided Voice Tour with Element Highlighting
  * Walks the user through each page step-by-step, highlighting

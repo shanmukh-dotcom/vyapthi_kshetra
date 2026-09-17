@@ -1,4 +1,12 @@
-import { TextToSpeech } from '@capacitor-community/text-to-speech';
+// Dynamic import: Capacitor TTS works on native (APK), falls back gracefully on web
+let TextToSpeech = { speak: () => Promise.resolve(), stop: () => {} };
+import('@capacitor-community/text-to-speech').then(mod => {
+  if (mod && mod.TextToSpeech) TextToSpeech = mod.TextToSpeech;
+}).catch(() => {});
+
+import './ask-vyapti.css';
+import './vyapti-kb.js';
+import './ask-vyapti.js';
 /**
  * VYAPTI KSHETRA - Core Farmer Application Module
  * SIH26033: Bridging Fields to Fair Markets

@@ -1,4 +1,8 @@
-import { TextToSpeech } from '@capacitor-community/text-to-speech';
+// Dynamic import: Capacitor TTS works on native (APK), falls back gracefully on web
+let TextToSpeech = { speak: () => Promise.resolve(), stop: () => {} };
+import('@capacitor-community/text-to-speech').then(mod => {
+  if (mod && mod.TextToSpeech) TextToSpeech = mod.TextToSpeech;
+}).catch(() => {});
 const LANG_KEY = 'vyapti_selected_language';
 const ROLE_KEY = 'vyapti_selected_role';
 const PROFILE_KEY = 'vyapti_farmer_profile';
