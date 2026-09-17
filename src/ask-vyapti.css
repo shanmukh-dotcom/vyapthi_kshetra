@@ -254,3 +254,110 @@
     border-radius: 24px 24px 0 0;
   }
 }
+
+/* Knowledge Base Card Styling */
+.vyapti-kb-card {
+  background: #FFFFFF;
+  border-radius: 10px;
+}
+
+.vyapti-kb-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #E8F4EC;
+  color: #165A31;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(46, 139, 87, 0.2);
+}
+
+.vyapti-kb-q {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #0B3D2E;
+  margin-bottom: 8px;
+  line-height: 1.35;
+}
+
+.vyapti-kb-ans {
+  font-size: 13px;
+  color: #24352D;
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+.vyapti-kb-ans strong {
+  color: #11261A;
+}
+
+.vyapti-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #1B4D35;
+  color: #FFFFFF !important;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+  text-decoration: none;
+  box-sizing: border-box;
+  box-shadow: 0 4px 12px rgba(27,77,53,0.22);
+  transition: all 0.2s ease;
+}
+
+.vyapti-action-btn:hover {
+  background: #143C29;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(27,77,53,0.3);
+}
+
+.vyapti-related-wrap {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed #D5E2D9;
+}
+
+.vyapti-related-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #65796E;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.vyapti-related-chip {
+  display: block;
+  width: 100%;
+  background: #F0F6F2;
+  border: 1px solid #D1E2D6;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1B4D35;
+  cursor: pointer;
+  margin-bottom: 6px;
+  text-align: left;
+  line-height: 1.35;
+  transition: all 0.18s ease;
+  font-family: inherit;
+}
+
+.vyapti-related-chip:hover {
+  background: #E0EFE5;
+  border-color: #2E8B57;
+  transform: translateX(2px);
+}
