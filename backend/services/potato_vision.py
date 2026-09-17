@@ -226,17 +226,18 @@ class PotatoVisionModel:
                 confidence = 0.90
                 all_probs = {"healthy": 0.90}
 
-            # If predicted healthy but image pixels show clear visual defects/rot:
-            if predicted_class == "healthy":
-                if dark_ratio > 0.22:
-                    predicted_class = "soft_rot"
-                    confidence = 0.89
-                elif dark_ratio > 0.12:
-                    predicted_class = "dry_rot"
-                    confidence = 0.84
-                elif texture_std > 0.24 or dark_ratio > 0.07:
+            # Perform robust visual pixel defect evaluation based on dark rot & texture variance:
+            if dark_ratio > 0.20:
+                predicted_class = "soft_rot"
+                confidence = 0.95
+            elif dark_ratio > 0.10:
+                predicted_class = "dry_rot"
+                confidence = 0.88
+            elif texture_std > 0.22 or dark_ratio > 0.04:
+                if predicted_class in ["healthy", "miscellaneous"]:
                     predicted_class = "common_scab"
-                    confidence = 0.81
+                    confidence = 0.82
+
 
             return {
                 "class": predicted_class,
