@@ -3,7 +3,7 @@
  * Connects frontend to backend endpoint: POST /api/potato/analyze
  */
 
-const API_BASE = "http://localhost:8000/api";
+const API_BASE = "https://vyapthi-kshetra-backend.onrender.com/api";
 
 /**
  * Converts a File or Blob object into a base64 Data URL string.
@@ -114,7 +114,7 @@ export async function analyzePotatoCrop({ images = [], quantityKg = 2000, batchN
     return data;
   } catch (err) {
     if (err.name === "TypeError" && err.message.includes("fetch")) {
-      throw new Error("Unable to connect to the AI service. Please verify the backend server is running at http://localhost:8000.");
+      throw new Error("Unable to connect to the AI service. Please verify the backend server is running at https://vyapthi-kshetra-backend.onrender.com.");
     }
     throw err;
   }

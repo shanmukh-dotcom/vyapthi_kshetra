@@ -1,3 +1,4 @@
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 /**
  * VYAPTI KSHETRA - Core Farmer Application Module
  * SIH26033: Bridging Fields to Fair Markets
@@ -293,13 +294,18 @@ class FarmerApp {
 
     readBtns.forEach((btn) => {
       btn.addEventListener('click', () => {
-        if (!('speechSynthesis' in window)) {
+        if (false) {
           alert('Read Aloud is not supported in this browser.');
           return;
         }
 
         if (isSpeaking) {
-          window.speechSynthesis.cancel();
+          
+    try {
+      TextToSpeech.stop();
+    } catch(e) {}
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
+
           isSpeaking = false;
           btn.classList.remove('speaking');
           btn.innerHTML = `
@@ -314,10 +320,31 @@ class FarmerApp {
         const pageData = PAGE_READ_DATA[pageKey] || PAGE_READ_DATA.home;
         const speechText = pageData[currentLang] || pageData.en;
 
-        window.speechSynthesis.cancel();
+        
+    try {
+      TextToSpeech.stop();
+    } catch(e) {}
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
+
+        
+    try {
+      TextToSpeech.speak({
+        text: speechText,
+        lang: currentLang === 'te' ? 'te-IN' : (currentLang === 'hi' ? 'hi-IN' : 'en-IN'),
+        rate: 0.95
+      });
+    } catch(e) {
+      if(window.speechSynthesis) {
         const utterance = new SpeechSynthesisUtterance(speechText);
-        utterance.lang = currentLang === 'te' ? 'te-IN' : (currentLang === 'hi' ? 'hi-IN' : 'en-IN');
-        utterance.rate = 0.95;
+        // removed
+        // removed
+        // removed
+      }
+    }
+
+// removed utterance
+        // removed
+        // removed
 
         utterance.onstart = () => {
           isSpeaking = true;
@@ -337,7 +364,7 @@ class FarmerApp {
           `;
         };
 
-        window.speechSynthesis.speak(utterance);
+        // removed
       });
     });
   }

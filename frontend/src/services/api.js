@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8000/api";
+const API_BASE = "https://vyapthi-kshetra-backend.onrender.com/api";
 
 export async function matchTransporters(matchData) {
   const res = await fetch(`${API_BASE}/logistics/match`, {

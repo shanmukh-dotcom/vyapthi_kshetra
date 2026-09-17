@@ -1,3 +1,4 @@
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
 
@@ -134,50 +135,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (voiceBtn) {
     voiceBtn.addEventListener('click', () => {
-      if (!('speechSynthesis' in window)) {
+      if (false) {
         alert('Voice synthesis is not supported in this browser.');
         return;
       }
 
       if (isSpeaking) {
-        window.speechSynthesis.cancel();
+        
+    try {
+      TextToSpeech.stop();
+    } catch(e) {}
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
+
         stopVoiceState();
         return;
       }
 
       // Stop any existing speech
-      window.speechSynthesis.cancel();
+      
+    try {
+      TextToSpeech.stop();
+    } catch(e) {}
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
 
-      const utterance = new SpeechSynthesisUtterance(langConfig.text);
-      utterance.lang = langConfig.locale;
-      utterance.rate = 0.95; // Slightly calmer speaking speed
 
-      // Attempt to pick matching native voice
-      const voices = window.speechSynthesis.getVoices();
-      if (voices && voices.length > 0) {
-        const matchingVoice = voices.find(
-          (v) => v.lang === langConfig.locale || v.lang.startsWith(currentLang)
-        );
-        if (matchingVoice) {
-          utterance.voice = matchingVoice;
-        }
+      
+    try {
+      TextToSpeech.speak({
+        text: langConfig.text,
+        lang: langConfig.locale,
+        rate: 0.95
+      });
+      setTimeout(() => stopVoiceState(), langConfig.text.length * 60);
+    } catch(e) {
+      if(window.speechSynthesis) {
+        const utterance = new SpeechSynthesisUtterance(langConfig.text);
+        utterance.lang = langConfig.locale;
+        utterance.rate = 0.95;
+        utterance.onend = () => stopVoiceState();
+        utterance.onerror = () => stopVoiceState();
+        window.speechSynthesis.speak(utterance);
       }
+    }
 
-      utterance.onstart = () => {
-        isSpeaking = true;
-        voiceBtn.classList.add('speaking');
-        voiceLabel.textContent = 'Stop Listening';
-      };
-
-      utterance.onend = () => {
-        stopVoiceState();
-      };
-
-      utterance.onerror = () => {
-        stopVoiceState();
-      };
-
-      window.speechSynthesis.speak(utterance);
     });
   }
 

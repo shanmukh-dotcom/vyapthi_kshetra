@@ -1,3 +1,4 @@
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 /**
  * VYAPTI KSHETRA — Guided Voice Tour with Element Highlighting
  * Walks the user through each page step-by-step, highlighting
@@ -187,7 +188,12 @@ class GuidedAssistant {
     this.stopped = true;
     this.isPlaying = false;
     this.currentStep = 0;
-    window.speechSynthesis.cancel();
+    
+    try {
+      TextToSpeech.stop();
+    } catch(e) {}
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
+
     this.removeHighlights();
     this.removeOverlay();
   }
@@ -196,8 +202,8 @@ class GuidedAssistant {
     if (this.overlay) return;
     this.overlay = document.createElement('div');
     this.overlay.id = 'guided-tour-overlay';
-    this.overlay.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 9990; pointer-events: none; transition: opacity 0.3s;';
-    document.body.appendChild(this.overlay);
+    // this.overlay.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 9990; pointer-events: none; transition: opacity 0.3s;';
+    // document.body.appendChild(this.overlay);
   }
 
   removeOverlay() {
@@ -237,19 +243,31 @@ class GuidedAssistant {
     const step = this.steps[this.currentStep];
     const element = this.findElement(step);
 
-    if (element) {
-      this.removeHighlights();
+    
+      
+      if (element) {
+        this.removeHighlights();
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Remove old floater if it exists
+        const oldFloater = document.getElementById('vyapti-floating-highlight');
+        if (oldFloater) oldFloater.remove();
+        
+        // Foolproof inline highlighting
+        element.dataset.originalBorder = element.style.border || '';
+        element.dataset.originalBackground = element.style.backgroundColor || '';
+        element.dataset.originalBoxShadow = element.style.boxShadow || '';
+        element.dataset.originalTransition = element.style.transition || '';
+        
+        element.style.transition = 'all 0.3s ease';
+        element.style.border = '4px solid #2ECC71';
+        element.style.backgroundColor = 'rgba(46, 204, 113, 0.15)';
+        element.style.boxShadow = '0 0 15px rgba(46, 204, 113, 0.5)';
+        
+        element.classList.add('guided-highlight');
+      } else {
 
-      // Scroll to element
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-      // Elevate element above overlay
-      element.style.transition = 'box-shadow 0.4s';
-      element.style.zIndex = '9995';
-      element.style.position = 'relative';
-      element.style.boxShadow = '0 0 0 4px rgba(46, 204, 113, 0.7), 0 0 30px 8px rgba(46, 204, 113, 0.4)';
-      element.classList.add('guided-highlight');
-    } else {
       // Element not found, skip
       this.currentStep++;
       if (!this.stopped) this.playNextStep();
@@ -261,15 +279,36 @@ class GuidedAssistant {
     const langCodes = { 'en': 'en-IN', 'hi': 'hi-IN', 'te': 'te-IN', 'ta': 'ta-IN', 'kn': 'kn-IN' };
     const spokenText = step[langKey] || step.en;
 
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(spokenText);
-    utterance.lang = langCodes[langKey] || 'en-IN';
-    utterance.rate = 0.92;
+    
+    try {
+      TextToSpeech.stop();
+    } catch(e) {}
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
+
+    
+    try {
+      TextToSpeech.speak({
+        text: spokenText,
+        lang: langCodes[langKey] || 'en-IN',
+        rate: 0.92
+      });
+    } catch(e) {
+      if(window.speechSynthesis) {
+        const utterance = new SpeechSynthesisUtterance(spokenText);
+        // removed
+        // removed
+        // removed
+      }
+    }
+
+// removed utterance
+    // removed
+    // removed
 
     // Try to find a native voice
-    const voices = window.speechSynthesis.getVoices();
-    const nativeVoice = voices.find(v => v.lang.toLowerCase().includes(langKey));
-    if (nativeVoice) {
+    // removed
+    // removed
+    if (false) {
       utterance.voice = nativeVoice;
     } else if (langKey === 'en') {
       const indVoice = voices.find(v => v.lang.includes('en-IN'));
@@ -294,16 +333,20 @@ class GuidedAssistant {
       }, 500);
     };
 
-    window.speechSynthesis.speak(utterance);
+    // removed
   }
 
-  removeHighlights() {
-    document.querySelectorAll('.guided-highlight').forEach(el => {
-      el.style.boxShadow = '';
-      el.style.zIndex = '';
-      el.classList.remove('guided-highlight');
-    });
-  }
+  
+    
+    removeHighlights() {
+      document.querySelectorAll('.guided-highlight').forEach(el => {
+        el.style.border = el.dataset.originalBorder || '';
+        el.style.backgroundColor = el.dataset.originalBackground || '';
+        el.style.boxShadow = el.dataset.originalBoxShadow || '';
+        el.style.transition = el.dataset.originalTransition || '';
+        el.classList.remove('guided-highlight');
+      });
+    }
 }
 
 // Inject CSS for the glow animation
@@ -314,11 +357,7 @@ gtStyle.innerHTML = `
     50% { box-shadow: 0 0 0 6px rgba(46, 204, 113, 0.8), 0 0 35px 12px rgba(46, 204, 113, 0.45); }
     100% { box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.5), 0 0 20px 6px rgba(46, 204, 113, 0.25); }
   }
-  .guided-highlight {
-    animation: guideGlow 1.8s infinite !important;
-    position: relative;
-    z-index: 9995 !important;
-  }
+  
 `;
 document.head.appendChild(gtStyle);
 
@@ -375,7 +414,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>Listen</span>
           `;
         } else {
-          window.speechSynthesis.cancel();
+          
+    try {
+      TextToSpeech.stop();
+    } catch(e) {}
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
+
           clone.innerHTML = `
             <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
             <span>Stop</span>
@@ -386,3 +430,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 300);
 });
+

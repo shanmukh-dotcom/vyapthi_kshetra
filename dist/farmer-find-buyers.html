@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VYAPTI KSHETRA - Find Buyers</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
   <style>
     body { background-color: #F8F9FA; font-family: var(--font-main); overflow-x: hidden; }
     
@@ -155,12 +155,215 @@
       opacity: 1;
       pointer-events: auto;
     }
+  
+    /* SUBTLE TINTED STAT CARDS */
+    .stat-card {
+        border-color: rgba(0,0,0,0.03) !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
+    }
+    .stats-grid > .stat-card:nth-child(1) { background-color: #F4F8FA !important; } /* Slate Blue */
+    .stats-grid > .stat-card:nth-child(2) { background-color: #F2F9F2 !important; } /* Fresh Green */
+    .stats-grid > .stat-card:nth-child(3) { background-color: #FFFDF5 !important; } /* Cream/Amber */
+    .stats-grid > .stat-card:nth-child(4) { background-color: #FDF6F4 !important; } /* Soft Peach */
+
+  
+    /* Interactive Dropdowns & Toast */
+    .filter-dropdown { position: relative; }
+    .filter-menu {
+      display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #FFFFFF;
+      border: 1px solid #E8ECEF; border-radius: 8px; margin-top: 8px; box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+      z-index: 100; overflow: hidden;
+    }
+    .filter-menu.show { display: block; }
+    .filter-menu-item {
+      padding: 12px 16px; font-size: 13.5px; font-weight: 500; color: #11261A; border-bottom: 1px solid #F0F3F5;
+    }
+    .filter-menu-item:last-child { border-bottom: none; }
+    .filter-menu-item:hover { background: #EAF5EC; color: #1B4D35; }
+
+    .farm-toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: #12231C; color: #FFFFFF; padding: 14px 24px; border-radius: 30px; font-size: 14.5px;
+      font-weight: 600; display: flex; align-items: center; gap: 12px; z-index: 3000; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .farm-toast.show { transform: translateX(-50%) translateY(0); }
+
   </style>
-  <script type="module" crossorigin src="/assets/style-vPCe4iK7.js"></script>
-  <script type="module" crossorigin src="/assets/farmer-app-CyacvP8E.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/style-C0Qmbr-M.css">
+<style>
+body { top: 0 !important; }
+.skiptranslate { display: none !important; }
+
+    /* SUBTLE TINTED STAT CARDS */
+    .stat-card {
+        border-color: rgba(0,0,0,0.03) !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
+    }
+    .stats-grid > .stat-card:nth-child(1) { background-color: #F4F8FA !important; } /* Slate Blue */
+    .stats-grid > .stat-card:nth-child(2) { background-color: #F2F9F2 !important; } /* Fresh Green */
+    .stats-grid > .stat-card:nth-child(3) { background-color: #FFFDF5 !important; } /* Cream/Amber */
+    .stats-grid > .stat-card:nth-child(4) { background-color: #FDF6F4 !important; } /* Soft Peach */
+
+  
+    /* Interactive Dropdowns & Toast */
+    .filter-dropdown { position: relative; }
+    .filter-menu {
+      display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #FFFFFF;
+      border: 1px solid #E8ECEF; border-radius: 8px; margin-top: 8px; box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+      z-index: 100; overflow: hidden;
+    }
+    .filter-menu.show { display: block; }
+    .filter-menu-item {
+      padding: 12px 16px; font-size: 13.5px; font-weight: 500; color: #11261A; border-bottom: 1px solid #F0F3F5;
+    }
+    .filter-menu-item:last-child { border-bottom: none; }
+    .filter-menu-item:hover { background: #EAF5EC; color: #1B4D35; }
+
+    .farm-toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: #12231C; color: #FFFFFF; padding: 14px 24px; border-radius: 30px; font-size: 14.5px;
+      font-weight: 600; display: flex; align-items: center; gap: 12px; z-index: 3000; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .farm-toast.show { transform: translateX(-50%) translateY(0); }
+
+  </style>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+}
+</script>
+
+<script>
+  (function() {
+    var lang = localStorage.getItem('vyapti_selected_language');
+    if (lang && lang !== 'en') {
+      document.cookie = "googtrans=/en/" + lang + "; path=/;";
+      document.cookie = "googtrans=/en/" + lang + "; domain=localhost; path=/;";
+    } else if (lang === 'en') {
+      document.cookie = "googtrans=/en/en; path=/;";
+      document.cookie = "googtrans=/en/en; domain=localhost; path=/;";
+    }
+  })();
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+
+
+
+
+<style>
+
+/* MOBILE UI STABILIZATION - GLOBAL OVERRIDES */
+@media (max-width: 768px) {
+  body, html {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+  .page-container, .app-main-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .table-responsive, [style*="overflow-x: auto"], .horizontal-scroll, table, .scroll-x {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  [style*="height: 100vh"], [style*="min-height: 100vh"] {
+    height: auto !important;
+    min-height: 100vh !important;
+  }
+  .header-pill, .header-bell {
+    padding: 6px 12px !important;
+    height: 36px !important;
+    font-size: 12px !important;
+  }
+  [style*="display: flex"]:not(.scroll-x):not(.horizontal-scroll):not(.no-wrap) {
+    max-width: 100% !important;
+  }
+  .page-title-row, [style*="justify-content: space-between"][style*="align-items: center"]:not(.scroll-x) {
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+  }
+  .hero-sell-banner {
+    background-size: cover !important;
+    background-position: center !important;
+    min-height: 160px !important;
+    padding: 20px !important;
+    border-radius: 16px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+  h1, h2, [style*="font-size: 56px"], [style*="font-size: clamp(40px"] {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+  h3, [style*="font-size: clamp(18px"] {
+    font-size: 18px !important;
+  }
+  
+  /* Convert multi-column grids into horizontally swipeable carousels on mobile */
+  [style*="grid-template-columns: repeat(3"], 
+  [style*="grid-template-columns: repeat(4"],
+  .hero-cards-grid, 
+  .options-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 12px !important;
+    gap: 16px !important;
+  }
+  
+  [style*="grid-template-columns: repeat(3"] > *, 
+  [style*="grid-template-columns: repeat(4"] > *,
+  .hero-cards-grid > *, 
+  .options-grid > * {
+    flex: 0 0 85% !important;
+    min-width: 240px !important;
+    scroll-snap-align: center !important;
+  }
+  
+  /* Fix remaining oversized grids by stacking them */
+  [style*="display: grid"]:not([style*="grid-template-columns: repeat(3"]):not([style*="grid-template-columns: repeat(4"]):not(.scroll-x) {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    min-height: auto !important;
+  }
+  
+  .card, .action-card, .buyer-card, .stat-card, .ui-card, .metric-card {
+    padding: 16px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  button, .btn {
+    max-width: 100% !important;
+    white-space: normal !important;
+    height: auto !important;
+    min-height: 44px !important;
+  }
+  body {
+    padding-bottom: 80px !important;
+  }
+}
+
+</style>
+  <script type="module" crossorigin src="/assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
+  <script type="module" crossorigin src="/assets/index-DhjmqKMq.js"></script>
+  <script type="module" crossorigin src="/assets/guided-tour-BU9_qTj9.js"></script>
+  <script type="module" crossorigin src="/assets/farmer-app-Cb21K9KM.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/guided-tour-D54wl7ew.css">
+  <link rel="stylesheet" crossorigin href="/assets/style-Dd8R9P_v.css">
 </head>
 <body data-page="findBuyers">
+<div id="google_translate_element" style="display:none;"></div>
   <div id="app-drawer-backdrop" class="drawer-backdrop"></div>
 
   <aside id="app-sidebar-drawer" aria-label="Main Navigation">
@@ -212,18 +415,8 @@
         </a>
       </li>
       <li class="sidebar-divider"></li>
-      <li>
-        <a href="#" class="sidebar-nav-link">
-          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          <span>Help & Support</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="sidebar-nav-link">
-          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-          <span>Settings</span>
-        </a>
-      </li>
+      
+      
     </ul>
     
     <div class="sidebar-footer-promo">
@@ -246,23 +439,24 @@
       </div>
       </div>
       <div class="header-right">
-        <div class="header-pill">
-          <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-          English <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        </div>
+        <select id="header-lang-select" class="header-pill" style="border: 1px solid #E4EBE6; appearance: none; -webkit-appearance: none; padding-right: 32px; background: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 stroke=%22%2311261A%22 fill=%22none%22 stroke-width=%222%22 viewBox=%220 0 24 24%22><polyline points=%226 9 12 15 18 9%22></polyline></svg>') no-repeat right 12px center; background-color: #FFFFFF; font-family: inherit; font-size: 13.5px; font-weight: 600; color: #163323; cursor: pointer; outline: none; margin: 0; box-sizing: border-box; display: inline-flex; height: 40px;">
+        <option value="en">English</option>
+        <option value="hi">हिंदी (Hindi)</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        <option value="mr">मराठी (Marathi)</option>
+      </select>
         <button type="button" class="header-pill btn-read-aloud">
           <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
           Read Aloud
         </button>
-        <div class="header-bell">
-          <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-          <span class="bell-badge">3</span>
-        </div>
+        
         <div class="profile-pill">
           <img src="/assets/farmer_portrait.jpg" alt="Ramesh Kumar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" />
           <div style="display: flex; flex-direction: column;">
             <span style="font-size: 14px; font-weight: 700; color: #11261A;" class="sync-farmer-name">Ramesh Kumar</span>
-            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Kolar, KA</span>
+            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Krishna District, AP</span>
           </div>
           <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
@@ -286,22 +480,55 @@
     <!-- Filters Bar -->
     <div class="filters-bar">
       <div class="filter-dropdown">
-        <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 16px;">🍅</span> <span class="sync-crop-name">Tomato</span></div>
-        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-      </div>
+          <div class="filter-selected" style="display: flex; align-items: center; gap: 8px; width: 100%; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;"><span style="font-size: 16px;">🍅</span> <span class="sync-crop-name filter-text">Potato</span></div>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="filter-menu">
+            <div class="filter-menu-item">Potato</div>
+            <div class="filter-menu-item">Tomato</div>
+            <div class="filter-menu-item">Onion</div>
+            <div class="filter-menu-item">Maize</div>
+          </div>
+        </div>
       <div class="filter-dropdown">
-        <div style="display: flex; align-items: center; gap: 8px;"><svg style="width: 16px; height: 16px; stroke: #1B4D35;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Karnataka</div>
-        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-      </div>
+          <div class="filter-selected" style="display: flex; align-items: center; gap: 8px; width: 100%; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;"><svg style="width: 16px; height: 16px; stroke: #1B4D35;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> <span class="filter-text">Andhra Pradesh</span></div>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="filter-menu">
+            <div class="filter-menu-item">Andhra Pradesh</div>
+            <div class="filter-menu-item">Telangana</div>
+            <div class="filter-menu-item">Karnataka</div>
+            <div class="filter-menu-item">Maharashtra</div>
+          </div>
+        </div>
       <div class="filter-dropdown">
-        <div style="display: flex; align-items: center; gap: 8px;"><svg style="width: 16px; height: 16px; stroke: #1B4D35;" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg> All Buyer Types</div>
-        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-      </div>
+          <div class="filter-selected" style="display: flex; align-items: center; gap: 8px; width: 100%; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;"><svg style="width: 16px; height: 16px; stroke: #1B4D35;" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg> <span class="filter-text">All Buyer Types</span></div>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="filter-menu">
+            <div class="filter-menu-item">All Buyer Types</div>
+            <div class="filter-menu-item">Govt. APMC</div>
+            <div class="filter-menu-item">Private Wholesalers</div>
+            <div class="filter-menu-item">Supermarkets</div>
+            <div class="filter-menu-item">Food Processors</div>
+          </div>
+        </div>
       <div class="filter-dropdown">
-        <div style="display: flex; align-items: center; gap: 8px;"><svg style="width: 16px; height: 16px; stroke: #1B4D35;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Grade</div>
-        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-      </div>
-      <button class="btn-search-main">
+          <div class="filter-selected" style="display: flex; align-items: center; gap: 8px; width: 100%; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 8px;"><svg style="width: 16px; height: 16px; stroke: #1B4D35;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> <span class="filter-text">Grade</span></div>
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </div>
+          <div class="filter-menu">
+            <div class="filter-menu-item">Grade A (Premium)</div>
+            <div class="filter-menu-item">Grade B (Standard)</div>
+            <div class="filter-menu-item">Grade C (Processing)</div>
+            <div class="filter-menu-item">Any Grade</div>
+          </div>
+        </div>
+      <button class="btn-search-main" id="btnSearchFilters">
         <svg style="width: 16px; height: 16px; stroke: white; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> Search
       </button>
     </div>
@@ -313,7 +540,7 @@
         <div>
           <h3 class="stat-val">128</h3>
           <p class="stat-lbl">Active Buyers</p>
-          <p class="stat-sub">In Karnataka</p>
+          <p class="stat-sub">In Andhra Pradesh</p>
         </div>
       </div>
       <div class="stat-card">
@@ -364,12 +591,12 @@
           </div>
           <div class="bc-details">
             <div class="bc-name-row">
-              <h4 class="bc-name">Kolar Mega Fresh</h4>
+              <h4 class="bc-name">Krishna District Mega Fresh</h4>
               <span class="verified-badge"><svg style="width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>
             </div>
             <div class="bc-sub">Retailer</div>
             <div class="bc-loc-row">
-              <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Kolar, Karnataka</div>
+              <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Krishna District, Andhra Pradesh</div>
               <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 12 km away</div>
             </div>
           </div>
@@ -400,7 +627,7 @@
             </div>
             <div class="bc-sub">Retail Chain</div>
             <div class="bc-loc-row">
-              <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Bengaluru, Karnataka</div>
+              <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Vijayawada, Andhra Pradesh</div>
               <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 45 km away</div>
             </div>
           </div>
@@ -430,7 +657,7 @@
             </div>
             <div class="bc-sub">Government Organization</div>
             <div class="bc-loc-row">
-              <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Bengaluru, Karnataka</div>
+              <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Vijayawada, Andhra Pradesh</div>
               <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 38 km away</div>
             </div>
           </div>
@@ -460,7 +687,7 @@
             </div>
             <div class="bc-sub">Online Retailer</div>
             <div class="bc-loc-row">
-              <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Bengaluru, Karnataka</div>
+              <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Vijayawada, Andhra Pradesh</div>
               <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 52 km away</div>
             </div>
           </div>
@@ -490,7 +717,7 @@
             </div>
             <div class="bc-sub">Wholesale Market</div>
             <div class="bc-loc-row">
-              <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: #D97706; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Kolar, Karnataka</div>
+              <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: #D97706; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Krishna District, Andhra Pradesh</div>
               <div class="bc-loc-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 8 km away</div>
             </div>
           </div>
@@ -526,14 +753,14 @@
             <div style="position: absolute; top: 58px; left: 26px; font-size: 10px; font-weight: 600; color: #4A5C52;">Tumakuru</div>
             
             <svg style="position: absolute; top: 30px; right: 80px; width: 14px; height: 14px; stroke: #1B4D35; fill: #1B4D35;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
-            <div style="position: absolute; top: 48px; right: 55px; font-size: 10px; font-weight: 600; color: #4A5C52;">Chikkaballapur</div>
+            <div style="position: absolute; top: 48px; right: 55px; font-size: 10px; font-weight: 600; color: #4A5C52;">Guntur</div>
 
             <svg style="position: absolute; top: 80px; left: 110px; width: 14px; height: 14px; stroke: #D97706; fill: #D97706;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
-            <div style="position: absolute; top: 98px; left: 96px; font-size: 11px; font-weight: 800; color: #11261A;">Bengaluru</div>
+            <div style="position: absolute; top: 98px; left: 96px; font-size: 11px; font-weight: 800; color: #11261A;">Vijayawada</div>
 
             <div class="map-float-card">
               <h4 class="mfc-title">Reliance Fresh</h4>
-              <p class="mfc-sub">Bengaluru</p>
+              <p class="mfc-sub">Vijayawada</p>
               <h3 class="mfc-price">₹ 26 / kg</h3>
             </div>
           </div>
@@ -555,7 +782,7 @@
               <div class="req-logo" style="color: #E03131;">Rf</div>
               <div class="req-mid">
                 <h4 class="req-name">Reliance Fresh</h4>
-                <p class="req-desc">1,000 kg <span class="sync-crop-name">Tomato</span>es (Grade A)</p>
+                <p class="req-desc">1,000 kg <span class="sync-crop-name">Potato</span>es (Grade A)</p>
               </div>
               <div class="req-time">2 hours ago</div>
             </div>
@@ -563,15 +790,15 @@
               <div class="req-logo" style="color: #00529B;">NC</div>
               <div class="req-mid">
                 <h4 class="req-name">NCCF</h4>
-                <p class="req-desc">5,000 kg <span class="sync-crop-name">Tomato</span>es (Grade A)</p>
+                <p class="req-desc">5,000 kg <span class="sync-crop-name">Potato</span>es (Grade A)</p>
               </div>
               <div class="req-time">5 hours ago</div>
             </div>
             <div class="req-item">
               <div class="req-logo" style="color: #0047AB;">KM</div>
               <div class="req-mid">
-                <h4 class="req-name">Kolar Mega Fresh</h4>
-                <p class="req-desc">800 kg <span class="sync-crop-name">Tomato</span>es (Grade A)</p>
+                <h4 class="req-name">Krishna District Mega Fresh</h4>
+                <p class="req-desc">800 kg <span class="sync-crop-name">Potato</span>es (Grade A)</p>
               </div>
               <div class="req-time">1 day ago</div>
             </div>
@@ -624,6 +851,106 @@
       <img src="/assets/farmer_illustration.jpg" class="fab-img" alt="Farmer illustration" />
     </div>
   </div>
+
+
+
 
+  <!-- Toast Notification -->
+  <div class="farm-toast" id="farmToast">
+    <svg style="width: 20px; height: 20px; color: #55B85A;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <span id="toastMsg">Action completed successfully!</span>
+  </div>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const toast = document.getElementById('farmToast');
+      const toastMsg = document.getElementById('toastMsg');
+      
+      function showToast(msg) {
+        toastMsg.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }
+
+      // Dropdown interaction logic
+      const dropdowns = document.querySelectorAll('.filter-dropdown');
+      dropdowns.forEach(dropdown => {
+        const selectedEl = dropdown.querySelector('.filter-selected');
+        const menu = dropdown.querySelector('.filter-menu');
+        const textSpan = dropdown.querySelector('.filter-text');
+
+        selectedEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Close others
+          document.querySelectorAll('.filter-menu').forEach(m => {
+            if(m !== menu) m.classList.remove('show');
+          });
+          menu.classList.toggle('show');
+        });
+
+        const items = menu.querySelectorAll('.filter-menu-item');
+        items.forEach(item => {
+          item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            textSpan.textContent = item.textContent;
+            menu.classList.remove('show');
+          });
+        });
+      });
+
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', () => {
+        document.querySelectorAll('.filter-menu').forEach(m => m.classList.remove('show'));
+      });
+
+      // Search button interaction
+      document.getElementById('btnSearchFilters').addEventListener('click', () => {
+        const btn = document.getElementById('btnSearchFilters');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<svg style="width:16px;height:16px;stroke:white;fill:none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="3" stroke-dasharray="32" stroke-dashoffset="32"><animate attributeName="stroke-dashoffset" dur="1s" repeatCount="indefinite" values="32;0"/></circle></svg> Searching...';
+        
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          showToast('Found 42 buyers matching your filters!');
+        }, 1500);
+      });
+      
+      // Also make contact buttons in the table show a toast
+      document.querySelectorAll('.buyer-card-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+           e.preventDefault();
+           showToast('Initiating secure chat with buyer...');
+        });
+      });
+    });
+  </script>
+
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-bottom-nav">
+      <a href="farmer-home.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </a>
+      <a href="farmer-my-farm.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        <span>Farm</span>
+      </a>
+      <a href="farmer-grade-sell.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Sell</span>
+      </a>
+      <a href="farmer-collective-logistics.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+        <span>Logistics</span>
+      </a>
+      <div class="mob-nav-item" onclick="document.getElementById('app-sidebar-drawer').classList.add('open'); document.getElementById('app-drawer-backdrop').classList.add('open');">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <span>More</span>
+      </div>
+    </div>
+    
 </body>
 </html>
+

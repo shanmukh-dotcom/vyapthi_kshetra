@@ -1,7 +1,7 @@
 // Vyapti Kshetra — Frontend Logistics API Service
 // Wraps FastAPI backend endpoints securely without exposing API keys
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api";
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://vyapthi-kshetra-backend.onrender.com/api";
 
 export async function matchTransporters(payload) {
   const res = await fetch(`${API_BASE}/logistics/match`, {

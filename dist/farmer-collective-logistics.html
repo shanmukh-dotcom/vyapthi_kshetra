@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VYAPTI KSHETRA - Collective & Logistics</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
   <style>
     body { background-color: #F8F9FA; font-family: var(--font-main); overflow-x: hidden; }
     
@@ -162,12 +162,464 @@
       opacity: 1;
       pointer-events: auto;
     }
+
+    /* ===== TRANSPORT BOOKING FEATURE ===== */
+    .booking-section {
+      background: linear-gradient(135deg, #1B4D35 0%, #163323 100%);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 8px 32px rgba(27, 77, 53, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    .booking-section::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+    .booking-section::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -30px;
+      width: 220px; height: 220px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 50%;
+    }
+    .booking-section-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 22px;
+    }
+    .booking-section-header .bsh-icon {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      flex-shrink: 0;
+    }
+    .booking-section-header h3 {
+      font-size: 20px; font-weight: 800;
+      color: #ffffff; margin: 0 0 3px;
+    }
+    .booking-section-header p { font-size: 13px; color: rgba(255,255,255,0.7); margin: 0; }
+
+    .booking-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .booking-form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .bf-group { display: flex; flex-direction: column; gap: 6px; }
+    .bf-group label {
+      font-size: 11px; font-weight: 700;
+      color: rgba(255,255,255,0.75);
+      text-transform: uppercase; letter-spacing: 0.6px;
+    }
+    .bf-group input, .bf-group select {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 14px; font-weight: 500;
+      color: #ffffff;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+      font-family: inherit;
+      appearance: none; -webkit-appearance: none;
+    }
+    .bf-group input::placeholder { color: rgba(255,255,255,0.45); }
+    .bf-group select option { color: #11261A; background: white; }
+    .bf-group input:focus, .bf-group select:focus {
+      border-color: rgba(255,255,255,0.55);
+      background: rgba(255,255,255,0.18);
+    }
+    .bf-group input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(1); opacity: 0.7; cursor: pointer;
+    }
+
+    .btn-find-vehicles {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #ffffff;
+      color: #1B4D35;
+      border: none;
+      border-radius: 10px;
+      padding: 13px 28px;
+      font-size: 15px; font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      width: 100%;
+    }
+    .btn-find-vehicles:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    .btn-find-vehicles:active { transform: translateY(0); }
+
+    /* Spinner */
+    .search-spinner {
+      display: none; align-items: center; justify-content: center;
+      gap: 12px; padding: 12px 0; color: rgba(255,255,255,0.85);
+      font-size: 14px; font-weight: 600;
+    }
+    .search-spinner.visible { display: flex; }
+    .spinner-ring {
+      width: 28px; height: 28px;
+      border: 3px solid rgba(255,255,255,0.25);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Vehicle Result Cards */
+    .vehicle-results { display: none; margin-top: 4px; }
+    .vehicle-results.visible { display: block; }
+    .vr-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .vr-header h4 { font-size: 17px; font-weight: 800; color: #11261A; margin: 0; }
+    .vr-header span { font-size: 12.5px; font-weight: 600; color: #65796E; }
+
+    .vehicle-card {
+      background: #FFFFFF;
+      border: 1.5px solid #E8ECEF;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 16px rgba(27,77,53,0.06);
+      display: flex; align-items: center; gap: 18px;
+      transition: box-shadow 0.2s, border-color 0.2s;
+      animation: slideUp 0.35s ease both;
+    }
+    .vehicle-card:nth-child(2) { animation-delay: 0.08s; }
+    .vehicle-card:nth-child(3) { animation-delay: 0.16s; }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .vehicle-card:hover { box-shadow: 0 8px 28px rgba(27,77,53,0.12); border-color: #C8D4CF; }
+    .vc-icon-wrap {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, #E8F4EC 0%, #d5ebe0 100%);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .vc-icon-wrap svg { width: 30px; height: 30px; stroke: #1B4D35; fill: none; stroke-width: 2; }
+    .vc-body { flex: 1; }
+    .vc-type-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+    .vc-type { font-size: 15px; font-weight: 800; color: #11261A; margin: 0; }
+    .vc-capacity {
+      background: #F0F6EA; color: #1B4D35;
+      padding: 2px 8px; border-radius: 4px;
+      font-size: 11px; font-weight: 700;
+    }
+    .vc-driver { font-size: 13px; color: #4A5C52; margin-bottom: 4px; }
+    .vc-driver strong { color: #11261A; font-weight: 700; }
+    .vc-rating {
+      display: inline-flex; align-items: center; gap: 3px;
+      background: #FFF8E7; color: #D97706;
+      padding: 2px 7px; border-radius: 4px;
+      font-size: 12px; font-weight: 700;
+      margin-left: 8px;
+    }
+    .vc-meta { font-size: 12px; color: #65796E; display: flex; align-items: center; gap: 14px; }
+    .vc-right { text-align: right; flex-shrink: 0; }
+    .vc-price { font-size: 22px; font-weight: 900; color: #11261A; margin-bottom: 2px; }
+    .vc-eta { font-size: 12px; color: #65796E; margin-bottom: 12px; }
+    .btn-book-now {
+      background: #1B4D35; color: white;
+      border: none; border-radius: 8px;
+      padding: 9px 20px;
+      font-size: 13px; font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .btn-book-now:hover { background: #163323; transform: scale(1.03); }
+    .btn-book-now:active { transform: scale(0.98); }
+
+    /* Tracking Section */
+    .tracking-section {
+      background: #FFFFFF;
+      border: 1.5px solid #E8ECEF;
+      border-radius: 14px;
+      padding: 22px 24px;
+      margin-top: 4px;
+      display: none;
+      animation: slideUp 0.4s ease;
+    }
+    .tracking-section.visible { display: block; }
+    .tracking-header { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    .tracking-header .th-badge {
+      background: #E8F4EC; color: #1B4D35;
+      padding: 3px 10px; border-radius: 6px;
+      font-size: 12px; font-weight: 700;
+    }
+    .tracking-header h4 { font-size: 16px; font-weight: 800; color: #11261A; margin: 0; }
+    .tracking-booked-info {
+      background: #F8FAF9; border-radius: 10px;
+      padding: 14px 16px; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .tbi-icon {
+      width: 40px; height: 40px;
+      background: #E8F4EC; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .tbi-icon svg { width: 20px; height: 20px; stroke: #1B4D35; fill: none; stroke-width: 2; }
+    .tbi-info h5 { font-size: 14px; font-weight: 700; color: #11261A; margin: 0 0 3px; }
+    .tbi-info p { font-size: 12.5px; color: #65796E; margin: 0; }
+
+    /* Timeline */
+    .tracking-timeline { display: flex; align-items: flex-start; justify-content: space-between; position: relative; }
+    .tt-track { display: flex; align-items: flex-start; flex: 1; }
+    .tt-step { display: flex; flex-direction: column; align-items: center; gap: 8px; position: relative; z-index: 1; }
+    .tt-connector { flex: 1; height: 3px; background: #E8ECEF; margin-top: 17px; border-radius: 2px; }
+    .tt-connector.done { background: #1B4D35; }
+    .tt-dot {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .tt-dot.done { background: #1B4D35; color: white; box-shadow: 0 4px 12px rgba(27,77,53,0.25); }
+    .tt-dot.active { background: #1B4D35; color: white; animation: pulse 1.5s ease-in-out infinite; }
+    .tt-dot.pending { background: #E8ECEF; color: #8F9E96; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 6px rgba(27,77,53,0.15); } 50% { box-shadow: 0 0 0 10px rgba(27,77,53,0.08); } }
+    .tt-label { font-size: 11px; font-weight: 700; color: #65796E; text-align: center; line-height: 1.3; }
+    .tt-label.active-lbl { color: #1B4D35; }
+    .tt-time { font-size: 10px; color: #8F9E96; }
+
+    /* Confirmation Modal Overlay */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(13,33,20,0.5);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .modal-box {
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 36px 32px;
+      max-width: 420px; width: 90%;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.18);
+      transform: scale(0.88);
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .modal-overlay.open .modal-box { transform: scale(1); }
+    .modal-check {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, #E8F4EC 0%, #d5ebe0 100%);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 34px;
+      box-shadow: 0 8px 24px rgba(27,77,53,0.18);
+    }
+    .modal-title { font-size: 22px; font-weight: 900; color: #11261A; margin: 0 0 8px; }
+    .modal-sub { font-size: 14px; color: #4A5C52; margin: 0 0 10px; line-height: 1.6; }
+    .modal-phone {
+      background: #F0F6EA; border-radius: 8px;
+      padding: 10px 16px; font-size: 15px;
+      font-weight: 800; color: #1B4D35;
+      margin: 0 0 22px; display: inline-block;
+    }
+    .modal-details {
+      background: #F8FAF9; border-radius: 8px;
+      padding: 12px 16px; margin-bottom: 20px;
+      text-align: left; font-size: 13px; color: #4A5C52; line-height: 1.8;
+    }
+    .modal-details strong { color: #11261A; }
+    .modal-close {
+      background: #1B4D35; color: white;
+      border: none; border-radius: 10px;
+      padding: 12px 32px;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer; width: 100%;
+      transition: background 0.15s;
+    }
+    .modal-close:hover { background: #163323; }
+  
+    /* VIBRANT PASTEL STAT CARDS */
+    .stat-card {
+        border-color: rgba(0,0,0,0.03) !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
+    }
+    .stats-grid > .stat-card:nth-child(1) { background-color: #E4F1E8 !important; } /* Mint Green */
+    .stats-grid > .stat-card:nth-child(2) { background-color: #E2EEF7 !important; } /* Sky Blue */
+    .stats-grid > .stat-card:nth-child(3) { background-color: #FFF0DB !important; } /* Golden Peach */
+    .stats-grid > .stat-card:nth-child(4) { background-color: #EFE3FC !important; } /* Soft Lavender */
+
   </style>
-  <script type="module" crossorigin src="/assets/style-vPCe4iK7.js"></script>
-  <script type="module" crossorigin src="/assets/farmer-app-CyacvP8E.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/style-C0Qmbr-M.css">
+<style>
+body { top: 0 !important; }
+.skiptranslate { display: none !important; }
+
+    /* VIBRANT PASTEL STAT CARDS */
+    .stat-card {
+        border-color: rgba(0,0,0,0.03) !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03) !important;
+    }
+    .stats-grid > .stat-card:nth-child(1) { background-color: #E4F1E8 !important; } /* Mint Green */
+    .stats-grid > .stat-card:nth-child(2) { background-color: #E2EEF7 !important; } /* Sky Blue */
+    .stats-grid > .stat-card:nth-child(3) { background-color: #FFF0DB !important; } /* Golden Peach */
+    .stats-grid > .stat-card:nth-child(4) { background-color: #EFE3FC !important; } /* Soft Lavender */
+
+  </style>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+}
+</script>
+
+<script>
+  (function() {
+    var lang = localStorage.getItem('vyapti_selected_language');
+    if (lang && lang !== 'en') {
+      document.cookie = "googtrans=/en/" + lang + "; path=/;";
+      document.cookie = "googtrans=/en/" + lang + "; domain=localhost; path=/;";
+    } else if (lang === 'en') {
+      document.cookie = "googtrans=/en/en; path=/;";
+      document.cookie = "googtrans=/en/en; domain=localhost; path=/;";
+    }
+  })();
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+
+
+
+<style>
+
+/* MOBILE UI STABILIZATION - GLOBAL OVERRIDES */
+@media (max-width: 768px) {
+  body, html {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+  .page-container, .app-main-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .table-responsive, [style*="overflow-x: auto"], .horizontal-scroll, table, .scroll-x {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  [style*="height: 100vh"], [style*="min-height: 100vh"] {
+    height: auto !important;
+    min-height: 100vh !important;
+  }
+  .header-pill, .header-bell {
+    padding: 6px 12px !important;
+    height: 36px !important;
+    font-size: 12px !important;
+  }
+  [style*="display: flex"]:not(.scroll-x):not(.horizontal-scroll):not(.no-wrap) {
+    max-width: 100% !important;
+  }
+  .page-title-row, [style*="justify-content: space-between"][style*="align-items: center"]:not(.scroll-x) {
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+  }
+  .hero-sell-banner {
+    background-size: cover !important;
+    background-position: center !important;
+    min-height: 160px !important;
+    padding: 20px !important;
+    border-radius: 16px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+  h1, h2, [style*="font-size: 56px"], [style*="font-size: clamp(40px"] {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+  h3, [style*="font-size: clamp(18px"] {
+    font-size: 18px !important;
+  }
+  
+  /* Convert multi-column grids into horizontally swipeable carousels on mobile */
+  [style*="grid-template-columns: repeat(3"], 
+  [style*="grid-template-columns: repeat(4"],
+  .hero-cards-grid, 
+  .options-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 12px !important;
+    gap: 16px !important;
+  }
+  
+  [style*="grid-template-columns: repeat(3"] > *, 
+  [style*="grid-template-columns: repeat(4"] > *,
+  .hero-cards-grid > *, 
+  .options-grid > * {
+    flex: 0 0 85% !important;
+    min-width: 240px !important;
+    scroll-snap-align: center !important;
+  }
+  
+  /* Fix remaining oversized grids by stacking them */
+  [style*="display: grid"]:not([style*="grid-template-columns: repeat(3"]):not([style*="grid-template-columns: repeat(4"]):not(.scroll-x) {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    min-height: auto !important;
+  }
+  
+  .card, .action-card, .buyer-card, .stat-card, .ui-card, .metric-card {
+    padding: 16px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  button, .btn {
+    max-width: 100% !important;
+    white-space: normal !important;
+    height: auto !important;
+    min-height: 44px !important;
+  }
+  body {
+    padding-bottom: 80px !important;
+  }
+}
+
+</style>
+  <script type="module" crossorigin src="/assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
+  <script type="module" crossorigin src="/assets/index-DhjmqKMq.js"></script>
+  <script type="module" crossorigin src="/assets/guided-tour-BU9_qTj9.js"></script>
+  <script type="module" crossorigin src="/assets/farmer-app-Cb21K9KM.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/guided-tour-D54wl7ew.css">
+  <link rel="stylesheet" crossorigin href="/assets/style-Dd8R9P_v.css">
 </head>
-<body data-page="collectiveLogistics">
+<body data-page="logistics">
+<div id="google_translate_element" style="display:none;"></div>
   <div id="app-drawer-backdrop" class="drawer-backdrop"></div>
 
   <aside id="app-sidebar-drawer" aria-label="Main Navigation">
@@ -195,6 +647,12 @@
         </a>
       </li>
       <li>
+        <a href="/farmer-production-alerts.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          <span>Crop Production Alerts</span>
+        </a>
+      </li>
+      <li>
         <a href="/farmer-grade-sell.html" class="sidebar-nav-link">
           <svg class="nav-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
           <span>Grade & Sell</span>
@@ -219,18 +677,8 @@
         </a>
       </li>
       <li class="sidebar-divider"></li>
-      <li>
-        <a href="#" class="sidebar-nav-link">
-          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          <span>Help & Support</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="sidebar-nav-link">
-          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-          <span>Settings</span>
-        </a>
-      </li>
+      
+      
     </ul>
     
     <div class="sidebar-footer-promo">
@@ -261,15 +709,12 @@
           <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
           Read Aloud
         </button>
-        <div class="header-bell">
-          <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-          <span class="bell-badge">3</span>
-        </div>
+        
         <div class="profile-pill">
           <img src="/assets/farmer_portrait.jpg" alt="Ramesh Kumar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" />
           <div style="display: flex; flex-direction: column;">
             <span style="font-size: 14px; font-weight: 700; color: #11261A;" class="sync-farmer-name">Ramesh Kumar</span>
-            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Kolar, KA</span>
+            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Krishna District, AP</span>
           </div>
           <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
@@ -305,7 +750,7 @@
         <div>
           <h3 class="stat-val">12</h3>
           <p class="stat-lbl">Active Farmer Groups</p>
-          <p class="stat-sub">In Kolar District</p>
+          <p class="stat-sub">In Krishna District</p>
         </div>
       </div>
       <div class="stat-card">
@@ -348,9 +793,9 @@
 
         <div class="filters-inline">
           Filter by: 
-          <div class="filter-btn">From: Kolar <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <div class="filter-btn">From: Krishna <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
           <div class="filter-btn">To: All Markets <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
-          <div class="filter-btn">Crop: <span class="sync-crop-name">Tomato</span> <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+          <div class="filter-btn">Crop: <span class="sync-crop-name">Potato</span> <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
           <div class="filter-btn">Date: This Week <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
         </div>
 
@@ -362,21 +807,21 @@
           </div>
           <div class="tc-mid">
             <div class="tc-name-row">
-              <h4 class="tc-name">Ravi Transport</h4>
+              <h4 class="tc-name">Mathrusri Logistics</h4>
               <span class="verified-badge"><svg style="width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>
             </div>
             <div class="tc-route">
               <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              Kolar → Bengaluru APMC
+              1.0 km away
             </div>
             <div class="tc-specs">
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 2.5 Ton Capacity</div>
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available: 28 May 2025</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 14-ft Eicher (3500 kg)</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available Now</div>
             </div>
           </div>
           <div class="tc-right">
-            <div class="tc-price">₹ 4,500</div>
-            <div class="tc-est">(₹ 18 / kg est.)</div>
+            <div class="tc-price">₹ 52 / km</div>
+            <div class="tc-est">Mathrusri Logistics</div>
             <a href="#" class="btn-book">Book Now</a>
             <a href="#" class="tc-details-link">View Details <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
           </div>
@@ -389,21 +834,21 @@
           </div>
           <div class="tc-mid">
             <div class="tc-name-row">
-              <h4 class="tc-name">Sri Venkateshwara Logistics</h4>
+              <h4 class="tc-name">Kranti Road Transport</h4>
               <span class="verified-badge"><svg style="width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>
             </div>
             <div class="tc-route">
               <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              Kolar → Chikkaballapur
+              1.1 km away
             </div>
             <div class="tc-specs">
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 5 Ton Capacity</div>
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available: 29 May 2025</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> Bada Dost (1500 kg)</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available Now</div>
             </div>
           </div>
           <div class="tc-right">
-            <div class="tc-price">₹ 6,000</div>
-            <div class="tc-est">(₹ 20 / kg est.)</div>
+            <div class="tc-price">₹ 29 / km</div>
+            <div class="tc-est">Kranti Road Transport</div>
             <a href="#" class="btn-book">Book Now</a>
             <a href="#" class="tc-details-link">View Details <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
           </div>
@@ -416,52 +861,26 @@
           </div>
           <div class="tc-mid">
             <div class="tc-name-row">
-              <h4 class="tc-name">Nandi Cargo Services</h4>
+              <h4 class="tc-name">Sri Panduranga Lorry Transport</h4>
               <span class="verified-badge"><svg style="width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Verified</span>
             </div>
             <div class="tc-route">
               <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              Kolar → Hosakote
+              1.4 km away
             </div>
             <div class="tc-specs">
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 3 Ton Capacity</div>
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available: 28 May 2025</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 14-ft Eicher (3500 kg)</div>
+              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available Now</div>
             </div>
           </div>
           <div class="tc-right">
-            <div class="tc-price">₹ 5,000</div>
-            <div class="tc-est">(₹ 19 / kg est.)</div>
+            <div class="tc-price">₹ 55 / km</div>
+            <div class="tc-est">Sri Panduranga Lorry Transport</div>
             <a href="#" class="btn-book">Book Now</a>
             <a href="#" class="tc-details-link">View Details <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
           </div>
         </div>
 
-        <!-- Card 4 -->
-        <div class="transport-card">
-          <div class="tc-img-wrap">
-            <img src="/assets/transport_vehicle.jpg" class="tc-img truck-w" alt="Truck" />
-          </div>
-          <div class="tc-mid">
-            <div class="tc-name-row">
-              <h4 class="tc-name">Local Farmer Shared Transport</h4>
-              <span class="shared-badge"><svg style="width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg> Shared</span>
-            </div>
-            <div class="tc-route">
-              <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              Kolar → Bengaluru (Group)
-            </div>
-            <div class="tc-specs">
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg> 1.5 Ton (Shared)</div>
-              <div class="tc-spec-item"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Available: 30 May 2025</div>
-            </div>
-          </div>
-          <div class="tc-right">
-            <div class="tc-price">₹ 3,000</div>
-            <div class="tc-est">(₹ 15 / kg est.)</div>
-            <a href="#" class="btn-book">Book Seat</a>
-            <a href="#" class="tc-details-link">View Details <svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-          </div>
-        </div>
 
         <!-- Banner -->
         <div class="group-promo">
@@ -490,23 +909,23 @@
             </svg>
             
             <svg style="position: absolute; top: 110px; left: 40px; width: 14px; height: 14px; stroke: #8F9E96; fill: #8F9E96;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
-            <div style="position: absolute; top: 95px; left: 35px; font-size: 10px; font-weight: 600; color: #4A5C52;">Tumakuru</div>
+            <div style="position: absolute; top: 95px; left: 35px; font-size: 10px; font-weight: 600; color: #4A5C52;">Nuzvid</div>
             
             <svg style="position: absolute; top: 100px; right: 100px; width: 14px; height: 14px; stroke: #8F9E96; fill: #8F9E96;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
-            <div style="position: absolute; top: 115px; right: 85px; font-size: 10px; font-weight: 600; color: #4A5C52;">Hosakote</div>
+            <div style="position: absolute; top: 115px; right: 85px; font-size: 10px; font-weight: 600; color: #4A5C52;">Machilipatnam</div>
             
             <svg style="position: absolute; top: 60px; right: 140px; width: 14px; height: 14px; stroke: #8F9E96; fill: #8F9E96;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
-            <div style="position: absolute; top: 45px; right: 100px; font-size: 10px; font-weight: 600; color: #4A5C52;">Doddaballapur</div>
+            <div style="position: absolute; top: 45px; right: 100px; font-size: 10px; font-weight: 600; color: #4A5C52;">Mylavaram</div>
 
-            <!-- Start Pin (Kolar) -->
+            <!-- Start Pin (Krishna) -->
             <svg style="position: absolute; top: 33px; right: 35px; width: 16px; height: 16px; stroke: #1B4D35; fill: #1B4D35;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
-            <div style="position: absolute; top: 32px; right: -50px; font-size: 12px; font-weight: 800; color: #11261A; width: 80px;">Kolar<br><span style="font-size: 10px; font-weight: 600; color: #65796E;">(Your Location)</span></div>
+            <div style="position: absolute; top: 32px; right: -50px; font-size: 12px; font-weight: 800; color: #11261A; width: 80px;">Krishna<br><span style="font-size: 10px; font-weight: 600; color: #65796E;">(Your Location)</span></div>
 
-            <!-- End Pin (Bengaluru) -->
+            <!-- End Pin (Vijayawada) -->
             <svg style="position: absolute; top: 162px; left: 143px; width: 16px; height: 16px; stroke: #E03131; fill: #E03131;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg>
-            <div style="position: absolute; top: 180px; left: 110px; font-size: 12px; font-weight: 800; color: #11261A;">Bengaluru</div>
+            <div style="position: absolute; top: 180px; left: 110px; font-size: 12px; font-weight: 800; color: #11261A;">Vijayawada</div>
             
-            <div style="position: absolute; top: 162px; left: 170px; background: white; padding: 4px 8px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-size: 11px; font-weight: 800; color: #11261A;">Bengaluru APMC</div>
+            <div style="position: absolute; top: 162px; left: 170px; background: white; padding: 4px 8px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-size: 11px; font-weight: 800; color: #11261A;">Vijayawada Factory</div>
           </div>
           <div class="map-legend">
             <div class="legend-item"><svg style="width: 12px; height: 12px; stroke: #1B4D35; fill: #1B4D35;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle></svg> Your Location</div>
@@ -525,7 +944,7 @@
             <div class="center-item">
               <div class="ci-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
               <div class="ci-mid">
-                <h4 class="ci-name">Kolar Farmer Collection Center</h4>
+                <h4 class="ci-name">Krishna Farmer Collection Center</h4>
                 <div class="ci-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> 5 km</div>
               </div>
               <button class="btn-ci">View Details</button>
@@ -533,7 +952,7 @@
             <div class="center-item">
               <div class="ci-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
               <div class="ci-mid">
-                <h4 class="ci-name">Chikkaballapur Cold Storage</h4>
+                <h4 class="ci-name">Gudivada Cold Storage</h4>
                 <div class="ci-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> 28 km</div>
               </div>
               <button class="btn-ci">View Details</button>
@@ -541,7 +960,7 @@
             <div class="center-item">
               <div class="ci-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
               <div class="ci-mid">
-                <h4 class="ci-name">Bengaluru APMC Yard</h4>
+                <h4 class="ci-name">Vijayawada Factory Yard</h4>
                 <div class="ci-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> 45 km</div>
               </div>
               <button class="btn-ci">View Details</button>
@@ -596,6 +1015,234 @@
       <img src="/assets/farmer_illustration.jpg" class="fab-img" alt="Farmer illustration" />
     </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const bookButtons = document.querySelectorAll('.btn-book');
+      bookButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const card = btn.closest('.transport-card');
+          const driverName = card ? card.querySelector('.tc-name')?.innerText || 'Ravi Kumar' : 'Ravi Kumar';
+          const price = card ? card.querySelector('.tc-price')?.innerText || '₹ 1,200' : '₹ 1,200';
 
+          const vehicleInfo = card ? card.querySelector('.tc-spec-item')?.innerText || 'Tata Ace (AP 16 AB 1234)' : 'Tata Ace (AP 16 AB 1234)';
+
+          const modalHtml = `
+            <div id="booking-modal-backdrop" style="position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(3px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+              <div style="background: white; border-radius: 18px; padding: 28px; max-width: 450px; width: 100%; box-shadow: 0 12px 35px rgba(0,0,0,0.22); text-align: center;">
+                <div style="width: 56px; height: 56px; background: #E8F4EC; color: #1B4D35; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
+                  <svg style="width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 800; color: #11261A; margin: 0 0 6px;">Transport Booking Details</h3>
+                <p style="font-size: 13.5px; color: #65796E; margin: 0 0 20px;">Shared Logistics Ride with ${driverName}</p>
+
+                <div style="background: #F8FAF9; border: 1px solid #E8ECEF; border-radius: 12px; padding: 16px; text-align: left; margin-bottom: 20px;">
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52; margin-bottom: 8px;"><span>Vehicle</span><strong style="color: #11261A;">${vehicleInfo}</strong></div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52; margin-bottom: 8px;"><span>Driver</span><strong style="color: #11261A;">${driverName} (⭐ 4.8)</strong></div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52; margin-bottom: 8px;"><span>Estimated Fare</span><strong style="color: #165A31; font-size: 16px;">${price}</strong></div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52;"><span>Pickup ETA</span><strong style="color: #D97706;">Today, 4:30 PM (in 45 mins)</strong></div>
+                </div>
+
+                <div style="display: flex; gap: 12px;">
+                  <button id="cancel-booking-btn" style="flex: 1; padding: 12px; border: 1px solid #E8ECEF; background: white; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; color: #65796E;">Cancel</button>
+                  <button id="send-request-btn" style="flex: 1.2; padding: 12px; border: none; background: #1B4D35; color: white; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(27,77,53,0.25);">Send a Request</button>
+                </div>
+              </div>
+            </div>
+          `;
+          document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+          document.getElementById('cancel-booking-btn').addEventListener('click', () => {
+            document.getElementById('booking-modal-backdrop').remove();
+          });
+
+          // When "Send a Request" is clicked, transition to the Negotiation Modal
+          document.getElementById('send-request-btn').addEventListener('click', () => {
+            document.getElementById('booking-modal-backdrop').remove();
+            openNegotiationModal(driverName, price, vehicleInfo, btn);
+          });
+
+          function openNegotiationModal(driverName, price, vehicleInfo, targetBtn) {
+            const negModalHtml = `
+              <div id="negotiation-modal-backdrop" style="position: fixed; inset: 0; background: rgba(11,61,46,0.65); backdrop-filter: blur(4px); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+                <div style="background: white; border-radius: 20px; padding: 28px 30px; max-width: 500px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.25); text-align: left; max-height: 90vh; overflow-y: auto;">
+                  
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div style="width: 38px; height: 38px; border-radius: 50%; background: #E8F4EC; color: #1B4D35; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                      </div>
+                      <h3 style="font-size: 19px; font-weight: 800; color: #11261A; margin: 0;">Negotiate & Customize Request</h3>
+                    </div>
+                    <button id="close-neg-x" style="background: none; border: none; font-size: 24px; color: #8F9E96; cursor: pointer; line-height: 1;">&times;</button>
+                  </div>
+                  
+                  <p style="font-size: 13px; color: #65796E; margin: 0 0 18px; line-height: 1.4;">Send your customized price and scheduling offer to <strong>${driverName}</strong>.</p>
+
+                  <!-- Price / Rate Negotiation -->
+                  <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Negotiated Fare / Rate (Your Offer)</label>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <input id="neg-fare-input" type="text" value="${price}" style="flex: 1; padding: 10px 14px; border: 1.5px solid #1B4D35; border-radius: 10px; font-size: 15px; font-weight: 700; color: #165A31; background: #F4FAF6; outline: none;">
+                      <button type="button" class="btn-quick-disc" data-disc="10" style="padding: 10px 12px; font-size: 12px; font-weight: 700; border: 1px solid #CDE6D4; background: #E8F4EC; color: #1B4D35; border-radius: 8px; cursor: pointer; white-space: nowrap;">-10% Offer</button>
+                      <button type="button" class="btn-quick-disc" data-disc="15" style="padding: 10px 12px; font-size: 12px; font-weight: 700; border: 1px solid #CDE6D4; background: #E8F4EC; color: #1B4D35; border-radius: 8px; cursor: pointer; white-space: nowrap;">-15% Offer</button>
+                    </div>
+                    <span style="font-size: 11px; color: #8F9E96; display: block; margin-top: 4px;">Standard listed rate: ${price}. Drivers usually accept within 10% - 15%.</span>
+                  </div>
+
+                  <!-- Location: Pickup & Destination -->
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+                    <div>
+                      <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Pickup Location</label>
+                      <input id="neg-pickup-loc" type="text" value="Chennuboina Farm, Krishna" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #E8ECEF; border-radius: 10px; font-size: 13px; color: #11261A; background: #F8FAF9; outline: none;">
+                    </div>
+                    <div>
+                      <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Destination Market</label>
+                      <select id="neg-dest-loc" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #E8ECEF; border-radius: 10px; font-size: 13px; color: #11261A; background: #F8FAF9; outline: none;">
+                        <option value="Vijayawada APMC (45 km)">Vijayawada APMC (45 km)</option>
+                        <option value="Guntur Market (28 km)">Guntur Market (28 km)</option>
+                        <option value="Machilipatnam APMC (38 km)">Machilipatnam APMC (38 km)</option>
+                        <option value="Krishna Local Mandi (12 km)">Krishna Local Mandi (12 km)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Date & Time -->
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+                    <div>
+                      <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Pickup Date</label>
+                      <input id="neg-pickup-date" type="date" value="2025-05-26" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #E8ECEF; border-radius: 10px; font-size: 13px; color: #11261A; background: #F8FAF9; outline: none;">
+                    </div>
+                    <div>
+                      <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Pickup Time Window</label>
+                      <select id="neg-pickup-time" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #E8ECEF; border-radius: 10px; font-size: 13px; color: #11261A; background: #F8FAF9; outline: none;">
+                        <option value="Today, 4:30 PM (in 45 mins)">Today, 4:30 PM (in 45 mins)</option>
+                        <option value="Morning (06:00 AM - 10:00 AM)">Morning (06:00 AM - 10:00 AM)</option>
+                        <option value="Afternoon (01:00 PM - 04:00 PM)">Afternoon (01:00 PM - 04:00 PM)</option>
+                        <option value="Evening (05:00 PM - 08:00 PM)">Evening (05:00 PM - 08:00 PM)</option>
+                        <option value="Night (09:00 PM - 12:00 AM)">Night (09:00 PM - 12:00 AM)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Crop & Weight details -->
+                  <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Crop Load & Negotiation Note</label>
+                    <input id="neg-note" type="text" value="Potato (500 kg) — Shared group load flexible with nearby farmers." placeholder="Add special instructions or note to driver..." style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #E8ECEF; border-radius: 10px; font-size: 13px; color: #11261A; background: #F8FAF9; outline: none;">
+                  </div>
+
+                  <!-- Actions -->
+                  <div style="display: flex; gap: 12px;">
+                    <button id="cancel-neg-btn" style="flex: 1; padding: 12px; border: 1px solid #E8ECEF; background: white; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; color: #65796E;">Back</button>
+                    <button id="submit-neg-btn" style="flex: 1.5; padding: 12px; border: none; background: #1B4D35; color: white; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(27,77,53,0.25);">Submit Negotiated Request</button>
+                  </div>
+
+                </div>
+              </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', negModalHtml);
+
+            // Quick discount buttons
+            document.querySelectorAll('.btn-quick-disc').forEach(discBtn => {
+              discBtn.addEventListener('click', () => {
+                const percent = parseInt(discBtn.getAttribute('data-disc'), 10);
+                const numMatch = price.match(/(\d+)/);
+                if (numMatch) {
+                  const baseVal = parseInt(numMatch[1], 10);
+                  const discounted = Math.round(baseVal * (1 - percent / 100));
+                  document.getElementById('neg-fare-input').value = price.replace(numMatch[1], discounted);
+                }
+              });
+            });
+
+            const closeNeg = () => {
+              const el = document.getElementById('negotiation-modal-backdrop');
+              if (el) el.remove();
+            };
+            document.getElementById('close-neg-x').addEventListener('click', closeNeg);
+            document.getElementById('cancel-neg-btn').addEventListener('click', closeNeg);
+
+            document.getElementById('submit-neg-btn').addEventListener('click', () => {
+              const proposedFare = document.getElementById('neg-fare-input').value;
+              const dateVal = document.getElementById('neg-pickup-date').value;
+
+              const submitBtn = document.getElementById('submit-neg-btn');
+              submitBtn.innerText = "Sending Request...";
+              submitBtn.disabled = true;
+
+              setTimeout(() => {
+                closeNeg();
+                if (window.showToast) {
+                  window.showToast(`Request sent to ${driverName} (${proposedFare})! Driver notified to review your offer.`, 'success');
+                } else {
+                  alert(`✅ Request Sent to ${driverName} for ${proposedFare} on ${dateVal}! Driver will respond shortly.`);
+                }
+                if (targetBtn) {
+                  targetBtn.innerText = "Request Sent ⏳";
+                  targetBtn.style.background = "#E8F4EC";
+                  targetBtn.style.color = "#165A31";
+                  targetBtn.style.border = "1px solid #A8C7B4";
+                }
+              }, 800);
+            });
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Ask Vyapti & Guided Tour (Re-injected) -->
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Tabs
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+        tab.onclick = (e) => {
+            tabs.forEach(t => t.classList.remove('active'));
+            e.currentTarget.classList.add('active');
+            window.showToast('Loading ' + e.currentTarget.innerText.trim() + '...', 'info');
+        };
+    });
+    
+    // Join Farmer Groups Button
+    const findGroupBtn = document.querySelector('.btn-gp');
+    if (findGroupBtn) {
+        findGroupBtn.onclick = (e) => {
+            e.preventDefault();
+            window.showToast('Searching for verified Farmer Groups within 50km...', 'info');
+        };
+    }
+});
+
+</script>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-bottom-nav">
+      <a href="farmer-home.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </a>
+      <a href="farmer-my-farm.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        <span>Farm</span>
+      </a>
+      <a href="farmer-grade-sell.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Sell</span>
+      </a>
+      <a href="farmer-collective-logistics.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+        <span>Logistics</span>
+      </a>
+      <div class="mob-nav-item" onclick="document.getElementById('app-sidebar-drawer').classList.add('open'); document.getElementById('app-drawer-backdrop').classList.add('open');">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <span>More</span>
+      </div>
+    </div>
+    
 </body>
 </html>
+

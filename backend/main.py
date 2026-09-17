@@ -55,8 +55,8 @@ def root():
     return {
         "app": "Vyapti Kshetra API Engine",
         "status": "online",
-        "docs_url": "http://localhost:8000/docs",
-        "openapi_url": "http://localhost:8000/openapi.json",
+        "docs_url": "https://vyapthi-kshetra-backend.onrender.com/docs",
+        "openapi_url": "https://vyapthi-kshetra-backend.onrender.com/openapi.json",
         "modules": ["auth", "deals", "logistics", "potato_ai"],
         "osrm_routing": "enabled"
     }

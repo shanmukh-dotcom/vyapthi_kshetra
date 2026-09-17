@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VYAPTI KSHETRA - Market & Fair Price</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
   <style>
     body { background-color: #F8F9FA; font-family: var(--font-main); overflow-x: hidden; }
     
@@ -38,6 +38,75 @@
     .time-tab { padding: 8px 16px; border-radius: 8px; font-size: 13.5px; font-weight: 600; color: #65796E; cursor: pointer; }
     .time-tab.active { background: #1B4D35; color: #FFFFFF; }
     
+    
+    /* VIBRANT CARD COLORS */
+    .card { border: none !important; box-shadow: 0 10px 30px rgba(0,0,0,0.06) !important; color: #FFFFFF; }
+    .card-title, .card-title svg { color: #FFFFFF !important; stroke: #FFFFFF !important; fill: none; }
+    
+    .card-today-price {
+      background: linear-gradient(135deg, #0B3D2E 0%, #1A744B 100%) !important;
+    }
+    .card-today-price h2, .card-today-price p, .card-today-price .news-text { color: #FFFFFF !important; }
+    .potato-circle { background: rgba(255,255,255,0.2) !important; }
+    .trend-badge { background: rgba(255,255,255,0.2) !important; color: #FFFFFF !important; }
+
+    .card-fair-price {
+      background: linear-gradient(135deg, #F59F00 0%, #E85D04 100%) !important;
+    }
+    .card-fair-price .fair-price-box { background: rgba(255,255,255,0.2) !important; }
+    .card-fair-price h2, .card-fair-price p { color: #FFFFFF !important; }
+    .fair-check-list div { color: #FFFFFF !important; }
+    .fair-check-list svg { stroke: #FFFFFF !important; fill: rgba(255,255,255,0.3) !important; }
+
+    .card-trend {
+      background: linear-gradient(135deg, #1C7ED6 0%, #0B2B5E 100%) !important;
+    }
+    .card-trend text { fill: rgba(255,255,255,0.7) !important; }
+    
+    .card-nearby {
+      background: linear-gradient(135deg, #82C89A 0%, #2B6B39 100%) !important;
+    }
+    .nearby-table th, .nearby-table td { color: #FFFFFF !important; border-bottom-color: rgba(255,255,255,0.2) !important; }
+    .nearby-table tr:hover { background: rgba(255,255,255,0.1) !important; }
+    .card-link { color: #FFFFFF !important; }
+
+    .card-comparison {
+      background: linear-gradient(135deg, #9C36B5 0%, #5C007A 100%) !important;
+    }
+    .comp-name, .comp-price { color: #FFFFFF !important; }
+    .bar-dark { background: #FFFFFF !important; }
+    .bar-light { background: rgba(255,255,255,0.4) !important; }
+
+    .card-insight {
+      background: linear-gradient(135deg, #FDE68A 0%, #D97706 100%) !important;
+    }
+    .card-insight .insight-text { color: #432000 !important; font-weight: 600; }
+    .card-insight .insight-green-box { background: rgba(255,255,255,0.6) !important; }
+    .card-insight .insight-green-box h4, .card-insight .insight-green-box p { color: #432000 !important; }
+    .card-insight .card-title, .card-insight .card-title svg { color: #432000 !important; stroke: #432000 !important; }
+
+    .card-ds {
+      background: linear-gradient(135deg, #20C997 0%, #087F5B 100%) !important;
+    }
+    .ds-label { color: #FFFFFF !important; }
+    .ds-bar-bg { background: rgba(255,255,255,0.3) !important; }
+    .ds-bar-fill { background: #FFFFFF !important; }
+    .ds-high, .ds-low { color: #FFFFFF !important; }
+    .ds-msg { background: rgba(255,255,255,0.2) !important; color: #FFFFFF !important; }
+
+    .card-map {
+      background: linear-gradient(135deg, #F0F6EA 0%, #A3C9A8 100%) !important;
+    }
+    .card-map .card-title, .card-map .card-title svg { color: #1B4D35 !important; stroke: #1B4D35 !important; }
+
+    .card-news {
+      background: linear-gradient(135deg, #4A5C52 0%, #11261A 100%) !important;
+    }
+    .news-date { color: #A8C7B4 !important; }
+    .news-text { color: #FFFFFF !important; }
+    .news-dot { background: #82C89A !important; border-color: #4A5C52 !important; }
+    .news-item { border-left-color: rgba(255,255,255,0.2) !important; }
+
     /* Main Grid */
     .main-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     
@@ -48,7 +117,7 @@
     
     /* Card 1: Today's Market Price */
     .price-flex { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
-    .tomato-icon-lg { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .potato-icon-lg { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     .huge-price { font-size: 36px; font-weight: 800; color: #11261A; letter-spacing: -1px; }
     .trend-pill-up { background: #E8F4EC; color: #165A31; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
     .trend-pill-flat { background: #FEF3C7; color: #D97706; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
@@ -69,7 +138,7 @@
     /* Card 4: Nearby Markets Table */
     .nearby-table { width: 100%; border-collapse: collapse; font-size: 13px; }
     .nearby-table th { text-align: left; padding: 0 0 12px 0; color: #65796E; font-weight: 600; border-bottom: 1px solid #E8ECEF; }
-    .nearby-table td { padding: 14px 0; color: #11261A; border-bottom: 1px solid #F0F3F5; }
+    .nearby-table td { padding: 14px 0; color: #FFFFFF; border-bottom: 1px solid #F0F3F5; }
     .nearby-table tr:last-child td { border-bottom: none; padding-bottom: 0; }
     .td-price { font-weight: 700; }
     
@@ -159,11 +228,146 @@
       pointer-events: auto;
     }
   </style>
-  <script type="module" crossorigin src="/assets/style-vPCe4iK7.js"></script>
-  <script type="module" crossorigin src="/assets/farmer-app-CyacvP8E.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/style-C0Qmbr-M.css">
+<style>
+body { top: 0 !important; }
+.skiptranslate { display: none !important; }
+</style>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+}
+</script>
+
+<script>
+  (function() {
+    var lang = localStorage.getItem('vyapti_selected_language');
+    if (lang && lang !== 'en') {
+      document.cookie = "googtrans=/en/" + lang + "; path=/;";
+      document.cookie = "googtrans=/en/" + lang + "; domain=localhost; path=/;";
+    } else if (lang === 'en') {
+      document.cookie = "googtrans=/en/en; path=/;";
+      document.cookie = "googtrans=/en/en; domain=localhost; path=/;";
+    }
+  })();
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+
+
+
+
+<style>
+
+/* MOBILE UI STABILIZATION - GLOBAL OVERRIDES */
+@media (max-width: 768px) {
+  body, html {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+  .page-container, .app-main-layout {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .table-responsive, [style*="overflow-x: auto"], .horizontal-scroll, table, .scroll-x {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  [style*="height: 100vh"], [style*="min-height: 100vh"] {
+    height: auto !important;
+    min-height: 100vh !important;
+  }
+  .header-pill, .header-bell {
+    padding: 6px 12px !important;
+    height: 36px !important;
+    font-size: 12px !important;
+  }
+  [style*="display: flex"]:not(.scroll-x):not(.horizontal-scroll):not(.no-wrap) {
+    max-width: 100% !important;
+  }
+  .page-title-row, [style*="justify-content: space-between"][style*="align-items: center"]:not(.scroll-x) {
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+  }
+  .hero-sell-banner {
+    background-size: cover !important;
+    background-position: center !important;
+    min-height: 160px !important;
+    padding: 20px !important;
+    border-radius: 16px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+  h1, h2, [style*="font-size: 56px"], [style*="font-size: clamp(40px"] {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+  h3, [style*="font-size: clamp(18px"] {
+    font-size: 18px !important;
+  }
+  
+  /* Convert multi-column grids into horizontally swipeable carousels on mobile */
+  [style*="grid-template-columns: repeat(3"], 
+  [style*="grid-template-columns: repeat(4"],
+  .hero-cards-grid, 
+  .options-grid {
+    display: flex !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 12px !important;
+    gap: 16px !important;
+  }
+  
+  [style*="grid-template-columns: repeat(3"] > *, 
+  [style*="grid-template-columns: repeat(4"] > *,
+  .hero-cards-grid > *, 
+  .options-grid > * {
+    flex: 0 0 85% !important;
+    min-width: 240px !important;
+    scroll-snap-align: center !important;
+  }
+  
+  /* Fix remaining oversized grids by stacking them */
+  [style*="display: grid"]:not([style*="grid-template-columns: repeat(3"]):not([style*="grid-template-columns: repeat(4"]):not(.scroll-x) {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    min-height: auto !important;
+  }
+  
+  .card, .action-card, .buyer-card, .stat-card, .ui-card, .metric-card {
+    padding: 16px !important;
+    border-radius: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  img {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  button, .btn {
+    max-width: 100% !important;
+    white-space: normal !important;
+    height: auto !important;
+    min-height: 44px !important;
+  }
+  body {
+    padding-bottom: 80px !important;
+  }
+}
+
+</style>
+  <script type="module" crossorigin src="/assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
+  <script type="module" crossorigin src="/assets/index-DhjmqKMq.js"></script>
+  <script type="module" crossorigin src="/assets/guided-tour-BU9_qTj9.js"></script>
+  <script type="module" crossorigin src="/assets/farmer-app-Cb21K9KM.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/guided-tour-D54wl7ew.css">
+  <link rel="stylesheet" crossorigin href="/assets/style-Dd8R9P_v.css">
 </head>
 <body data-page="market">
+<div id="google_translate_element" style="display:none;"></div>
   <div id="app-drawer-backdrop" class="drawer-backdrop"></div>
 
   <aside id="app-sidebar-drawer" aria-label="Main Navigation">
@@ -215,18 +419,8 @@
         </a>
       </li>
       <li class="sidebar-divider"></li>
-      <li>
-        <a href="#" class="sidebar-nav-link">
-          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-          <span>Help & Support</span>
-        </a>
-      </li>
-      <li>
-        <a href="#" class="sidebar-nav-link">
-          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-          <span>Settings</span>
-        </a>
-      </li>
+      
+      
     </ul>
     
     <div class="sidebar-footer-solid">
@@ -246,23 +440,24 @@
       </div>
       </div>
       <div class="header-right">
-        <div class="header-pill">
-          <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-          English <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        </div>
+        <select id="header-lang-select" class="header-pill" style="border: 1px solid #E4EBE6; appearance: none; -webkit-appearance: none; padding-right: 32px; background: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 stroke=%22%2311261A%22 fill=%22none%22 stroke-width=%222%22 viewBox=%220 0 24 24%22><polyline points=%226 9 12 15 18 9%22></polyline></svg>') no-repeat right 12px center; background-color: #FFFFFF; font-family: inherit; font-size: 13.5px; font-weight: 600; color: #163323; cursor: pointer; outline: none; margin: 0; box-sizing: border-box; display: inline-flex; height: 40px;">
+        <option value="en">English</option>
+        <option value="hi">हिंदी (Hindi)</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        <option value="mr">मराठी (Marathi)</option>
+      </select>
         <button type="button" class="header-pill btn-read-aloud">
           <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
           Read Aloud
         </button>
-        <div class="header-bell">
-          <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-          <span class="bell-badge">3</span>
-        </div>
+        
         <div class="profile-pill">
           <img src="/assets/farmer_portrait.jpg" alt="Ramesh Kumar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" />
           <div style="display: flex; flex-direction: column;">
             <span style="font-size: 14px; font-weight: 700; color: #11261A;" class="sync-farmer-name">Ramesh Kumar</span>
-            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Kolar, KA</span>
+            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Krishna District, AP</span>
           </div>
           <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
@@ -286,11 +481,11 @@
     <div class="filters-row">
       <div class="filters-left">
         <div class="dropdown-btn">
-          <div style="font-size: 20px; line-height: 1;">🍅</div> <span class="sync-crop-name">Tomato</span> <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          <div style="font-size: 20px; line-height: 1;">🍅</div> <span class="sync-crop-name">Potato</span> <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
         <div class="dropdown-btn">
           <svg style="width: 18px; height: 18px; stroke: #1B4D35; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-          Nearby Markets (Karnataka)
+          Nearby Markets (Andhra Pradesh)
           <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </div>
       </div>
@@ -307,12 +502,12 @@
       
       <!-- Top Row -->
       <!-- Card 1: Today's Market Price -->
-      <div class="card">
+      <div class="card card-today-price">
         <div class="card-header">
           <h3 class="card-title">Today's Market Price <svg style="width: 16px; height: 16px; stroke: #8F9E96; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></h3>
         </div>
         <div class="price-flex">
-          <img src="/assets/tomato_crop.jpg" alt="Tomato" class="tomato-icon-lg" />
+          <img src="/assets/potato_crop.jpg" alt="Potato" class="potato-icon-lg" />
           <div>
             <div class="huge-price">₹ 22 <span style="font-size: 24px;">/ kg</span></div>
             <div style="margin-top: 6px; display: flex; align-items: center; gap: 8px;">
@@ -328,7 +523,7 @@
       </div>
 
       <!-- Card 2: Fair Price -->
-      <div class="card">
+      <div class="card card-fair-price">
         <div class="card-header">
           <h3 class="card-title">Fair Price for Farmers <svg style="width: 16px; height: 16px; stroke: #8F9E96; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></h3>
         </div>
@@ -345,7 +540,7 @@
       </div>
 
       <!-- Card 3: Price Trend -->
-      <div class="card">
+      <div class="card card-trend">
         <div class="card-header" style="margin-bottom: 0;">
           <h3 class="card-title">Price Trend (Last 6 Months)</h3>
         </div>
@@ -400,7 +595,7 @@
 
       <!-- Middle Row -->
       <!-- Card 4: Prices in Nearby Markets -->
-      <div class="card">
+      <div class="card card-nearby">
         <div class="card-header">
           <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Prices in Nearby Markets</h3>
           <a href="#" class="card-link">View on Map <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
@@ -417,35 +612,35 @@
           </thead>
           <tbody>
             <tr>
-              <td>Kolar APMC</td>
+              <td>Krishna District APMC</td>
               <td class="td-price">22</td>
               <td><span style="color: #165A31; font-weight: 700;">↑ +12%</span></td>
               <td style="color: #65796E;">12 km</td>
               <td style="color: #65796E;">High</td>
             </tr>
             <tr>
-              <td>Bengaluru APMC</td>
+              <td>Vijayawada APMC</td>
               <td class="td-price">24</td>
               <td><span style="color: #165A31; font-weight: 700;">↑ +9%</span></td>
               <td style="color: #65796E;">45 km</td>
               <td style="color: #65796E;">Medium</td>
             </tr>
             <tr>
-              <td>Chikkaballapur</td>
+              <td>Guntur</td>
               <td class="td-price">20</td>
               <td><span style="color: #165A31; font-weight: 700;">↑ +5%</span></td>
               <td style="color: #65796E;">28 km</td>
               <td style="color: #65796E;">Medium</td>
             </tr>
             <tr>
-              <td>Hoskote</td>
+              <td>Machilipatnam</td>
               <td class="td-price">21</td>
               <td><span style="color: #D97706; font-weight: 700;">→ 0%</span></td>
               <td style="color: #65796E;">38 km</td>
               <td style="color: #65796E;">Low</td>
             </tr>
             <tr>
-              <td>Doddaballapur</td>
+              <td>Tenali</td>
               <td class="td-price">20</td>
               <td><span style="color: #165A31; font-weight: 700;">↑ +8%</span></td>
               <td style="color: #65796E;">32 km</td>
@@ -456,33 +651,33 @@
       </div>
 
       <!-- Card 5: Price Comparison -->
-      <div class="card">
+      <div class="card card-comparison">
         <div class="card-header">
           <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Price Comparison</h3>
         </div>
         <div style="display: flex; flex-direction: column; justify-content: center; flex: 1;">
           <div class="comp-row">
-            <div class="comp-name">Your Area (Kolar)</div>
+            <div class="comp-name">Your Area (Krishna District)</div>
             <div class="comp-price">₹ 22</div>
             <div class="comp-bar-bg"><div class="comp-bar bar-dark" style="width: 70%;"></div></div>
           </div>
           <div class="comp-row">
-            <div class="comp-name">Bengaluru</div>
+            <div class="comp-name">Vijayawada</div>
             <div class="comp-price">₹ 24</div>
             <div class="comp-bar-bg"><div class="comp-bar bar-light" style="width: 90%;"></div></div>
           </div>
           <div class="comp-row">
-            <div class="comp-name">Chikkaballapur</div>
+            <div class="comp-name">Guntur</div>
             <div class="comp-price">₹ 20</div>
             <div class="comp-bar-bg"><div class="comp-bar bar-light" style="width: 50%;"></div></div>
           </div>
           <div class="comp-row">
-            <div class="comp-name">Hoskote</div>
+            <div class="comp-name">Machilipatnam</div>
             <div class="comp-price">₹ 21</div>
             <div class="comp-bar-bg"><div class="comp-bar bar-light" style="width: 60%;"></div></div>
           </div>
           <div class="comp-row">
-            <div class="comp-name">Doddaballapur</div>
+            <div class="comp-name">Tenali</div>
             <div class="comp-price">₹ 20</div>
             <div class="comp-bar-bg"><div class="comp-bar bar-light" style="width: 50%;"></div></div>
           </div>
@@ -490,22 +685,22 @@
       </div>
 
       <!-- Card 6: Market Insight -->
-      <div class="card insight-card">
+      <div class="card insight-card card-insight">
         <div class="card-header">
           <h3 class="card-title"><svg style="width: 20px; height: 20px; stroke: #D97706; fill: #FDE68A;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Market Insight</h3>
         </div>
         <div class="insight-text">
-          <span class="sync-crop-name">Tomato</span> prices are 12% higher this week due to lower supply in nearby markets.
+          <span class="sync-crop-name">Potato</span> prices are 12% higher this week due to lower supply in nearby markets.
         </div>
         <div class="insight-green-box">
           <h4><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg> Good time to sell</h4>
-          <p>Demand is high in Kolar, Bengaluru and Chikkaballapur markets.</p>
+          <p>Demand is high in Krishna District, Vijayawada and Guntur markets.</p>
         </div>
       </div>
 
       <!-- Bottom Row -->
       <!-- Card 7: Demand & Supply -->
-      <div class="card">
+      <div class="card card-ds">
         <div class="card-header">
           <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Demand & Supply</h3>
         </div>
@@ -526,7 +721,7 @@
       </div>
 
       <!-- Card 8: Market Locations Map -->
-      <div class="card map-card">
+      <div class="card map-card card-map">
         <div class="card-header" style="margin-bottom: 12px;">
           <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Market Locations</h3>
           <button style="background: white; border: 1px solid #E8ECEF; padding: 4px; border-radius: 6px; cursor: pointer;">
@@ -538,26 +733,26 @@
           
           <div class="map-pin-box" style="top: 20px; right: 40px;">
             <div class="pin-price">₹ 20 /kg <svg style="width:10px; height:10px; stroke:#65796E; fill:none; display:inline-block;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div>
-            <div class="pin-loc">Chikkaballapur</div>
+            <div class="pin-loc">Guntur</div>
           </div>
           <svg style="position: absolute; top: 58px; right: 100px; width: 14px; height: 14px; stroke: #1B4D35; fill: #1B4D35;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
           
           <div class="map-pin-box" style="bottom: 40px; left: 30px;">
             <div class="pin-price">₹ 24 /kg</div>
-            <div class="pin-loc">Bengaluru</div>
+            <div class="pin-loc">Vijayawada</div>
           </div>
           <svg style="position: absolute; bottom: 30px; left: 80px; width: 14px; height: 14px; stroke: #1B4D35; fill: #1B4D35;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
           
           <div class="map-pin-box" style="bottom: 40px; right: 40px;">
             <div class="pin-price">₹ 22 /kg</div>
-            <div class="pin-loc">Kolar</div>
+            <div class="pin-loc">Krishna District</div>
           </div>
           <svg style="position: absolute; bottom: 30px; right: 80px; width: 14px; height: 14px; stroke: #1B4D35; fill: #1B4D35;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
         </div>
       </div>
 
       <!-- Card 9: Market News -->
-      <div class="card">
+      <div class="card card-news">
         <div class="card-header">
           <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Market News</h3>
           <a href="#" class="card-link">View All <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
@@ -567,7 +762,7 @@
             <div class="news-dot"></div>
             <div class="news-content">
               <span class="news-date">24 May 2025</span>
-              <p class="news-text"><span class="sync-crop-name">Tomato</span> supply drops due to unseasonal rains in nearby regions.</p>
+              <p class="news-text"><span class="sync-crop-name">Potato</span> supply drops due to unseasonal rains in nearby regions.</p>
             </div>
             <svg style="width: 14px; height: 14px; stroke: #8F9E96; fill: none; flex-shrink: 0;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
@@ -583,7 +778,7 @@
             <div class="news-dot"></div>
             <div class="news-content">
               <span class="news-date">20 May 2025</span>
-              <p class="news-text">Increased demand from Bengaluru markets.</p>
+              <p class="news-text">Increased demand from Vijayawada markets.</p>
             </div>
             <svg style="width: 14px; height: 14px; stroke: #8F9E96; fill: none; flex-shrink: 0;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </div>
@@ -617,6 +812,50 @@
       Farmers<br>Feed the Future
     </div>
   </div>
+
+
+
+<script>
 
+document.addEventListener('DOMContentLoaded', () => {
+    // Time filters
+    const filterPills = document.querySelectorAll('.filter-pill');
+    filterPills.forEach(pill => {
+        pill.onclick = (e) => {
+            filterPills.forEach(p => { p.style.background = 'white'; p.style.color = '#4A5C52'; });
+            e.target.style.background = '#163323';
+            e.target.style.color = 'white';
+            window.showToast('Fetching latest market data for ' + e.target.innerText, 'info');
+        };
+    });
+});
+
+</script>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-bottom-nav">
+      <a href="farmer-home.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span>Home</span>
+      </a>
+      <a href="farmer-my-farm.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        <span>Farm</span>
+      </a>
+      <a href="farmer-grade-sell.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Sell</span>
+      </a>
+      <a href="farmer-collective-logistics.html" class="mob-nav-item">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+        <span>Logistics</span>
+      </a>
+      <div class="mob-nav-item" onclick="document.getElementById('app-sidebar-drawer').classList.add('open'); document.getElementById('app-drawer-backdrop').classList.add('open');">
+        <svg class="mob-nav-icon" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <span>More</span>
+      </div>
+    </div>
+    
 </body>
 </html>
+

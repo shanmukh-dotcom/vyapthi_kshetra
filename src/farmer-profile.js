@@ -1,3 +1,4 @@
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 const LANG_KEY = 'vyapti_selected_language';
 const ROLE_KEY = 'vyapti_selected_role';
 const PROFILE_KEY = 'vyapti_farmer_profile';
@@ -183,24 +184,54 @@ document.addEventListener('DOMContentLoaded', () => {
   let isSpeakingGuidance = false;
 
   function toggleVoiceGuidance() {
-    if (!('speechSynthesis' in window)) {
+    if (false) {
       showError('Speech synthesis is not supported in this browser.');
       return;
     }
 
     if (isSpeakingGuidance) {
-      window.speechSynthesis.cancel();
+      
+    try {
+      TextToSpeech.stop();
+    } catch(e) {}
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
+
       stopGuidanceState();
       return;
     }
 
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(langConfig.text);
-    utterance.lang = langConfig.locale;
-    utterance.rate = 0.92;
+    
+    try {
+      TextToSpeech.stop();
+    } catch(e) {}
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
 
-    const voices = window.speechSynthesis.getVoices();
-    if (voices && voices.length > 0) {
+    
+    try {
+      TextToSpeech.speak({
+        text: langConfig.text,
+        lang: langConfig.locale,
+        rate: 0.92
+      });
+      // emulate onend since capacitor doesn't easily support callbacks here
+      setTimeout(() => stopGuidanceState(), langConfig.text.length * 60);
+    } catch(e) {
+      if(window.speechSynthesis) {
+        const utterance = new SpeechSynthesisUtterance(langConfig.text);
+        // removed
+        // removed
+        // removed
+        // removed
+        // removed
+      }
+    }
+
+// removed utterance
+    // removed
+    // removed
+
+    // removed
+    if (false) {
       const match = voices.find((v) => v.lang === langConfig.locale || v.lang.startsWith(currentLang));
       if (match) utterance.voice = match;
     }
@@ -213,10 +244,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    utterance.onend = () => stopGuidanceState();
-    utterance.onerror = () => stopGuidanceState();
+    // removed
+    // removed
 
-    window.speechSynthesis.speak(utterance);
+    // removed
   }
 
   function stopGuidanceState() {
