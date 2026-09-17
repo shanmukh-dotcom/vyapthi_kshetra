@@ -916,25 +916,27 @@ function googleTranslateElementInit() {
           const driverName = card ? card.querySelector('.tc-name')?.innerText || 'Ravi Kumar' : 'Ravi Kumar';
           const price = card ? card.querySelector('.tc-price')?.innerText || '₹ 1,200' : '₹ 1,200';
 
+          const vehicleInfo = card ? card.querySelector('.tc-spec-item')?.innerText || 'Tata Ace (AP 16 AB 1234)' : 'Tata Ace (AP 16 AB 1234)';
+
           const modalHtml = `
-            <div id="booking-modal-backdrop" style="position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
-              <div style="background: white; border-radius: 16px; padding: 28px; max-width: 450px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center;">
+            <div id="booking-modal-backdrop" style="position: fixed; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(3px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+              <div style="background: white; border-radius: 18px; padding: 28px; max-width: 450px; width: 100%; box-shadow: 0 12px 35px rgba(0,0,0,0.22); text-align: center;">
                 <div style="width: 56px; height: 56px; background: #E8F4EC; color: #1B4D35; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">
                   <svg style="width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
                 </div>
-                <h3 style="font-size: 20px; font-weight: 800; color: #11261A; margin: 0 0 6px;">Confirm Transport Booking</h3>
+                <h3 style="font-size: 20px; font-weight: 800; color: #11261A; margin: 0 0 6px;">Transport Booking Details</h3>
                 <p style="font-size: 13.5px; color: #65796E; margin: 0 0 20px;">Shared Logistics Ride with ${driverName}</p>
 
                 <div style="background: #F8FAF9; border: 1px solid #E8ECEF; border-radius: 12px; padding: 16px; text-align: left; margin-bottom: 20px;">
-                  <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52; margin-bottom: 8px;"><span>Vehicle</span><strong style="color: #11261A;">Tata Ace (AP 16 AB 1234)</strong></div>
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52; margin-bottom: 8px;"><span>Vehicle</span><strong style="color: #11261A;">${vehicleInfo}</strong></div>
                   <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52; margin-bottom: 8px;"><span>Driver</span><strong style="color: #11261A;">${driverName} (⭐ 4.8)</strong></div>
                   <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52; margin-bottom: 8px;"><span>Estimated Fare</span><strong style="color: #165A31; font-size: 16px;">${price}</strong></div>
                   <div style="display: flex; justify-content: space-between; font-size: 13px; color: #4A5C52;"><span>Pickup ETA</span><strong style="color: #D97706;">Today, 4:30 PM (in 45 mins)</strong></div>
                 </div>
 
                 <div style="display: flex; gap: 12px;">
-                  <button id="cancel-booking-btn" style="flex: 1; padding: 12px; border: 1px solid #E8ECEF; background: white; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; color: #65796E;">Cancel</button>
-                  <button id="confirm-booking-btn" style="flex: 1; padding: 12px; border: none; background: #1B4D35; color: white; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer;">Confirm Booking</button>
+                  <button id="cancel-booking-btn" style="flex: 1; padding: 12px; border: 1px solid #E8ECEF; background: white; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; color: #65796E;">Cancel</button>
+                  <button id="send-request-btn" style="flex: 1.2; padding: 12px; border: none; background: #1B4D35; color: white; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(27,77,53,0.25);">Send a Request</button>
                 </div>
               </div>
             </div>
@@ -945,16 +947,136 @@ function googleTranslateElementInit() {
             document.getElementById('booking-modal-backdrop').remove();
           });
 
-          document.getElementById('confirm-booking-btn').addEventListener('click', () => {
-            const btnConfirm = document.getElementById('confirm-booking-btn');
-            btnConfirm.innerText = "Assigning Driver...";
-            btnConfirm.disabled = true;
-
-            setTimeout(() => {
-              document.getElementById('booking-modal-backdrop').remove();
-              alert(`🎉 Transport Booking Confirmed!\nDriver: ${driverName}\nContact: +91 98765 43210\nVehicle: Tata Ace (AP 16 AB 1234)\n\nLive tracking link sent to your phone!`);
-            }, 1500);
+          // When "Send a Request" is clicked, transition to the Negotiation Modal
+          document.getElementById('send-request-btn').addEventListener('click', () => {
+            document.getElementById('booking-modal-backdrop').remove();
+            openNegotiationModal(driverName, price, vehicleInfo, btn);
           });
+
+          function openNegotiationModal(driverName, price, vehicleInfo, targetBtn) {
+            const negModalHtml = `
+              <div id="negotiation-modal-backdrop" style="position: fixed; inset: 0; background: rgba(11,61,46,0.65); backdrop-filter: blur(4px); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+                <div style="background: white; border-radius: 20px; padding: 28px 30px; max-width: 500px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.25); text-align: left; max-height: 90vh; overflow-y: auto;">
+                  
+                  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <div style="width: 38px; height: 38px; border-radius: 50%; background: #E8F4EC; color: #1B4D35; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 2v20"></path><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                      </div>
+                      <h3 style="font-size: 19px; font-weight: 800; color: #11261A; margin: 0;">Negotiate & Customize Request</h3>
+                    </div>
+                    <button id="close-neg-x" style="background: none; border: none; font-size: 24px; color: #8F9E96; cursor: pointer; line-height: 1;">&times;</button>
+                  </div>
+                  
+                  <p style="font-size: 13px; color: #65796E; margin: 0 0 18px; line-height: 1.4;">Send your customized price and scheduling offer to <strong>${driverName}</strong>.</p>
+
+                  <!-- Price / Rate Negotiation -->
+                  <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Negotiated Fare / Rate (Your Offer)</label>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <input id="neg-fare-input" type="text" value="${price}" style="flex: 1; padding: 10px 14px; border: 1.5px solid #1B4D35; border-radius: 10px; font-size: 15px; font-weight: 700; color: #165A31; background: #F4FAF6; outline: none;">
+                      <button type="button" class="btn-quick-disc" data-disc="10" style="padding: 10px 12px; font-size: 12px; font-weight: 700; border: 1px solid #CDE6D4; background: #E8F4EC; color: #1B4D35; border-radius: 8px; cursor: pointer; white-space: nowrap;">-10% Offer</button>
+                      <button type="button" class="btn-quick-disc" data-disc="15" style="padding: 10px 12px; font-size: 12px; font-weight: 700; border: 1px solid #CDE6D4; background: #E8F4EC; color: #1B4D35; border-radius: 8px; cursor: pointer; white-space: nowrap;">-15% Offer</button>
+                    </div>
+                    <span style="font-size: 11px; color: #8F9E96; display: block; margin-top: 4px;">Standard listed rate: ${price}. Drivers usually accept within 10% - 15%.</span>
+                  </div>
+
+                  <!-- Location: Pickup & Destination -->
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+                    <div>
+                      <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Pickup Location</label>
+                      <input id="neg-pickup-loc" type="text" value="Chennuboina Farm, Krishna" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #E8ECEF; border-radius: 10px; font-size: 13px; color: #11261A; background: #F8FAF9; outline: none;">
+                    </div>
+                    <div>
+                      <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Destination Market</label>
+                      <select id="neg-dest-loc" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #E8ECEF; border-radius: 10px; font-size: 13px; color: #11261A; background: #F8FAF9; outline: none;">
+                        <option value="Vijayawada APMC (45 km)">Vijayawada APMC (45 km)</option>
+                        <option value="Guntur Market (28 km)">Guntur Market (28 km)</option>
+                        <option value="Machilipatnam APMC (38 km)">Machilipatnam APMC (38 km)</option>
+                        <option value="Krishna Local Mandi (12 km)">Krishna Local Mandi (12 km)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Date & Time -->
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+                    <div>
+                      <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Pickup Date</label>
+                      <input id="neg-pickup-date" type="date" value="2025-05-26" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #E8ECEF; border-radius: 10px; font-size: 13px; color: #11261A; background: #F8FAF9; outline: none;">
+                    </div>
+                    <div>
+                      <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Pickup Time Window</label>
+                      <select id="neg-pickup-time" style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #E8ECEF; border-radius: 10px; font-size: 13px; color: #11261A; background: #F8FAF9; outline: none;">
+                        <option value="Today, 4:30 PM (in 45 mins)">Today, 4:30 PM (in 45 mins)</option>
+                        <option value="Morning (06:00 AM - 10:00 AM)">Morning (06:00 AM - 10:00 AM)</option>
+                        <option value="Afternoon (01:00 PM - 04:00 PM)">Afternoon (01:00 PM - 04:00 PM)</option>
+                        <option value="Evening (05:00 PM - 08:00 PM)">Evening (05:00 PM - 08:00 PM)</option>
+                        <option value="Night (09:00 PM - 12:00 AM)">Night (09:00 PM - 12:00 AM)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Crop & Weight details -->
+                  <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 12.5px; font-weight: 700; color: #11261A; margin-bottom: 6px;">Crop Load & Negotiation Note</label>
+                    <input id="neg-note" type="text" value="Potato (500 kg) — Shared group load flexible with nearby farmers." placeholder="Add special instructions or note to driver..." style="width: 100%; box-sizing: border-box; padding: 10px 12px; border: 1px solid #E8ECEF; border-radius: 10px; font-size: 13px; color: #11261A; background: #F8FAF9; outline: none;">
+                  </div>
+
+                  <!-- Actions -->
+                  <div style="display: flex; gap: 12px;">
+                    <button id="cancel-neg-btn" style="flex: 1; padding: 12px; border: 1px solid #E8ECEF; background: white; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; color: #65796E;">Back</button>
+                    <button id="submit-neg-btn" style="flex: 1.5; padding: 12px; border: none; background: #1B4D35; color: white; border-radius: 10px; font-size: 14px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 12px rgba(27,77,53,0.25);">Submit Negotiated Request</button>
+                  </div>
+
+                </div>
+              </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', negModalHtml);
+
+            // Quick discount buttons
+            document.querySelectorAll('.btn-quick-disc').forEach(discBtn => {
+              discBtn.addEventListener('click', () => {
+                const percent = parseInt(discBtn.getAttribute('data-disc'), 10);
+                const numMatch = price.match(/(\d+)/);
+                if (numMatch) {
+                  const baseVal = parseInt(numMatch[1], 10);
+                  const discounted = Math.round(baseVal * (1 - percent / 100));
+                  document.getElementById('neg-fare-input').value = price.replace(numMatch[1], discounted);
+                }
+              });
+            });
+
+            const closeNeg = () => {
+              const el = document.getElementById('negotiation-modal-backdrop');
+              if (el) el.remove();
+            };
+            document.getElementById('close-neg-x').addEventListener('click', closeNeg);
+            document.getElementById('cancel-neg-btn').addEventListener('click', closeNeg);
+
+            document.getElementById('submit-neg-btn').addEventListener('click', () => {
+              const proposedFare = document.getElementById('neg-fare-input').value;
+              const dateVal = document.getElementById('neg-pickup-date').value;
+
+              const submitBtn = document.getElementById('submit-neg-btn');
+              submitBtn.innerText = "Sending Request...";
+              submitBtn.disabled = true;
+
+              setTimeout(() => {
+                closeNeg();
+                if (window.showToast) {
+                  window.showToast(`Request sent to ${driverName} (${proposedFare})! Driver notified to review your offer.`, 'success');
+                } else {
+                  alert(`✅ Request Sent to ${driverName} for ${proposedFare} on ${dateVal}! Driver will respond shortly.`);
+                }
+                if (targetBtn) {
+                  targetBtn.innerText = "Request Sent ⏳";
+                  targetBtn.style.background = "#E8F4EC";
+                  targetBtn.style.color = "#165A31";
+                  targetBtn.style.border = "1px solid #A8C7B4";
+                }
+              }, 800);
+            });
+          }
         });
       });
     });
