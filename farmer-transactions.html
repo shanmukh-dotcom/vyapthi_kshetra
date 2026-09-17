@@ -801,6 +801,36 @@ function googleTranslateElementInit() {
     });
   </script>
 
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Transaction Tabs
+    const tabs = document.querySelectorAll('.tab-item');
+    tabs.forEach(tab => {
+        tab.onclick = (e) => {
+            tabs.forEach(t => t.classList.remove('active'));
+            e.currentTarget.classList.add('active');
+            window.showToast('Filtering view by ' + e.currentTarget.innerText.trim(), 'info');
+        };
+    });
+    
+    // Filter Dropdowns (Last 6 Months, Sort)
+    const dropdowns = document.querySelectorAll('.filter-dropdown');
+    dropdowns.forEach(btn => {
+        btn.onclick = () => window.showToast('Select options from dropdown menu', 'info');
+    });
+    
+    // Download Report Button
+    const downloadBtn = document.querySelector('.btn-download');
+    if (downloadBtn) {
+        downloadBtn.onclick = (e) => {
+            e.preventDefault();
+            window.showToast('Transactions report generating... download started', 'success');
+        };
+    }
+});
+
+</script>
 </body>
 </html>
 
