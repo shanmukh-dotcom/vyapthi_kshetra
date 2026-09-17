@@ -1,5 +1,14 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import fs from 'fs';
+
+// Get all html files in the root directory
+const files = fs.readdirSync(__dirname).filter(file => file.endsWith('.html') && file !== 'temp_drawer.html');
+const input = {};
+files.forEach(file => {
+  const name = file.replace('.html', '').replace(/-([a-z])/g, g => g[1].toUpperCase());
+  input[name] = resolve(__dirname, file);
+});
 
 export default defineConfig({
   server: {
@@ -7,47 +16,9 @@ export default defineConfig({
     open: true
   },
   build: {
+    outDir: 'dist',
     rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        role: resolve(__dirname, 'role.html'),
-        farmerProfile: resolve(__dirname, 'farmer-profile.html'),
-        farmerHome: resolve(__dirname, 'farmer-home.html'),
-        farmerMyFarm: resolve(__dirname, 'farmer-my-farm.html'),
-        farmerMarket: resolve(__dirname, 'farmer-market.html'),
-        farmerGradeSell: resolve(__dirname, 'farmer-grade-sell.html'),
-        farmerFindBuyers: resolve(__dirname, 'farmer-find-buyers.html'),
-        farmerCollectiveLogistics: resolve(__dirname, 'farmer-collective-logistics.html'),
-import { defineConfig } from 'vite';
-import { resolve } from 'path';
-
-export default defineConfig({
-  server: {
-    port: 3000,
-    open: true
-  },
-  build: {
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        role: resolve(__dirname, 'role.html'),
-        farmerProfile: resolve(__dirname, 'farmer-profile.html'),
-        farmerHome: resolve(__dirname, 'farmer-home.html'),
-        farmerMyFarm: resolve(__dirname, 'farmer-my-farm.html'),
-        farmerMarket: resolve(__dirname, 'farmer-market.html'),
-        farmerGradeSell: resolve(__dirname, 'farmer-grade-sell.html'),
-        farmerFindBuyers: resolve(__dirname, 'farmer-find-buyers.html'),
-        farmerCollectiveLogistics: resolve(__dirname, 'farmer-collective-logistics.html'),
-        farmerTransactions: resolve(__dirname, 'farmer-transactions.html'),
-        buyerDashboard: resolve(__dirname, 'buyer-dashboard.html'),
-        consumerHome: resolve(__dirname, 'consumer-home.html'),
-        consumerMyRequirements: resolve(__dirname, 'consumer-my-requirements.html'),
-        consumerMatchSource: resolve(__dirname, 'consumer-match-source.html'),
-        consumerSupplyJourney: resolve(__dirname, 'consumer-supply-journey.html'),
-        consumerOrdersDelivery: resolve(__dirname, 'consumer-orders-delivery.html'),
-        login: resolve(__dirname, 'login.html'),
-        home: resolve(__dirname, 'home.html'),
-      },
+      input
     },
   },
 });
