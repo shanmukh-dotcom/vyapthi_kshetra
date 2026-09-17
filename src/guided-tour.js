@@ -1,4 +1,9 @@
-import { TextToSpeech } from '@capacitor-community/text-to-speech';
+// Dynamic import: Capacitor TTS works on native (APK), falls back gracefully on web
+let TextToSpeech = { speak: () => Promise.resolve(), stop: () => {} };
+try {
+  const mod = await import('@capacitor-community/text-to-speech');
+  if (mod && mod.TextToSpeech) TextToSpeech = mod.TextToSpeech;
+} catch(e) { /* Running on web — will use browser speechSynthesis fallback */ }
 /**
  * VYAPTI KSHETRA — Guided Voice Tour with Element Highlighting
  * Walks the user through each page step-by-step, highlighting
@@ -278,62 +283,53 @@ class GuidedAssistant {
     const langKey = localStorage.getItem('vyapti_selected_language') || 'en';
     const langCodes = { 'en': 'en-IN', 'hi': 'hi-IN', 'te': 'te-IN', 'ta': 'ta-IN', 'kn': 'kn-IN' };
     const spokenText = step[langKey] || step.en;
+    const self = this;
 
-    
-    try {
-      TextToSpeech.stop();
-    } catch(e) {}
-    if(window.speechSynthesis) window.speechSynthesis.cancel();
+    // Advance to next step after speaking
+    const advanceStep = () => {
+      if (self.stopped) return;
+      setTimeout(() => {
+        if (self.stopped) return;
+        self.currentStep++;
+        self.playNextStep();
+      }, 600);
+    };
 
-    
+    // Stop any ongoing speech
+    try { TextToSpeech.stop(); } catch(e) {}
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+
+    // Try native Capacitor TTS first (works on Android)
+    let nativeTTSWorked = false;
     try {
       TextToSpeech.speak({
         text: spokenText,
         lang: langCodes[langKey] || 'en-IN',
         rate: 0.92
+      }).then(() => {
+        advanceStep();
+      }).catch(() => {
+        if (!nativeTTSWorked) useFallbackTTS();
       });
+      nativeTTSWorked = true;
     } catch(e) {
-      if(window.speechSynthesis) {
-        const utterance = new SpeechSynthesisUtterance(spokenText);
-        // removed
-        // removed
-        // removed
+      useFallbackTTS();
+    }
+
+    // Fallback: use browser SpeechSynthesis API
+    function useFallbackTTS() {
+      if (!window.speechSynthesis) {
+        const wordCount = spokenText.split(' ').length;
+        setTimeout(advanceStep, Math.max(2000, wordCount * 400));
+        return;
       }
+      const utterance = new SpeechSynthesisUtterance(spokenText);
+      utterance.lang = langCodes[langKey] || 'en-IN';
+      utterance.rate = 0.92;
+      utterance.onend = advanceStep;
+      utterance.onerror = advanceStep;
+      window.speechSynthesis.speak(utterance);
     }
-
-// removed utterance
-    // removed
-    // removed
-
-    // Try to find a native voice
-    // removed
-    // removed
-    if (false) {
-      utterance.voice = nativeVoice;
-    } else if (langKey === 'en') {
-      const indVoice = voices.find(v => v.lang.includes('en-IN'));
-      if (indVoice) utterance.voice = indVoice;
-    }
-
-    utterance.onend = () => {
-      if (this.stopped) return; // Don't advance if stopped
-      setTimeout(() => {
-        if (this.stopped) return;
-        this.currentStep++;
-        this.playNextStep();
-      }, 500);
-    };
-
-    utterance.onerror = () => {
-      if (this.stopped) return;
-      setTimeout(() => {
-        if (this.stopped) return;
-        this.currentStep++;
-        this.playNextStep();
-      }, 500);
-    };
-
-    // removed
   }
 
   
