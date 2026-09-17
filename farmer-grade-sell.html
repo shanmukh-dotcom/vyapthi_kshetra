@@ -905,28 +905,24 @@ function googleTranslateElementInit() {
           // 2. Call our developed Vision-AI + RAG Potato Quality Grading Backend
           
           
-          // Simulated Vision AI Backend
-          await new Promise(resolve => setTimeout(resolve, 2000));
-          const response = { ok: true };
-          const data = {
-            success: true,
-            grade: "A",
-            quality_score: 94,
-            score_breakdown: {
-              uniformity: 18,
-              freshness: 32,
-              ripeness: 19
-            },
-            defects: [],
-            market_guidance: {
-              recommended_price_min: 1450,
-              recommended_price_max: 1680,
-              market_sentiment: "High Demand",
-              nearest_mandi: "Vijayawada APMC"
-            },
-            overall_assessment: "Grade A Potato Assessment",
-            quality_reason: "High quality potatoes with very low defects and excellent freshness. Suitable for premium retail."
-          };
+          // Real Vision-AI + RAG Potato Quality Grading Backend Call
+          const response = await fetch('https://vyapthi-kshetra-backend.onrender.com/api/potato/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              crop: "Potato",
+              quantity_kg: 2000.0,
+              images: imageSources,
+              batch_notes: "Fresh harvest batch submitted for AI Quality Assessment"
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(`Vision AI backend returned HTTP ${response.status}`);
+          }
+
+          const data = await response.json();
+
 
 
 
