@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VYAPTI KSHETRA - Create Your Farmer Profile</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
+  <link rel="stylesheet" href="/src/style.css" />
+<style>
+body { top: 0 !important; }
+.skiptranslate { display: none !important; }
+</style>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <link rel="stylesheet" href="/src/ask-vyapti.css">
+</head>
+<body>
+<div id="google_translate_element" style="display:none;"></div>
+  <div class="page-container farmer-profile-bg">
+    
+    <main class="language-card profile-card">
+      
+      <!-- Voice Guidance Button (Top Right) -->
+      <button type="button" id="voice-guidance-btn" class="voice-button" aria-label="Listen to page audio instructions in your selected language">
+        <svg class="speaker-icon" viewBox="0 0 24 24">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path class="sound-wave" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path class="sound-wave-outer" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+        <span id="guidance-label">Listen (Telugu)</span>
+      </button>
+
+      <!-- Card Header -->
+      <div class="card-header">
+        <div class="globe-badge sprout-badge">
+          <svg class="sprout-icon" viewBox="0 0 24 24">
+            <path d="M7 20h10"></path>
+            <path d="M12 20v-8"></path>
+            <path d="M12 12A6 6 0 0 1 6 6c0 3.31 2.69 6 6 6z"></path>
+            <path d="M12 12a6 6 0 0 0 6-6c0 3.31-2.69 6-6 6z"></path>
+          </svg>
+        </div>
+        <h1 class="card-title">Create Your Farmer Profile</h1>
+        <p class="card-subtitle">Let's set up your farm identity to get started</p>
+      </div>
+
+      <!-- Profile Form -->
+      <form id="farmer-profile-form" class="profile-form" novalidate>
+        
+        <!-- Validation Alert Message -->
+        <div id="form-error-msg" class="error-toast" style="display: none;" role="alert"></div>
+
+        <!-- Field 1: Your Name -->
+        <div class="form-row-card">
+          <div class="field-icon-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <div class="field-body">
+            <label for="name-input" class="field-label">Your Name <span class="req-star">*</span></label>
+            <input type="text" id="name-input" class="field-input" placeholder="Enter your name" required />
+          </div>
+          <div class="field-actions">
+            <button type="button" class="btn-speech" data-target="name-input" title="Speak to enter your name">
+              <svg class="mic-icon" viewBox="0 0 24 24">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="22"></line>
+              </svg>
+              <span class="btn-action-text">Speak</span>
+            </button>
+            <span class="action-divider"></span>
+            <button type="button" class="btn-type" data-target="name-input" title="Type your name">
+              <svg class="pencil-icon" viewBox="0 0 24 24">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span class="btn-action-text">Type</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Field 2: Mobile Number -->
+        <div class="form-row-card">
+          <div class="field-icon-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </div>
+          <div class="field-body">
+            <label for="mobile-input" class="field-label">Mobile Number <span class="req-star">*</span></label>
+            <input type="tel" id="mobile-input" class="field-input" placeholder="Enter 10-digit mobile number" maxlength="10" required />
+          </div>
+          <div class="field-actions">
+            <button type="button" class="btn-speech" data-target="mobile-input" title="Speak to enter mobile number">
+              <svg class="mic-icon" viewBox="0 0 24 24">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="22"></line>
+              </svg>
+              <span class="btn-action-text">Speak</span>
+            </button>
+            <span class="action-divider"></span>
+            <button type="button" class="btn-type" data-target="mobile-input" title="Type mobile number">
+              <svg class="pencil-icon" viewBox="0 0 24 24">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span class="btn-action-text">Type</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Field 3: Village / Location -->
+        <div class="form-row-card">
+          <div class="field-icon-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <div class="field-body">
+            <label for="location-input" class="field-label">Village / Location <span class="req-star">*</span></label>
+            <input type="text" id="location-input" class="field-input" placeholder="Enter your village or area" required />
+          </div>
+          <div class="field-actions">
+            <button type="button" class="btn-speech" data-target="location-input" title="Speak to enter village or area">
+              <svg class="mic-icon" viewBox="0 0 24 24">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="22"></line>
+              </svg>
+              <span class="btn-action-text">Speak</span>
+            </button>
+            <span class="action-divider"></span>
+            <button type="button" class="btn-type" data-target="location-input" title="Type village or area">
+              <svg class="pencil-icon" viewBox="0 0 24 24">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span class="btn-action-text">Type</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Field 4: Main Crop -->
+        <div class="form-row-card">
+          <div class="field-icon-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24">
+              <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+              <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+            </svg>
+          </div>
+          <div class="field-body">
+            <label for="crop-input" class="field-label">Main Crop <span class="req-star">*</span></label>
+            <input type="text" id="crop-input" class="field-input" placeholder="e.g., Potato, Rice, Maize" required />
+          </div>
+          <div class="field-actions">
+            <button type="button" class="btn-speech" data-target="crop-input" title="Speak to enter main crop">
+              <svg class="mic-icon" viewBox="0 0 24 24">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="22"></line>
+              </svg>
+              <span class="btn-action-text">Speak</span>
+            </button>
+            <span class="action-divider"></span>
+            <button type="button" class="btn-type" data-target="crop-input" title="Type main crop">
+              <svg class="pencil-icon" viewBox="0 0 24 24">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span class="btn-action-text">Type</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Field 5: Approx. Quantity -->
+        <div class="form-row-card">
+          <div class="field-icon-wrap">
+            <svg class="field-icon" viewBox="0 0 24 24">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          </div>
+          <div class="field-body">
+            <label for="quantity-input" class="field-label">Approx. Quantity <span class="req-star">*</span></label>
+            <input type="text" id="quantity-input" class="field-input" placeholder="e.g., 500 kg, 2 tons" required />
+          </div>
+          <div class="field-actions">
+            <button type="button" class="btn-speech" data-target="quantity-input" title="Speak to enter crop quantity">
+              <svg class="mic-icon" viewBox="0 0 24 24">
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="22"></line>
+              </svg>
+              <span class="btn-action-text">Speak</span>
+            </button>
+            <span class="action-divider"></span>
+            <button type="button" class="btn-type" data-target="quantity-input" title="Type crop quantity">
+              <svg class="pencil-icon" viewBox="0 0 24 24">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span class="btn-action-text">Type</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Continue Button -->
+        <button type="submit" id="continue-profile-btn" class="continue-button">
+          <span>Continue</span>
+          <svg class="arrow-icon" viewBox="0 0 24 24">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </button>
+
+        <!-- Back Link -->
+        <button type="button" id="back-profile-btn" class="back-link-btn">
+          <svg class="back-arrow-icon" viewBox="0 0 24 24">
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Back</span>
+        </button>
+
+      </form>
+
+    </main>
+
+    <!-- Bottom Accessibility Bar -->
+    <nav class="bottom-access-bar" aria-label="Accessibility & Quick Support">
+      
+      <a href="tel:18001234567" class="access-bar-btn" title="Call Vyapti Kshetra Support">
+        <svg class="access-icon" viewBox="0 0 24 24">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span>Call Vyapti</span>
+      </a>
+
+      <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="access-bar-btn" title="WhatsApp Vyapti Support">
+        <svg class="access-icon" viewBox="0 0 24 24">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+        </svg>
+        <span>WhatsApp Vyapti</span>
+      </a>
+
+      <button type="button" id="access-voice-btn" class="access-bar-btn" title="Trigger Voice Explanation">
+        <svg class="access-icon" viewBox="0 0 24 24">
+          <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+          <line x1="12" y1="19" x2="12" y2="22"></line>
+        </svg>
+        <span>Voice Access</span>
+      </button>
+
+      <a href="/index.html" class="access-bar-btn" title="Change App Language">
+        <svg class="access-icon" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        <span>Change Language</span>
+      </a>
+
+    </nav>
+
+  </div>
+
+  <script type="module" src="/src/farmer-profile.js"></script>
+
+  <script src="/src/vyapti-kb.js"></script>
+  <script src="/src/ask-vyapti.js"></script>
+  <script src="/src/guided-tour.js"></script>
+</body>
+</html>

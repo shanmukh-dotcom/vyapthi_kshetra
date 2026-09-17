@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VYAPTI KSHETRA - Grade & Sell</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <link rel="stylesheet" href="/src/ask-vyapti.css" />
+  <style>
+    body { background-color: #F8F9FA; font-family: var(--font-main); overflow-x: hidden; }
+    
+    /* Sidebar */
+    #app-sidebar-drawer {  width: 260px; background: #FFFFFF; border-right: 1px solid #E8ECEF; box-shadow: none; left: 0; position: fixed; bottom: 0; top: 0; display: flex; flex-direction: column;  }
+    .app-main-layout { margin-left: 0; max-width: 1400px; padding: 30px 40px 100px; min-height: 100vh; display: flex; flex-direction: column; }
+    
+    /* Top Header */
+    .top-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .search-bar { background: #F0F3F5; border: 1px solid #E8ECEF; border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; width: 400px; }
+    .search-bar input { border: none; background: transparent; outline: none; width: 100%; font-size: 14px; font-family: inherit; color: #163323; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .header-pill { background: #F0F3F5; border: none; padding: 8px 16px; border-radius: 20px; font-size: 13.5px; font-weight: 600; color: #163323; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .header-bell { background: #FFFFFF; border: 1px solid #E4EBE6; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .bell-badge { position: absolute; top: -2px; right: -2px; background: #E03131; color: white; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
+    .profile-pill { background: #F0F3F5; padding: 4px 12px 4px 4px; border-radius: 24px; display: flex; align-items: center; gap: 10px; cursor: pointer; margin-left: 8px; }
+    
+    /* Page Title */
+    .page-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+    .page-title-left h1 { font-size: 32px; font-weight: 800; color: #0D2114; margin: 0 0 4px; display: flex; align-items: center; gap: 12px; letter-spacing: -0.5px; }
+    .page-title-left p { font-size: 15px; color: #65796E; margin: 0; }
+    .update-banner { background: #E8F4EC; padding: 12px 20px; border-radius: 12px; display: flex; align-items: center; gap: 16px; }
+    .update-banner-icon { color: #1B4D35; }
+    .update-banner-text { font-size: 14px; color: #163323; line-height: 1.4; }
+    
+    /* Stepper */
+    .stepper-container { display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; padding: 16px 32px; border-radius: 16px; border: 1px solid #E8ECEF; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .step-item { display: flex; align-items: center; gap: 10px; }
+    .step-circle { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+    .step-active .step-circle { background: #1B4D35; color: white; }
+    .step-inactive .step-circle { background: #F0F3F5; color: #65796E; }
+    .step-label { font-size: 13.5px; font-weight: 700; }
+    .step-active .step-label { color: #11261A; }
+    .step-inactive .step-label { color: #65796E; font-weight: 600; }
+    .step-line { flex: 1; height: 1px; background: #E8ECEF; margin: 0 16px; }
+    
+    /* Grids */
+    .main-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 24px; }
+    .main-grid-2 { display: grid; grid-template-columns: 2fr 1.2fr; gap: 24px; margin-bottom: 24px; }
+    
+    /* Cards */
+    .card { background: #FFFFFF; border: 1px solid #E8ECEF; border-radius: 16px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .card-title { font-size: 16px; font-weight: 700; color: #11261A; margin: 0; }
+    
+    /* Card 1: Upload Photos — Interactive */
+    .upload-sub { font-size: 13px; color: #65796E; margin-bottom: 16px; }
+    .dropzone { border: 2px dashed #C8D4CF; background: #F8F9FA; border-radius: 12px; padding: 30px 20px; text-align: center; margin-bottom: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; cursor: pointer; transition: all 0.2s; position: relative; }
+    .dropzone:hover, .dropzone.dragover { background: #EAF4EE; border-color: #1B4D35; border-style: solid; }
+    .dz-icon { color: #1B4D35; margin-bottom: 4px; }
+    .dz-title { font-size: 14.5px; font-weight: 700; color: #11261A; margin: 0; }
+    .dz-or { font-size: 12px; color: #65796E; }
+    .dz-subtitle { font-size: 12px; color: #8F9E96; margin-top: 4px; }
+    .thumb-row { display: flex; gap: 12px; justify-content: flex-start; flex-wrap: wrap; min-height: 60px; }
+    .thumb-wrap { position: relative; width: 60px; height: 60px; border-radius: 8px; overflow: hidden; border: 2px solid #CDE6D4; padding: 2px; background: #FFFFFF; box-shadow: 0 2px 6px rgba(27,77,53,0.08); flex-shrink: 0; transition: border-color 0.2s; }
+    .thumb-wrap:hover { border-color: #82C89A; }
+    .thumb-img { width: 100%; height: 100%; object-fit: cover; }
+    .thumb-close { position: absolute; top: 3px; right: 3px; width: 16px; height: 16px; background: rgba(255,255,255,0.92); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #11261A; cursor: pointer; font-size: 10px; font-weight: bold; border: none; line-height: 1; }
+    .thumb-add-btn { width: 60px; height: 60px; border-radius: 8px; border: 2px dashed #C8D4CF; display: flex; align-items: center; justify-content: center; color: #65796E; cursor: pointer; background: #F8F9FA; transition: all 0.2s; font-size: 22px; font-weight: 300; }
+    .thumb-add-btn:hover { border-color: #1B4D35; color: #1B4D35; background: #EAF4EE; }
+    #ai-analyze-btn { width: 100%; margin-top: 14px; background: #1B4D35; color: white; border: none; border-radius: 10px; padding: 12px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    #ai-analyze-btn:hover { background: #163323; }
+    #ai-analyze-btn:disabled { background: #C8D4CF; cursor: not-allowed; }
+    .upload-preview-img { width: 100%; max-height: 160px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; display: none; }
+
+    /* Card 2: AI Grading Results — States */
+    .ai-badge { background: #E8F4EC; color: #165A31; padding: 4px 10px; border-radius: 6px; font-size: 11.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+
+    /* State: idle (waiting for upload) */
+    #ai-idle-state { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 12px; padding: 32px 16px; color: #8F9E96; flex: 1; }
+    #ai-idle-state svg { opacity: 0.35; }
+    #ai-idle-state p { margin: 0; font-size: 13px; line-height: 1.5; }
+
+    /* State: scanning */
+    #ai-scanning-state { display: none; flex-direction: column; gap: 16px; flex: 1; }
+    .scan-preview-wrap { position: relative; width: 100%; height: 160px; border-radius: 12px; overflow: hidden; background: #0D2114; }
+    .scan-preview-wrap img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+    .scan-line { position: absolute; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, #4ADE80, transparent); box-shadow: 0 0 12px #4ADE80; animation: scanMove 1.4s ease-in-out infinite; top: 0; }
+    @keyframes scanMove { 0% { top: 0%; } 100% { top: 100%; } }
+    .scan-overlay-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(74,222,128,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(74,222,128,0.07) 1px, transparent 1px); background-size: 24px 24px; }
+    .scan-corner { position: absolute; width: 20px; height: 20px; border-color: #4ADE80; border-style: solid; }
+    .scan-corner.tl { top: 8px; left: 8px; border-width: 2px 0 0 2px; }
+    .scan-corner.tr { top: 8px; right: 8px; border-width: 2px 2px 0 0; }
+    .scan-corner.bl { bottom: 8px; left: 8px; border-width: 0 0 2px 2px; }
+    .scan-corner.br { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; }
+    .scan-label { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: rgba(13,33,20,0.75); color: #4ADE80; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; white-space: nowrap; letter-spacing: 0.5px; }
+    .scan-info { font-size: 13px; color: #65796E; text-align: center; }
+    .scan-steps { display: flex; flex-direction: column; gap: 8px; }
+    .scan-step { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: #4A5C52; }
+    .scan-step-dot { width: 8px; height: 8px; border-radius: 50%; background: #C8D4CF; flex-shrink: 0; transition: background 0.4s; }
+    .scan-step-dot.active { background: #1B4D35; animation: pulse-dot 0.8s ease-in-out infinite; }
+    .scan-step-dot.done { background: #2E7D32; }
+    @keyframes pulse-dot { 0%,100% { transform: scale(1); } 50% { transform: scale(1.4); } }
+    .scan-progress-bar-wrap { height: 6px; background: #E8ECEF; border-radius: 99px; overflow: hidden; }
+    .scan-progress-bar { height: 100%; background: linear-gradient(90deg, #1B4D35, #4ADE80); border-radius: 99px; width: 0%; transition: width 0.3s ease; }
+
+    /* State: result */
+    #ai-result-state { display: none; flex-direction: column; gap: 14px; flex: 1; }
+    .result-header-row { display: flex; gap: 14px; align-items: center; }
+    .result-img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+    .result-crop-info { display: flex; flex-direction: column; gap: 5px; }
+    .result-crop-name { font-size: 18px; font-weight: 800; color: #11261A; margin: 0; }
+    .result-grade-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 800; letter-spacing: 0.3px; }
+    .grade-aplus { background: #DCFCE7; color: #166534; border: 1px solid #BBF7D0; }
+    .grade-a    { background: #DCFCE7; color: #166534; border: 1px solid #BBF7D0; }
+    .grade-b    { background: #FEF9C3; color: #854D0E; border: 1px solid #FDE68A; }
+    .grade-c    { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
+    .result-conf { font-size: 11.5px; color: #1B4D35; font-weight: 600; }
+    .result-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .result-stat-item { background: #F8F9FA; border-radius: 8px; padding: 10px 12px; }
+    .result-stat-label { font-size: 10.5px; color: #65796E; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 3px; }
+    .result-stat-value { font-size: 14px; font-weight: 800; color: #11261A; }
+    .result-attrs { display: flex; flex-wrap: wrap; gap: 6px; }
+    .attr-chip { display: flex; align-items: center; gap: 4px; background: #F0F6EA; color: #165A31; border-radius: 20px; padding: 4px 10px; font-size: 11.5px; font-weight: 600; }
+    .attr-chip-bad { background: #FEF9C3; color: #854D0E; }
+    .price-rec-box { background: linear-gradient(135deg, #1B4D35 0%, #2D6A4F 100%); border-radius: 12px; padding: 14px 16px; color: white; }
+    .price-rec-label { font-size: 11px; font-weight: 600; opacity: 0.8; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .price-rec-value { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
+    .btn-list-sale { width: 100%; background: #4ADE80; color: #11261A; border: none; border-radius: 8px; padding: 10px 16px; font-size: 13px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .btn-list-sale:hover { background: #22C55E; }
+    .result-disclaimer { font-size: 10.5px; color: #8F9E96; text-align: center; margin-top: 2px; }
+
+    /* alert-green kept for the existing static result card uses */
+    .alert-green { background: #F0F6EA; border-radius: 12px; padding: 16px; display: flex; gap: 12px; align-items: flex-start; }
+    .alert-icon { width: 24px; height: 24px; background: #2B6B39; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .alert-text h4 { margin: 0 0 4px; font-size: 14.5px; font-weight: 700; color: #165A31; }
+    .alert-text p { margin: 0; font-size: 12px; color: #4A5C52; line-height: 1.4; }
+    
+    /* old static AI result layout helpers */
+    .ai-top-row { display: flex; gap: 20px; margin-bottom: 24px; align-items: stretch; }
+    .ai-crop-img { width: 100px; height: 100px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .ai-crop-info { display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+    .ai-crop-title { font-size: 20px; font-weight: 800; color: #11261A; margin: 0; }
+    .ai-conf { font-size: 12.5px; color: #1B4D35; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+    .stats-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; flex: 1; }
+    .stat-row { display: flex; justify-content: space-between; align-items: center; font-size: 13.5px; }
+    .stat-lbl { color: #65796E; display: flex; align-items: center; gap: 8px; }
+    .stat-val { color: #11261A; font-weight: 600; }
+    
+    /* Card 3: Buyer Matches */
+    .buyer-sub { font-size: 13px; color: #65796E; margin-bottom: 20px; }
+    .buyer-list { display: flex; flex-direction: column; gap: 20px; }
+    .buyer-item { display: flex; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid #F0F3F5; }
+    .buyer-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .b-icon { width: 40px; height: 40px; background: #F0F6EA; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #2B6B39; flex-shrink: 0; }
+    .b-mid { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .b-name { font-size: 14.5px; font-weight: 700; color: #11261A; margin: 0; line-height: 1.2; }
+    .b-loc { font-size: 12px; color: #65796E; display: flex; align-items: center; gap: 4px; }
+    .b-needs { font-size: 12.5px; color: #4A5C52; margin-top: 2px; }
+    .b-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 8px; }
+    .b-price { font-size: 16px; font-weight: 800; color: #11261A; }
+    .pref-badge { background: #E8F4EC; color: #165A31; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+    .btn-contact { background: #1B4D35; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; text-decoration: none; }
+    
+    /* Bottom Grid Left: Price Recommendation */
+    .rec-box { display: flex; gap: 24px; align-items: center; height: 100%; }
+    .rec-green-block { background: #E8F4EC; border-radius: 12px; padding: 24px; flex: 1; text-align: left; }
+    .rec-green-block p { margin: 0 0 8px; font-size: 13.5px; font-weight: 600; color: #165A31; }
+    .rec-green-block h2 { margin: 0; font-size: 36px; font-weight: 800; color: #1B4D35; }
+    .rec-list { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+    .rec-list-item { font-size: 13.5px; color: #4A5C52; display: flex; align-items: center; gap: 10px; }
+    
+    /* Bottom Grid Right: Next Steps */
+    .ns-sub { font-size: 13.5px; color: #65796E; margin-bottom: 20px; }
+    .ns-btns { display: flex; gap: 12px; margin-top: auto; }
+    .btn-lg { flex: 1; padding: 12px; border-radius: 8px; font-size: 13.5px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; text-decoration: none; }
+    .btn-solid { background: #1B4D35; color: white; border: 1px solid #1B4D35; }
+    .btn-outline { background: white; color: #1B4D35; border: 1px solid #E8ECEF; }
+    
+    /* Footer Help Block */
+    .help-footer-block { background: white; border-radius: 16px; border: 1px solid #E8ECEF; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); margin-top: auto; overflow: hidden; position: relative; }
+    .hf-left { display: flex; align-items: center; gap: 16px; flex: 1; }
+    .hf-icon { width: 48px; height: 48px; background: #F0F3F5; color: #1B4D35; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .hf-text h3 { margin: 0 0 4px; font-size: 16px; font-weight: 800; color: #11261A; }
+    .hf-text p { margin: 0; font-size: 13px; color: #65796E; }
+    
+    .hf-mid { display: flex; gap: 12px; z-index: 2; position: relative; }
+    .hf-btn { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: white; border: 1px solid #E8ECEF; border-radius: 8px; font-size: 13px; font-weight: 600; color: #11261A; cursor: pointer; text-decoration: none; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    
+    .hf-right { position: relative; height: 80px; width: 250px; display: flex; justify-content: flex-end; align-items: flex-end; }
+    .hf-speech { background: white; border: 1px solid #E8ECEF; border-radius: 12px; padding: 8px 12px; font-family: cursive, sans-serif; font-size: 14px; font-weight: bold; color: #1B4D35; position: absolute; right: 100px; top: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transform: rotate(-3deg); }
+    .hf-img { width: 120px; height: 100px; object-fit: contain; object-position: bottom; position: absolute; bottom: -20px; right: -20px; }
+    
+    .card-link { font-size: 12.5px; font-weight: 700; color: #1B4D35; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+    
+    /* Sidebar Footer solid for consistency with other pages */
+    .sidebar-footer-solid { margin: auto 20px 20px; background: #E8F4EC; padding: 16px; border-radius: 12px; }
+    .sidebar-footer-solid h5 { margin: 0 0 8px; font-size: 13px; color: #165A31; display: flex; align-items: flex-start; gap: 8px; line-height: 1.3; }
+  
+    /* Drawer Styles */
+    #app-sidebar-drawer {
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+    }
+    #app-sidebar-drawer.open {
+      transform: translateX(0);
+    }
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 33, 20, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .drawer-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  
+    /* SUBTLE TINTED CARDS TO FIX WHITE-WASHED LOOK */
+    .stepper-container {
+        background-color: #FAFCF8 !important;
+        border-color: #E2E8DF !important;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.03) !important;
+    }
+    
+    .card {
+        border-color: rgba(0,0,0,0.04) !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.04) !important;
+    }
+    
+    .main-grid-3 > .card:nth-child(1) {
+        background-color: #F4F8FA !important; /* Subtle slate blue for Upload */
+    }
+    .main-grid-3 > .card:nth-child(2) {
+        background-color: #F2F9F2 !important; /* Subtle fresh green for Grading */
+    }
+    .main-grid-3 > .card:nth-child(3) {
+        background-color: #FFFDF5 !important; /* Subtle cream/yellow for Transport */
+    }
+    
+    .main-grid-2 > .card:nth-child(1) {
+        background-color: #F7F5FA !important; /* Subtle lavender for Price Rec */
+    }
+    .main-grid-2 > .card:nth-child(2) {
+        background-color: #FDF6F4 !important; /* Subtle warm peach for Next Steps */
+    }
+
+  
+    /* Request Manual Check Button & Modal Styles */
+    .btn-manual-check {
+      background: linear-gradient(135deg, #EAF7EE 0%, #DCF2E3 100%);
+      border: 1.5px solid #2E8B57;
+      padding: 10px 20px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 14px rgba(46,139,87,0.12);
+      text-decoration: none;
+      font-family: inherit;
+    }
+    .btn-manual-check:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(46,139,87,0.22);
+      border-color: #1B4D35;
+      background: linear-gradient(135deg, #DDF2E3 0%, #CDEBD6 100%);
+    }
+    .bmc-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #1B4D35;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(27,77,53,0.25);
+    }
+    .bmc-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+    .bmc-content {
+      text-align: left;
+    }
+    .bmc-title {
+      font-size: 14.5px;
+      font-weight: 800;
+      color: #0B3D2E;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.2;
+    }
+    .bmc-title svg {
+      width: 14px;
+      height: 14px;
+      stroke: #2E8B57;
+      transition: transform 0.2s ease;
+    }
+    .btn-manual-check:hover .bmc-title svg {
+      transform: translateX(3px);
+    }
+    .bmc-sub {
+      font-size: 12px;
+      color: #2E6B48;
+      font-weight: 600;
+      margin-top: 3px;
+    }
+
+    .farm-modal-backdrop { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(11,61,46,0.6); backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+    .farm-modal-backdrop.show { display: flex; opacity: 1; }
+    .farm-modal-card { background: #FFFFFF; width: 90%; max-width: 520px; border-radius: 24px; padding: 32px; box-shadow: 0 20px 60px rgba(0,0,0,0.18); transform: translateY(20px); transition: transform 0.3s ease; position: relative; max-height: 90vh; overflow-y: auto; }
+    .farm-modal-backdrop.show .farm-modal-card { transform: translateY(0); }
+    .fm-title { font-size: 22px; font-weight: 800; color: #12231C; margin: 0 0 8px; display: flex; align-items: center; gap: 10px; }
+    .fm-subtitle { font-size: 13.5px; color: #64766E; margin: 0 0 20px; line-height: 1.5; }
+    .fm-form-group { margin-bottom: 16px; text-align: left; }
+    .fm-label { display: block; font-size: 13px; font-weight: 700; color: #12231C; margin-bottom: 6px; }
+    .fm-input, .fm-select { width: 100%; box-sizing: border-box; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(20,70,50,0.18); font-size: 14px; outline: none; transition: border-color 0.2s; background: #FAFCFA; font-family: inherit; }
+    .fm-input:focus, .fm-select:focus { border-color: #1F6B46; background: #FFFFFF; box-shadow: 0 0 0 3px rgba(31,107,70,0.1); }
+    .fm-actions { display: flex; gap: 12px; margin-top: 24px; }
+    .fm-btn-cancel { flex: 1; padding: 13px; border-radius: 14px; font-size: 14.5px; font-weight: 700; background: #FAFCFA; color: #64766E; border: 1px solid rgba(20,70,50,0.15); cursor: pointer; }
+    .fm-btn-save { flex: 1.4; padding: 13px; border-radius: 14px; font-size: 14.5px; font-weight: 700; background: #0B3D2E; color: #FFFFFF; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(11,61,46,0.2); }
+    .farm-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: #12231C; color: #FFFFFF; padding: 14px 24px; border-radius: 30px; font-size: 14.5px; font-weight: 600; display: flex; align-items: center; gap: 12px; z-index: 3000; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .farm-toast.show { transform: translateX(-50%) translateY(0); }
+
+  </style>
+<style>
+body { top: 0 !important; }
+.skiptranslate { display: none !important; }
+
+    /* SUBTLE TINTED CARDS TO FIX WHITE-WASHED LOOK */
+    .stepper-container {
+        background-color: #FAFCF8 !important;
+        border-color: #E2E8DF !important;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.03) !important;
+    }
+    
+    .card {
+        border-color: rgba(0,0,0,0.04) !important;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.04) !important;
+    }
+    
+    .main-grid-3 > .card:nth-child(1) {
+        background-color: #F4F8FA !important; /* Subtle slate blue for Upload */
+    }
+    .main-grid-3 > .card:nth-child(2) {
+        background-color: #F2F9F2 !important; /* Subtle fresh green for Grading */
+    }
+    .main-grid-3 > .card:nth-child(3) {
+        background-color: #FFFDF5 !important; /* Subtle cream/yellow for Transport */
+    }
+    
+    .main-grid-2 > .card:nth-child(1) {
+        background-color: #F7F5FA !important; /* Subtle lavender for Price Rec */
+    }
+    .main-grid-2 > .card:nth-child(2) {
+        background-color: #FDF6F4 !important; /* Subtle warm peach for Next Steps */
+    }
+
+  </style>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+<body data-page="gradeSell">
+<div id="google_translate_element" style="display:none;"></div>
+  <div id="app-drawer-backdrop" class="drawer-backdrop"></div>
+
+  <aside id="app-sidebar-drawer" aria-label="Main Navigation">
+    <div class="sidebar-header" style="padding: 24px 20px 16px; display: flex; justify-content: center; align-items: center; min-height: 100px;">
+      <a href="/role.html" title="Switch Role" style="display:block; text-align:center;"><img src="/assets/app_logo.png" alt="Vyapti Kshetra" style="width: 180px; height: auto; object-fit: contain; image-rendering: -webkit-optimize-contrast;" /></a>
+    </div>
+    
+    <ul class="sidebar-nav-list">
+      <li>
+        <a href="/farmer-home.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-my-farm.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+          <span>My Farm</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-market.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span>Market & Fair Price</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-production-alerts.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          <span>Crop Production Alerts</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-grade-sell.html" class="sidebar-nav-link active" style="background: #1B4D35; color: white; border-radius: 12px; box-shadow: none;">
+          <svg class="nav-icon" style="stroke: white;" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          <span>Grade & Sell</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-find-buyers.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Find Buyers</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-collective-logistics.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span>Collective & Logistics</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-transactions.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span>My Transactions</span>
+        </a>
+      </li>
+      <li class="sidebar-divider"></li>
+      <li>
+        <a href="#" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Help & Support</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+    
+    <div class="sidebar-footer-solid">
+      <h5><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg> Stronger Farmers<br>Brighter Tomorrows</h5>
+    </div>
+    <div style="padding: 0 20px 20px; font-size: 10px; color: #8F9E96;">Version 1.0.0</div>
+  </aside>
+
+  <main class="app-main-layout">
+    
+    <div class="top-header-row">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button type="button" id="app-menu-toggle" style="background: #FFFFFF; border: 1px solid #E8ECEF; border-radius: 8px; width: 42px; height: 42px; cursor: pointer; color: #163323; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><svg style="width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+        <div class="search-bar">
+        <svg style="width: 18px; height: 18px; stroke: #65796E; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" placeholder="Search crops, buyers, markets, documents..." />
+      </div>
+      </div>
+      <div class="header-right">
+        <div class="header-pill">
+          <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          English <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <button type="button" class="header-pill btn-read-aloud">
+          <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          Read Aloud
+        </button>
+        <div class="header-bell">
+          <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="bell-badge">3</span>
+        </div>
+        <div class="profile-pill">
+          <img src="/assets/farmer_portrait.jpg" alt="Ramesh Kumar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" />
+          <div style="display: flex; flex-direction: column;">
+            <span style="font-size: 14px; font-weight: 700; color: #11261A;" class="sync-farmer-name">Ramesh Kumar</span>
+            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Krishna District, AP</span>
+          </div>
+          <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-title-row">
+      <div class="page-title-left">
+        <h1>Grade & Sell <svg style="width: 36px; height: 36px; stroke: #1B4D35; fill: none; stroke-width: 2.5; margin-left: 8px;" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg></h1>
+        <p>Check your crop quality, get an estimated grade and find the best buyers.</p>
+      </div>
+      <button type="button" id="btnRequestManualCheck" class="btn-manual-check" title="Request a manual inspection">
+        <div class="bmc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        </div>
+        <div class="bmc-content">
+          <div class="bmc-title">
+            Request a manual check?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+          <div class="bmc-sub">Book APMC physical quality assayer</div>
+        </div>
+      </button>
+    </div>
+
+    <div class="stepper-container">
+      <div class="step-item step-active">
+        <div class="step-circle">1</div>
+        <div class="step-label">Upload Photos</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item step-inactive">
+        <div class="step-circle">2</div>
+        <div class="step-label">AI Analysis</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item step-inactive">
+        <div class="step-circle">3</div>
+        <div class="step-label">View Results</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item step-inactive">
+        <div class="step-circle">4</div>
+        <div class="step-label">Find Buyers</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item step-inactive">
+        <div class="step-circle">5</div>
+        <div class="step-label">Sell & Arrange Pickup</div>
+      </div>
+    </div>
+
+    <div class="main-grid-3">
+      
+      <!-- Card 1: Upload Photos -->
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 8px;">
+          <h3 class="card-title">1. Upload Crop Photos</h3>
+        </div>
+        <div class="upload-sub">Take clear photos of your crop from different angles.</div>
+        
+        <div class="dropzone">
+          <svg class="dz-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+          <h4 class="dz-title">Drag & drop images here</h4>
+          <span class="dz-or">or</span>
+          <h4 class="dz-title" style="color: #1B4D35;">Click to upload</h4>
+          <div class="dz-subtitle">Upload 2-5 clear images for better accuracy</div>
+        </div>
+        
+        <div class="thumb-row">
+          <div class="thumb-wrap">
+            <img src="/assets/potato_crop.jpg" class="thumb-img" alt="thumb1" />
+            <div class="thumb-close">×</div>
+          </div>
+          <div class="thumb-wrap">
+            <img src="/assets/potato_crop.jpg" class="thumb-img" alt="thumb2" />
+            <div class="thumb-close">×</div>
+          </div>
+          <div class="thumb-wrap">
+            <img src="/assets/potato_crop.jpg" class="thumb-img" alt="thumb3" style="transform: scaleX(-1);" />
+            <div class="thumb-close">×</div>
+          </div>
+          <div class="thumb-wrap">
+            <img src="/assets/potato_crop.jpg" class="thumb-img" alt="thumb4" style="transform: scaleY(-1);" />
+            <div class="thumb-close">×</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: AI Grading Results -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">2. AI Grading Results</h3>
+          <div class="ai-badge"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg> Analysis Complete</div>
+        </div>
+        
+        <div class="ai-top-row">
+          <img src="/assets/potato_crop.jpg" class="ai-crop-img" alt="Potato analyzed" />
+          <div class="ai-crop-info">
+            <h4 class="ai-crop-title sync-crop-name">Potato</h4>
+            <div class="ai-badge" style="width: fit-content; margin: 4px 0;"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Grade A</div>
+            <div class="ai-conf"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> 94% confidence</div>
+          </div>
+        </div>
+        
+        <div class="stats-list">
+          <div class="stat-row">
+            <div class="stat-lbl"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path></svg> Size</div>
+            <div class="stat-val">Uniform (Medium)</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-lbl"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg> Color</div>
+            <div class="stat-val">Good (Bright Red)</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-lbl"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="6.5"></line></svg> Shape</div>
+            <div class="stat-val">Mostly Uniform</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-lbl"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg> Defects</div>
+            <div class="stat-val">Minimal (2%)</div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-lbl"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg> Overall Quality</div>
+            <div class="stat-val">Excellent</div>
+          </div>
+        </div>
+        
+        <div class="alert-green">
+          <div class="alert-icon"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+          <div class="alert-text">
+            <h4>Your crop looks good!</h4>
+            <p>This grade is based on visual analysis. Final grade may vary at the marketplace.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Transport Matches -->
+      <div class="card" id="transport-options-card">
+        <div class="card-header" style="margin-bottom: 8px;">
+          <h3 class="card-title">3. Nearby Transport Providers</h3>
+          <a href="/farmer-collective-logistics.html" class="card-link">Arrange Pickup <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        </div>
+        <div class="buyer-sub" id="transport-sub">Upload crop image to find nearby trucks...</div>
+        
+        <div class="buyer-list" id="transport-matches-container">
+          <!-- Dynamic Logistics Output -->
+        </div>
+      </div>
+    </div>
+    
+    <div class="main-grid-2">
+      <!-- Price Recommendation -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none; margin-right: 4px;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Price Recommendation</h3>
+        </div>
+        <div class="rec-box">
+          <div class="rec-green-block">
+            <p>Estimated Fair Price for Grade A <span class="sync-crop-name">Potato</span>es</p>
+            <h2>₹ 22 – 24 / kg</h2>
+          </div>
+          <div class="rec-list">
+            <div class="rec-list-item"><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white; flex-shrink: 0;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Based on current market prices</div>
+            <div class="rec-list-item"><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white; flex-shrink: 0;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Considering your crop grade</div>
+            <div class="rec-list-item"><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white; flex-shrink: 0;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Nearby market demand</div>
+            <div class="rec-list-item"><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white; flex-shrink: 0;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Updated today (26 May 2025)</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Next Steps -->
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 8px;">
+          <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none; margin-right: 4px;" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Next Steps</h3>
+        </div>
+        <div class="ns-sub">Happy with the results? Proceed to connect with buyers.</div>
+        <div class="ns-btns">
+          <a href="/farmer-find-buyers.html" class="btn-lg btn-solid"><svg style="width: 16px; height: 16px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg> View All Buyers <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <a href="/farmer-collective-logistics.html" class="btn-lg btn-outline"><svg style="width: 16px; height: 16px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg> Arrange Pickup <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Footer Block -->
+    <div class="help-footer-block">
+      <div class="hf-left">
+        <div class="hf-icon">
+          <svg style="width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+        </div>
+        <div class="hf-text">
+          <h3>Need Help?</h3>
+          <p>Talk to Vyapti for guidance on grading, pricing or selling.</p>
+        </div>
+      </div>
+      
+      <div class="hf-mid">
+        <button class="hf-btn">
+          <svg style="width: 16px; height: 16px; stroke: #1B4D35; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg> Speak / Voice Input
+        </button>
+        <a href="tel:18001234567" class="hf-btn">
+          <svg style="width: 16px; height: 16px; stroke: #1B4D35; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Call Vyapti
+        </a>
+        <a href="https://wa.me/919876543210" target="_blank" rel="noopener" class="hf-btn">
+          <svg style="width: 16px; height: 16px; stroke: #1B4D35; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg> WhatsApp Vyapti
+        </a>
+      </div>
+      
+      <div class="hf-right">
+        <div class="hf-speech">"Farmer's<br>Voice Matters"</div>
+        <img src="/assets/farmer_illustration.jpg" class="hf-img" alt="Farmer illustration" />
+      </div>
+    </div>
+
+  </main>
+
+  <input type="file" id="ai-crop-upload-input" accept="image/*" multiple style="display: none;" />
+
+  <script type="module" src="/src/farmer-app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropzone = document.querySelector('.dropzone');
+      const fileInput = document.getElementById('ai-crop-upload-input');
+      const aiCropImg = document.querySelector('.ai-crop-img');
+      const thumbRow = document.querySelector('.thumb-row');
+      const aiBadge = document.querySelector('.ai-crop-info .ai-badge');
+      const aiConf = document.querySelector('.ai-conf');
+
+      if (dropzone && fileInput) {
+        dropzone.style.cursor = 'pointer';
+        dropzone.addEventListener('click', () => fileInput.click());
+
+        dropzone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          dropzone.style.borderColor = '#1B4D35';
+          dropzone.style.background = '#E8F4EC';
+        });
+
+        dropzone.addEventListener('dragleave', () => {
+          dropzone.style.borderColor = '#E8ECEF';
+          dropzone.style.background = 'transparent';
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          dropzone.style.borderColor = '#E8ECEF';
+          dropzone.style.background = 'transparent';
+          if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            handleCropFiles(Array.from(e.dataTransfer.files));
+          }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+          if (e.target.files && e.target.files.length > 0) {
+            handleCropFiles(Array.from(e.target.files));
+          }
+        });
+      }
+
+      function readFileAsDataURL(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      async function handleCropFiles(files) {
+        const selectedFiles = files.slice(0, 3);
+        if (!selectedFiles.length) return;
+
+        // 1. Show scanning animation on dropzone
+        dropzone.innerHTML = `
+          <div style="padding: 20px; text-align: center;">
+            <div class="ai-scan-spinner" style="width: 40px; height: 40px; border: 4px solid #E8F4EC; border-top: 4px solid #1B4D35; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px;"></div>
+            <h4 style="font-size: 15px; font-weight: 700; color: #1B4D35; margin: 0 0 4px;">Vision AI Analyzing Potato Quality...</h4>
+            <p style="font-size: 12px; color: #65796E; margin: 0;">Inspecting surface lesions, defect severity & AGMARK knowledge rules</p>
+          </div>
+        `;
+
+        if (!document.getElementById('spin-style')) {
+          const style = document.createElement('style');
+          style.id = 'spin-style';
+          style.innerText = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
+          document.head.appendChild(style);
+        }
+
+        try {
+          // Read all selected images
+          const imageSources = await Promise.all(selectedFiles.map(readFileAsDataURL));
+
+          // Update main preview
+          if (aiCropImg && imageSources[0]) {
+            aiCropImg.src = imageSources[0];
+          }
+
+          // Update thumbnails
+          if (thumbRow) {
+            if (!thumbRow.dataset.userUploaded) {
+              thumbRow.innerHTML = '';
+              thumbRow.dataset.userUploaded = 'true';
+            }
+            imageSources.forEach((src) => {
+              const newThumb = document.createElement('div');
+              newThumb.className = 'thumb-wrap';
+              newThumb.style.cursor = 'pointer';
+              newThumb.innerHTML = `<img src="${src}" class="thumb-img" alt="Uploaded photo" /><div class="thumb-close" onclick="event.stopPropagation(); this.parentElement.remove()">×</div>`;
+              newThumb.addEventListener('click', () => {
+                if (aiCropImg) aiCropImg.src = src;
+              });
+              thumbRow.appendChild(newThumb);
+            });
+          }
+
+          // 2. Call our developed Vision-AI + RAG Potato Quality Grading Backend
+          const response = await fetch('http://localhost:8001/api/potato/analyze', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              crop: 'Potato',
+              quantity_kg: 1000.0,
+              images: imageSources,
+              batch_notes: 'Uploaded via Farmer Grade & Sell interface'
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error(`Server returned HTTP ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          // Check if validation failed (non-potato or blurry)
+          if (data.is_valid_potato === false) {
+            if (aiBadge) {
+              aiBadge.style.background = '#FEF2F2';
+              aiBadge.style.color = '#B91C1C';
+              aiBadge.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Unclear Sample`;
+            }
+            if (aiConf) aiConf.innerText = 'Low Confidence — Re-upload';
+            const alertTitleEl = document.querySelector('.alert-text h4');
+            const alertTextEl = document.querySelector('.alert-text p');
+            if (alertTitleEl) alertTitleEl.innerText = 'Image Quality Alert';
+            if (alertTextEl) alertTextEl.innerText = data.validation_message || 'Please upload a clearer, well-lit photo of potato tubers.';
+            
+            // Clear out hardcoded stats
+            document.querySelectorAll('.sync-crop-name').forEach(el => el.innerText = 'Unknown Item');
+            const statRows = document.querySelectorAll('.stats-list .stat-row .stat-val');
+            if (statRows.length > 0) {
+              statRows.forEach(el => el.innerText = 'N/A');
+            }
+            const priceElem = document.querySelector('.rec-green-block h2');
+            if (priceElem) priceElem.innerText = 'N/A';
+            const priceSubElem = document.querySelector('.rec-green-block p');
+            if (priceSubElem) priceSubElem.innerText = 'Cannot estimate price for unclear item';
+            
+            return;
+          }
+
+          const grade = data.grade || 'B';
+          const score = Math.round(data.quality_score || 75);
+          const breakdown = data.score_breakdown || {};
+          const defects = data.defects || [];
+
+          // Update Crop Name to Potato across all sync elements
+          document.querySelectorAll('.sync-crop-name').forEach(el => el.innerText = 'Potato');
+
+          // Grade Color Config
+          const gradeStyles = {
+            A: { bg: '#E8F4EC', text: '#165A31', price: '₹ 24 – 27 / kg' },
+            B: { bg: '#EFF6FF', text: '#1D4ED8', price: '₹ 20 – 23 / kg' },
+            C: { bg: '#FFFBEB', text: '#B45309', price: '₹ 15 – 18 / kg' },
+            D: { bg: '#FEF2F2', text: '#B91C1C', price: '₹ 8 – 12 / kg' }
+          };
+          const currentStyle = gradeStyles[grade] || gradeStyles.B;
+
+          // Update Grade Badge
+          if (aiBadge) {
+            aiBadge.style.background = currentStyle.bg;
+            aiBadge.style.color = currentStyle.text;
+            aiBadge.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg> Grade ${grade}`;
+          }
+
+          // Update Confidence & Quality Score
+          if (aiConf) {
+            const confPct = defects.length > 0 && defects[0].confidence 
+              ? Math.round(defects[0].confidence * 100) 
+              : 95;
+            aiConf.innerHTML = `<svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg> ${confPct}% AI Confidence (${score}/100)`;
+          }
+
+          // Update Price Recommendation
+          const priceElem = document.querySelector('.rec-green-block h2');
+          if (priceElem) priceElem.innerText = currentStyle.price;
+
+          const priceSubElem = document.querySelector('.rec-green-block p');
+          if (priceSubElem) priceSubElem.innerText = `Estimated Fair Price for Grade ${grade} Potatoes`;
+
+          // Update Stats List (Size, Color/Freshness, Shape/Ripeness, Defects, Overall Quality)
+          const statRows = document.querySelectorAll('.stats-list .stat-row .stat-val');
+          if (statRows.length >= 5) {
+            statRows[0].innerText = `Uniform (${breakdown.uniformity ?? 15}/20)`;
+            statRows[1].innerText = `Freshness (${breakdown.freshness ?? 28}/35)`;
+            statRows[2].innerText = `Ripeness (${breakdown.ripeness ?? 16}/20)`;
+            if (defects.length > 0) {
+              statRows[3].innerText = `${defects[0].name} (${defects[0].severity.toUpperCase()})`;
+            } else {
+              statRows[3].innerText = 'Minimal / Defect-Free (0%)';
+            }
+            statRows[4].innerText = `Grade ${grade} (${score}/100)`;
+          }
+
+          // Update Alert / Explanation Box
+          const alertBox = document.querySelector('.alert-green');
+          if (alertBox) {
+            if (grade === 'D') {
+              alertBox.style.background = '#FEF2F2';
+              alertBox.style.border = '1.5px solid #FECACA';
+            } else if (grade === 'C') {
+              alertBox.style.background = '#FFFBEB';
+              alertBox.style.border = '1.5px solid #FDE68A';
+            } else {
+              alertBox.style.background = '#E8F4EC';
+              alertBox.style.border = '1.5px solid #A7F3D0';
+            }
+          }
+
+          const alertTitleEl = document.querySelector('.alert-text h4');
+          const alertTextEl = document.querySelector('.alert-text p');
+          if (alertTitleEl) {
+            alertTitleEl.innerText = data.overall_assessment || `Grade ${grade} Potato Assessment`;
+          }
+          if (alertTextEl) {
+            alertTextEl.innerText = data.quality_reason || data.explanation || 'Graded by Vision AI model paired with local agricultural knowledge base.';
+          }
+
+          // Fetch Transport Matches from Logistics Backend
+          const transportSub = document.getElementById('transport-sub');
+          const transportContainer = document.getElementById('transport-matches-container');
+          
+          if (transportSub && transportContainer) {
+            try {
+              const transportRes = await fetch('http://localhost:8001/api/logistics/providers/nearby?lat=16.506&lng=80.648&radius_km=50');
+              const transportData = await transportRes.json();
+              
+              if (transportData.success && transportData.providers.length > 0) {
+                transportSub.innerText = `${transportData.count} Trucks available nearby`;
+                transportContainer.innerHTML = transportData.providers.slice(0,3).map(p => `
+                  <div class="buyer-item">
+                    <div class="b-icon"><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div>
+                    <div class="b-mid">
+                      <h5 class="b-name">${p.name}</h5>
+                      <div class="b-loc"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> ${p.distance_km.toFixed(1)} km away</div>
+                      <div class="b-needs">${p.vehicle_type} (${p.capacity_kg} kg)</div>
+                    </div>
+                    <div class="b-right">
+                      <div class="b-price">₹ ${p.rate_per_km}/km</div>
+                      <div style="height: 14px;"></div>
+                      <a href="/farmer-collective-logistics.html" class="btn-contact"><svg style="width: 12px; height: 12px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Book</a>
+                    </div>
+                  </div>
+                `).join('');
+              } else {
+                transportSub.innerText = 'No trucks available nearby right now.';
+                transportContainer.innerHTML = '';
+              }
+            } catch (err) {
+              console.error('Logistics fetch error:', err);
+              transportSub.innerText = 'Logistics offline.';
+            }
+          }
+
+        } catch (err) {
+          console.error('Vision AI Grading error:', err);
+          const alertTitleEl = document.querySelector('.alert-text h4');
+          const alertTextEl = document.querySelector('.alert-text p');
+          if (alertTitleEl) alertTitleEl.innerText = 'AI Service Connection Alert';
+          if (alertTextEl) alertTextEl.innerText = 'Unable to reach the Potato AI Backend at http://localhost:8001. Please ensure the backend server is running.';
+        } finally {
+          // Restore Dropzone
+          dropzone.innerHTML = `
+            <svg class="dz-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+            <h4 class="dz-title" style="color: #1B4D35;">Analysis Complete! Upload another image</h4>
+            <div class="dz-subtitle">Click or drag & drop to re-analyze</div>
+          `;
+        }
+      }
+    });
+  </script>
+
+  <!-- Ask Vyapti & Guided Tour (Re-injected) -->
+  <script src="/src/vyapti-kb.js"></script>
+  <script src="/src/ask-vyapti.js"></script>
+  <script src="/src/guided-tour.js"></script>
+
+
+  <!-- Manual Check Request Modal -->
+  <div class="farm-modal-backdrop" id="manualCheckModal">
+    <div class="farm-modal-card">
+      <h2 class="fm-title">
+        <span style="display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%; background:#EAF5EC; color:#1B4D35;">
+          <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+        </span>
+        Request a Manual Check
+      </h2>
+      <p class="fm-subtitle">Need an official physical certification? An authorized APMC Quality Assayer will visit your farm to verify your crop grade.</p>
+      
+      <div class="fm-form-group">
+        <label class="fm-label">Farmer Name & Contact</label>
+        <input type="text" class="fm-input" id="mcFarmerContact" value="Ramesh Kumar (+91 9876543210)">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="fm-form-group">
+          <label class="fm-label">Crop & Variety</label>
+          <input type="text" class="fm-input" id="mcCrop" value="Potato (Arka Rakshak)">
+        </div>
+        <div class="fm-form-group">
+          <label class="fm-label">Lot Quantity</label>
+          <input type="text" class="fm-input" id="mcQty" value="500 kg (5 Quintals)">
+        </div>
+      </div>
+
+      <div class="fm-form-group">
+        <label class="fm-label">Farm Location & Landmark</label>
+        <input type="text" class="fm-input" id="mcLocation" value="Chennuboina Farm, Krishna District, AP">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="fm-form-group">
+          <label class="fm-label">Preferred Date</label>
+          <input type="date" class="fm-input" id="mcDate" value="2025-05-27">
+        </div>
+        <div class="fm-form-group">
+          <label class="fm-label">Reason for Request</label>
+          <select class="fm-select" id="mcReason">
+            <option value="disagree">Re-verify AI grade</option>
+            <option value="buyer_req">Buyer requires physical certificate</option>
+            <option value="high_volume">High volume commercial lot</option>
+            <option value="other">Other quality verification</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fm-actions">
+        <button type="button" class="fm-btn-cancel" id="btnCancelManualCheck">Cancel</button>
+        <button type="button" class="fm-btn-save" id="btnSubmitManualCheck">Submit Request</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="farm-toast" id="mcToast">
+    <svg style="width: 20px; height: 20px; color: #55B85A;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <span id="mcToastMsg">Manual check requested successfully!</span>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const modal = document.getElementById('manualCheckModal');
+      const btnOpen = document.getElementById('btnRequestManualCheck');
+      const btnCancel = document.getElementById('btnCancelManualCheck');
+      const btnSubmit = document.getElementById('btnSubmitManualCheck');
+      const toast = document.getElementById('mcToast');
+
+      function showMcToast(msg) {
+        if (window.showToast) {
+          window.showToast(msg, 'success');
+          return;
+        }
+        document.getElementById('mcToastMsg').textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3500);
+      }
+
+      if (btnOpen && modal) {
+        btnOpen.addEventListener('click', (e) => {
+          e.preventDefault();
+          modal.classList.add('show');
+        });
+      }
+
+      if (btnCancel && modal) {
+        btnCancel.addEventListener('click', () => {
+          modal.classList.remove('show');
+        });
+      }
+
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.classList.remove('show');
+          }
+        });
+      }
+
+      if (btnSubmit && modal) {
+        btnSubmit.addEventListener('click', () => {
+          const crop = document.getElementById('mcCrop').value || 'Crop';
+          modal.classList.remove('show');
+          showMcToast('Manual check requested! APMC Officer Suresh Rao assigned for inspection.');
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
+

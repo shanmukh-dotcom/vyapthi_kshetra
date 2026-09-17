@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VYAPTI KSHETRA - My Farm</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <link rel="stylesheet" href="/src/ask-vyapti.css" />
+  <style>
+    body { background-color: #F7F9F7; font-family: var(--font-main); overflow-x: hidden; margin: 0; padding: 0; color: #12231C; }
+    
+    /* Header (Matches new dashboard style) */
+    .top-floating-header { 
+      display: flex; align-items: center; justify-content: space-between; gap: 1vw; 
+      padding: 1.5vh 3vw; background: #FFFFFF; border-bottom: 1px solid rgba(20,70,50,0.06); 
+      box-shadow: 0 4px 16px rgba(0,0,0,0.02); margin-bottom: 3vh;
+    }
+    
+    /* Layout */
+    .page-wrapper { max-width: 1400px; margin: 0 auto; padding: 0 3vw 6vh; }
+    
+    .page-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2.5vh; }
+    .page-title-left h1 { font-size: 36px; font-weight: 800; color: #0B3D2E; margin: 0 0 4px; display: flex; align-items: center; gap: 10px; letter-spacing: -0.5px; }
+    .page-title-left p { font-size: 15.5px; color: #64766E; margin: 0; font-weight: 500; }
+    
+    .update-banner { 
+      background: #EAF5EC; padding: 14px 22px; border-radius: 16px; display: flex; align-items: center; gap: 16px; 
+      box-shadow: 0 4px 12px rgba(20,60,45,0.04);
+    }
+    .update-banner p { font-size: 14px; font-weight: 600; color: #0B3D2E; margin: 0; line-height: 1.4; }
+    .update-banner span { color: #1F6B46; font-weight: 500; display: block; font-size: 13px; }
+    
+    /* Tabs */
+    .tabs-row { display: flex; align-items: center; gap: 32px; border-bottom: 1px solid rgba(20,70,50,0.1); margin-bottom: 3.5vh; padding-bottom: 0; }
+    .tab-item { 
+      display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: #64766E; 
+      padding: 0 4px 12px; cursor: pointer; position: relative; text-decoration: none; transition: color 0.2s;
+    }
+    .tab-item:hover { color: #1F6B46; }
+    .tab-item.active { color: #0B3D2E; font-weight: 700; }
+    .tab-item.active::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 3px; background: #1F6B46; border-radius: 3px 3px 0 0; }
+    .tab-item svg { width: 18px; height: 18px; stroke-width: 2.2; }
+    
+    /* 2-Column Grid */
+    .dashboard-grid { display: grid; grid-template-columns: 2.3fr 1fr; gap: 24px; align-items: start; }
+    
+    /* Card Styles */
+    .glass-card { 
+      background: #FFFFFF; border: 1px solid rgba(20,70,50,0.09); 
+      box-shadow: 0 6px 24px rgba(20,60,45,0.06); border-radius: 22px; padding: 24px; 
+    }
+    
+    /* Farm Overview (Horizontal Layout) */
+    .overview-content { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 24px; }
+    
+    .farm-photo-wrapper { position: relative; border-radius: 16px; overflow: hidden; height: 100%; min-height: 220px; }
+    .farm-photo { width: 100%; height: 100%; object-fit: cover; }
+    .btn-change-photo { 
+      position: absolute; bottom: 12px; left: 12px; background: rgba(11,61,46,0.85); backdrop-filter: blur(4px);
+      color: #FFF; padding: 8px 14px; border-radius: 8px; font-size: 12.5px; font-weight: 600; display: flex; align-items: center; gap: 6px; border: none; cursor: pointer;
+    }
+    
+    .farm-details { display: flex; flex-direction: column; }
+    .farm-name-row { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+    .farm-name { font-size: 24px; font-weight: 800; color: #12231C; margin: 0 0 6px; line-height: 1.2; }
+    .badge-verified { 
+      background: #EAF5EC; color: #1F6B46; padding: 4px 10px; border-radius: 12px; font-size: 11.5px; font-weight: 700; 
+      display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgba(31,107,70,0.2);
+    }
+    .btn-edit-farm { 
+      background: #FFFFFF; border: 1px solid rgba(20,70,50,0.15); border-radius: 10px; padding: 6px 12px; 
+      font-size: 12.5px; font-weight: 600; color: #64766E; cursor: pointer; display: flex; align-items: center; gap: 6px;
+    }
+    
+    .detail-row { display: flex; align-items: center; margin-bottom: 12px; font-size: 13.5px; }
+    .detail-icon { width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; color: #64766E; margin-right: 12px; }
+    .detail-label { color: #64766E; width: 130px; font-weight: 500; }
+    .detail-value { color: #12231C; font-weight: 700; flex: 1; }
+    
+    .map-wrapper { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid rgba(20,70,50,0.08); background: #EAF4FC; display: flex; align-items: center; justify-content: center; height: 100%; min-height: 220px; }
+    .map-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; mix-blend-mode: multiply; }
+    .map-pin { position: absolute; display: flex; flex-direction: column; align-items: center; gap: 4px; z-index: 2; }
+    .map-pin svg { width: 32px; height: 32px; color: #0B3D2E; drop-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+    .map-label { background: #FFFFFF; padding: 4px 12px; border-radius: 12px; font-size: 11.5px; font-weight: 700; color: #12231C; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .btn-expand-map { position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; background: #FFFFFF; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(20,70,50,0.1); color: #12231C; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+    .btn-update-loc { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); background: #FFFFFF; color: #0B3D2E; padding: 6px 16px; border-radius: 16px; font-size: 12.5px; font-weight: 700; border: 1px solid rgba(11,61,46,0.2); box-shadow: 0 4px 12px rgba(0,0,0,0.08); cursor: pointer; white-space: nowrap; }
+    
+    /* My Crops Section */
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .section-title { font-size: 20px; font-weight: 800; color: #12231C; display: flex; align-items: center; gap: 8px; margin: 0; }
+    .section-subtitle { font-size: 13.5px; color: #64766E; font-weight: 500; margin: 4px 0 0 32px; }
+    .btn-primary { background: #0B3D2E; color: #FFFFFF; padding: 10px 20px; border-radius: 12px; font-size: 14px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer; transition: background 0.2s; }
+    .btn-primary:hover { background: #1F6B46; }
+    
+    .crops-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 16px; }
+    .crop-card { border: 1px solid rgba(20,70,50,0.08); border-radius: 16px; display: flex; padding: 12px; gap: 14px; align-items: center; text-decoration: none; color: inherit; transition: all 0.2s; }
+    .crop-card:hover { border-color: rgba(31,107,70,0.3); background: #FAFCFA; box-shadow: 0 4px 12px rgba(20,60,45,0.04); }
+    .crop-img { width: 72px; height: 72px; border-radius: 12px; object-fit: cover; }
+    .crop-info { flex: 1; }
+    .crop-name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+    .crop-name { font-size: 16px; font-weight: 700; color: #12231C; margin: 0; }
+    .badge-current { background: #EAF5EC; color: #1F6B46; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+    .crop-stat { font-size: 12.5px; color: #64766E; font-weight: 500; margin-bottom: 2px; }
+    
+    .view-all-link { display: inline-flex; align-items: center; gap: 6px; color: #1F6B46; font-size: 14px; font-weight: 700; text-decoration: none; }
+    
+    /* Weather Card */
+    .weather-card { background: #FFF9EF; border-color: rgba(243,166,47,0.15); position: relative; overflow: hidden; }
+    .weather-decorative-leaf { position: absolute; bottom: -20px; right: -20px; width: 120px; opacity: 0.1; transform: rotate(-15deg); }
+    .weather-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+    .weather-title-area h3 { margin: 0 0 4px; font-size: 16px; font-weight: 700; color: #12231C; }
+    .weather-title-area p { margin: 0; font-size: 12px; color: #64766E; font-weight: 500; }
+    .weather-main { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .weather-temp { font-size: 36px; font-weight: 800; color: #12231C; margin: 0; line-height: 1; }
+    .weather-desc { font-size: 13.5px; color: #64766E; font-weight: 500; margin: 4px 0 0 0; }
+    .weather-stats { display: flex; flex-direction: column; gap: 8px; margin-left: auto; }
+    .w-stat { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: #64766E; font-weight: 500; }
+    .w-stat strong { color: #12231C; font-weight: 700; margin-left: auto; }
+    .btn-weather { width: 100%; background: #EAF5EC; color: #0B3D2E; border: none; padding: 10px; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; }
+    
+    /* Quick Actions */
+    .qa-header { font-size: 16px; font-weight: 800; color: #12231C; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .qa-row { display: flex; align-items: center; gap: 14px; background: #FFFFFF; border: 1px solid rgba(20,70,50,0.08); border-radius: 14px; padding: 12px 16px; margin-bottom: 12px; text-decoration: none; transition: all 0.2s; }
+    .qa-row:hover { border-color: rgba(31,107,70,0.3); box-shadow: 0 4px 12px rgba(20,60,45,0.04); transform: translateY(-2px); }
+    .qa-icon-wrap { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .qa-info { flex: 1; }
+    .qa-title { font-size: 14px; font-weight: 700; color: #12231C; margin: 0 0 2px; }
+    .qa-desc { font-size: 11.5px; color: #64766E; margin: 0; }
+    .qa-arrow { color: #12231C; }
+    
+    /* Bottom Acc */
+    .bottom-acc-container { display: flex; justify-content: center; align-items: center; padding: 2vh 0; margin-top: 4vh; }
+    .acc-pill-wrap { display: flex; align-items: center; gap: 0; background: #FFFFFF; border-radius: 30px; padding: 6px; box-shadow: 0 6px 24px rgba(20,60,45,0.06); border: 1px solid rgba(20,70,50,0.09); }
+    .acc-btn { display: flex; align-items: center; gap: 8px; padding: 6px 16px; color: #12231C; font-size: 13px; font-weight: 600; text-decoration: none; border-right: 1px solid #EAF5EC; }
+    .acc-btn:last-child { border: none; }
+  
+    /* Modal & Toast Styles */
+    .farm-modal-backdrop {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(11,61,46,0.6);
+      backdrop-filter: blur(4px); z-index: 2000; display: none; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .farm-modal-backdrop.show { display: flex; opacity: 1; }
+    
+    .farm-modal-card {
+      background: #FFFFFF; width: 90%; max-width: 500px; border-radius: 24px; padding: 32px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15); transform: translateY(20px); transition: transform 0.3s ease;
+      position: relative;
+    }
+    .farm-modal-backdrop.show .farm-modal-card { transform: translateY(0); }
+    
+    .fm-title { font-size: 24px; font-weight: 800; color: #12231C; margin: 0 0 8px; }
+    .fm-subtitle { font-size: 14px; color: #64766E; margin: 0 0 24px; }
+    
+    .fm-upload-zone {
+      border: 2px dashed rgba(31,107,70,0.3); background: #FAFCFA; border-radius: 16px; padding: 32px 20px;
+      text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 24px;
+    }
+    .fm-upload-zone:hover { background: #EAF5EC; border-color: #1F6B46; }
+    .fm-upload-icon { color: #1F6B46; margin-bottom: 12px; }
+    
+    .fm-form-group { margin-bottom: 16px; text-align: left; }
+    .fm-label { display: block; font-size: 13px; font-weight: 700; color: #12231C; margin-bottom: 8px; }
+    .fm-input { width: 100%; box-sizing: border-box; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(20,70,50,0.15); font-family: inherit; font-size: 14.5px; outline: none; transition: border-color 0.2s; }
+    .fm-input:focus { border-color: #1F6B46; box-shadow: 0 0 0 3px rgba(31,107,70,0.1); }
+    
+    .fm-actions { display: flex; gap: 12px; margin-top: 32px; }
+    .fm-btn-cancel { flex: 1; padding: 14px; border-radius: 14px; font-size: 15px; font-weight: 700; background: #FAFCFA; color: #64766E; border: 1px solid rgba(20,70,50,0.15); cursor: pointer; }
+    .fm-btn-save { flex: 1; padding: 14px; border-radius: 14px; font-size: 15px; font-weight: 700; background: #0B3D2E; color: #FFFFFF; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(11,61,46,0.2); }
+    
+    .farm-toast {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: #12231C; color: #FFFFFF; padding: 14px 24px; border-radius: 30px; font-size: 14.5px;
+      font-weight: 600; display: flex; align-items: center; gap: 12px; z-index: 3000; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .farm-toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+
+</head>
+<body data-page="myFarm">
+<div id="app-drawer-backdrop" class="drawer-backdrop"></div>
+
+  <aside id="app-sidebar-drawer" aria-label="Main Navigation">
+    <div class="sidebar-header" style="padding: 24px 20px 16px; display: flex; justify-content: center; align-items: center; min-height: 100px;">
+      <a href="/role.html" title="Switch Role" style="display:block; text-align:center;"><img src="/assets/app_logo.png" alt="Vyapti Kshetra" style="width: 180px; height: auto; object-fit: contain; image-rendering: -webkit-optimize-contrast;" /></a>
+    </div>
+    
+    <ul class="sidebar-nav-list">
+      <li>
+        <a href="/farmer-home.html" class="sidebar-nav-link active" style="background: #1B4D35; color: white; border-radius: 12px; box-shadow: none;">
+          <svg class="nav-icon" style="stroke: white;" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-my-farm.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+          <span>My Farm</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-market.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span>Market & Fair Price</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-grade-sell.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          <span>Grade & Sell</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-find-buyers.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Find Buyers</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-collective-logistics.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span>Collective & Logistics</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-transactions.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span>My Transactions</span>
+        </a>
+      </li>
+      <li class="sidebar-divider"></li>
+      <li>
+        <a href="#" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Help & Support</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-footer" style="margin-top: auto; padding-top: 40px; padding-bottom: 20px; background: url('/assets/ramesh_bg.png') no-repeat bottom center; background-size: cover; position: relative; border-top: none;">
+      <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,0.7) 100%);"></div>
+      <div style="position: relative; z-index: 1;">
+        <strong style="color: #65796E; font-size: 11px;">Stronger Farmers<br>Brighter Tomorrows</strong><br />
+        <span style="font-size: 9px; color: #A8C7B4;">Version 1.0.0</span>
+      </div>
+    </div>
+  </aside>
+
+
+  <!-- Top Floating Header -->
+  <header class="top-floating-header">
+    <div style="display: flex; align-items: center; gap: 24px;">
+      <!-- Hamburger -->
+      <button type="button" id="app-menu-toggle" style="background: #FAFCFA; border: 1px solid rgba(20,70,50,0.08); border-radius: 12px; width: 44px; height: 44px; cursor: pointer; color: #0B3D2E; display: flex; align-items: center; justify-content: center;">
+        <svg style="width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      
+      <!-- Brand Logo -->
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+          <svg style="width: 24px; height: 24px;" viewBox="0 0 32 32" fill="none">
+            <rect width="32" height="32" rx="8" fill="#0B3D2E"/>
+            <path d="M16 8 L24 22 L8 22 Z" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size: 16px; font-weight: 800; color: #0B3D2E; letter-spacing: -0.5px; line-height: 1;">Vyapti Kshetra</div>
+          <div style="font-size: 10px; color: #64766E; font-weight: 600;">Farm. Trade. Grow Together.</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Search Bar -->
+    <div style="flex: 2; max-width: 600px; position: relative; height: 44px;">
+      <svg style="width: 18px; height: 18px; stroke: #64766E; fill: none; stroke-width: 2.5; position: absolute; left: 16px; top: 13px;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input type="text" placeholder="Search crops, buyers, market prices..." style="width: 100%; height: 100%; padding-left: 44px; border: 1px solid rgba(20,70,50,0.08); border-radius: 22px; font-family: inherit; font-size: 14px; background: #FAFCFA; outline: none; color: #12231C;">
+    </div>
+
+    <!-- Right Controls -->
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <select class="header-pill" style="border: 1px solid rgba(20,70,50,0.08); padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #12231C; background: #FAFCFA; outline: none;">
+        <option value="en">English</option>
+          <option value="te">తెలుగు</option>
+          <option value="hi">हिंदी</option>
+      </select>
+      
+      <button style="border: 1px solid rgba(20,70,50,0.08); padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #12231C; background: #FAFCFA; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+        <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path fill="none" stroke="currentColor" stroke-width="2" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+        Read Aloud
+      </button>
+
+      <div style="position: relative; width: 44px; height: 44px; border-radius: 50%; background: #FAFCFA; border: 1px solid rgba(20,70,50,0.08); display: flex; align-items: center; justify-content: center; cursor: pointer;">
+        <svg style="width: 20px; height: 20px; stroke: #12231C; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        <span style="position: absolute; top: -2px; right: -2px; background: #E03131; color: white; font-size: 10px; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white;">3</span>
+      </div>
+
+      <div style="background: #FAFCFA; border: 1px solid rgba(20,70,50,0.08); padding: 4px 16px 4px 4px; border-radius: 30px; display: flex; align-items: center; gap: 10px; cursor: pointer;">
+        <img src="/assets/farmer_profile.png" alt="Farmer" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22%23cccccc%22><circle cx=%2212%22 cy=%228%22 r=%224%22/><path d=%22M12 14c-6.1 0-8 4-8 4v2h16v-2s-1.9-4-8-4z%22/></svg>'" />
+        <div>
+          <div class="sync-farmer-name" style="font-size: 13px; font-weight: 700; color: #12231C;">Ramesh Kumar</div>
+          <div style="font-size: 11px; color: #64766E; font-weight: 500;">Farmer | Krishna District, Andhra Pradesh</div>
+        </div>
+        <svg style="width: 14px; height: 14px; stroke: #64766E; fill: none; stroke-width: 2; margin-left: 4px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-wrapper">
+    
+    <!-- Title Row -->
+    <div class="page-title-row">
+      <div class="page-title-left">
+        <h1>My Farm 🌿</h1>
+        <p>Manage your farm, crops and everything in one place.</p>
+      </div>
+      <div class="update-banner">
+        <svg style="width: 24px; height: 24px; stroke: #1F6B46; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <div>
+          <p>Keep your farm details updated</p>
+          <span>to get better buyer matches.</span>
+        </div>
+        <svg style="width: 18px; height: 18px; stroke: #12231C; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-row">
+      <a href="#" class="tab-item active">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        Farm Overview
+      </a>
+      <a href="#" class="tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 7.477 2 13s4.477 10 10 10z"></path><path d="M12 22c-3.314 0-6-4.477-6-10S8.686 2 12 2s6 4.477 6 10-2.686 10-6 10z"></path><path d="M2 12h20"></path></svg>
+        My Crops
+      </a>
+      <a href="#" class="tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+        Soil & Water
+      </a>
+      <a href="#" class="tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        Crop History
+      </a>
+      <a href="#" class="tab-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+        Documents
+      </a>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="dashboard-grid">
+      
+      <!-- LEFT COLUMN (70%) -->
+      <div class="left-column">
+        
+        <!-- Farm Overview Card -->
+        <div class="glass-card" style="margin-bottom: 24px;">
+          <div class="overview-content">
+            
+            <!-- Photo -->
+            <div class="farm-photo-wrapper">
+              <img src="/assets/farm_landscape.jpg" alt="Farm" class="farm-photo">
+              <button class="btn-change-photo action-btn" data-action="Change Photo">
+                <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                Change Photo
+              </button>
+            </div>
+
+            <!-- Details -->
+            <div class="farm-details">
+              <div class="farm-name-row">
+                <div>
+                  <h2 class="farm-name">Krishna Farm</h2>
+                  <div class="badge-verified">
+                    <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Verified
+                  </div>
+                </div>
+                <button class="btn-edit-farm action-btn" data-action="Edit Farm">
+                  <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                  Edit
+                </button>
+              </div>
+              
+              <div class="detail-row">
+                <div class="detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
+                <span class="detail-label">Location</span>
+                <span class="detail-value">Krishna District, AP</span>
+              </div>
+              <div class="detail-row">
+                <div class="detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12l5.25 5 2.625-3 3.937 4 5.25-6 2.938 2.5"></path></svg></div>
+                <span class="detail-label">Total Land Area</span>
+                <span class="detail-value">2.50 Acres</span>
+              </div>
+              <div class="detail-row">
+                <div class="detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg></div>
+                <span class="detail-label">Soil Type</span>
+                <span class="detail-value">Red Loamy</span>
+              </div>
+              <div class="detail-row">
+                <div class="detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M12 2v20"></path></svg></div>
+                <span class="detail-label">Irrigation</span>
+                <span class="detail-value">Borewell</span>
+              </div>
+              <div class="detail-row" style="margin-bottom:0;">
+                <div class="detail-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                <span class="detail-label">Experience</span>
+                <span class="detail-value">6 Years</span>
+              </div>
+            </div>
+
+            <!-- Map -->
+            <div class="map-wrapper">
+              <img src="/assets/map_placeholder.jpg" onerror="this.style.display='none'" alt="Map" class="map-img">
+              <div class="map-pin">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3" fill="white"></circle></svg>
+                <div class="map-label">Krishna District, AP</div>
+              </div>
+              <button class="btn-expand-map action-btn" data-action="Expand Map">
+                <svg style="width: 16px; height: 16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+              </button>
+              <button class="btn-update-loc action-btn" data-action="Update Location">Update Location</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- My Crops Section -->
+        <div class="glass-card">
+          <div class="section-header">
+            <div>
+              <h3 class="section-title"><svg style="width: 24px; height: 24px; stroke: #1F6B46; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 7.477 2 13s4.477 10 10 10z"></path><path d="M12 22c-3.314 0-6-4.477-6-10S8.686 2 12 2s6 4.477 6 10-2.686 10-6 10z"></path><path d="M2 12h20"></path></svg> My Crops</h3>
+              <p class="section-subtitle">View and manage all your crops</p>
+            </div>
+            <button class="btn-primary btn-add-crop">
+              <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Add New Crop
+            </button>
+          </div>
+
+          <div class="crops-grid">
+            <!-- Potato (Current) -->
+            <a href="#" class="crop-card">
+              <img src="/assets/potato_crop.jpg" alt="Potato" class="crop-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22%23eee%22><rect width=%22100%22 height=%22100%22/></svg>'">
+              <div class="crop-info">
+                <div class="crop-name-row">
+                  <h4 class="crop-name sync-crop-name">Potato</h4>
+                  <span class="badge-current">Current Crop</span>
+                </div>
+                <div class="crop-stat">2.50 Acres</div>
+                <div class="crop-stat">Planted: Dec 2024</div>
+              </div>
+              <svg style="width: 20px; height: 20px; stroke: #12231C; fill: none; stroke-width: 2; margin-left: auto;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+            
+            <!-- Tomato -->
+            <a href="#" class="crop-card">
+              <img src="/assets/tomato_crop.jpg" alt="Tomato" class="crop-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22%23eee%22><rect width=%22100%22 height=%22100%22/></svg>'">
+              <div class="crop-info">
+                <div class="crop-name-row">
+                  <h4 class="crop-name">Tomato</h4>
+                </div>
+                <div class="crop-stat">1.00 Acres</div>
+                <div class="crop-stat">Planted: Jan 2025</div>
+              </div>
+              <svg style="width: 20px; height: 20px; stroke: #12231C; fill: none; stroke-width: 2; margin-left: auto;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+
+            <!-- Chilli -->
+            <a href="#" class="crop-card">
+              <img src="/assets/chilli_crop.jpg" alt="Chilli" class="crop-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22 fill=%22%23eee%22><rect width=%22100%22 height=%22100%22/></svg>'">
+              <div class="crop-info">
+                <div class="crop-name-row">
+                  <h4 class="crop-name">Chilli</h4>
+                </div>
+                <div class="crop-stat">0.75 Acres</div>
+                <div class="crop-stat">Planted: Feb 2025</div>
+              </div>
+              <svg style="width: 20px; height: 20px; stroke: #12231C; fill: none; stroke-width: 2; margin-left: auto;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+          </div>
+
+          <a href="#" class="view-all-link">View All Crops <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN (30%) -->
+      <div class="right-column">
+        
+        <!-- Weather Card -->
+        <div class="glass-card weather-card" style="margin-bottom: 24px;">
+          <!-- Decorative leaf -->
+          <svg class="weather-decorative-leaf" fill="#F3A62F" viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66l.95-2.3c.48.1.96.15 1.44.15c4.54 0 8.87-2.16 11.95-6C21.67 11.82 22 9 22 9c-2-2-5-1-5-1z"/></svg>
+          
+          <div class="weather-header">
+            <div class="weather-title-area">
+              <h3>Today's Weather</h3>
+              <p>Mon, 26 May 2025</p>
+            </div>
+            <svg style="width: 48px; height: 48px;" viewBox="0 0 64 64"><path fill="#FFD05B" d="M32 10.7V4.9M47 16.9l4.1-4.1M53.3 32h5.8M47 47.1l4.1 4.1M32 53.3v5.8M16.9 47.1l-4.1 4.1M10.7 32H4.9M16.9 16.9l-4.1-4.1" stroke="#FFB74D" stroke-width="2" stroke-linecap="round"/><circle cx="32" cy="32" r="14" fill="#FFE082"/><path fill="#E0E5FF" d="M48.7 39.8c0-5.7-4.6-10.3-10.3-10.3-1.2 0-2.3.2-3.4.6-1.5-3.8-5.3-6.4-9.7-6.4-5.8 0-10.5 4.7-10.5 10.5 0 .6 0 1.1.1 1.6-3 1.2-5.1 4.2-5.1 7.6 0 4.6 3.7 8.3 8.3 8.3h22c4.8 0 8.6-3.8 8.6-8.6 0-1.4-.4-2.8-1-3.9z"/></svg>
+          </div>
+
+          <div class="weather-main">
+            <div>
+              <h2 class="weather-temp">32°C</h2>
+              <p class="weather-desc">Partly Cloudy</p>
+            </div>
+            <div class="weather-stats">
+              <div class="w-stat">
+                <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                Humidity <strong>62%</strong>
+              </div>
+              <div class="w-stat">
+                <svg style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M12 14v7"></path><path d="M8 18v3"></path><path d="M16 18v3"></path></svg>
+                Rain Chance <strong>10%</strong>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn-weather action-btn" data-action="Weather Forecast">View 5-Day Forecast &rarr;</button>
+        </div>
+
+        <!-- Quick Actions -->
+        <h3 class="qa-header">
+          <svg style="width: 20px; height: 20px; stroke: #1F6B46; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          Quick Actions
+        </h3>
+        
+        <a href="javascript:void(0)" class="qa-row action-link">
+          <div class="qa-icon-wrap" style="background: #EAF5EC; color: #1F6B46;">
+            <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2.5;" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          </div>
+          <div class="qa-info">
+            <h4 class="qa-title">Add New Crop</h4>
+            <p class="qa-desc">Record a new crop in your farm</p>
+          </div>
+          <svg class="qa-arrow" style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+
+        <a href="javascript:void(0)" class="qa-row action-link">
+          <div class="qa-icon-wrap" style="background: #EAF5EC; color: #1F6B46;">
+            <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          </div>
+          <div class="qa-info">
+            <h4 class="qa-title">Update Farm Details</h4>
+            <p class="qa-desc">Keep your information up to date</p>
+          </div>
+          <svg class="qa-arrow" style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+
+        <a href="javascript:void(0)" class="qa-row action-link">
+          <div class="qa-icon-wrap" style="background: #EAF5EC; color: #1F6B46;">
+            <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <div class="qa-info">
+            <h4 class="qa-title">Download Farm Report</h4>
+            <p class="qa-desc">Get a detailed summary</p>
+          </div>
+          <svg class="qa-arrow" style="width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Bottom Accessibility Bar -->
+    <div class="bottom-acc-container">
+      <div class="acc-pill-wrap">
+        <a href="javascript:void(0)" class="acc-btn">
+          <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+          Speak / Voice Input
+        </a>
+        <button type="button" class="acc-btn" style="border: none; background: none; cursor: pointer;">
+          <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="currentColor"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path fill="none" stroke="currentColor" stroke-width="2" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          Read Aloud
+        </button>
+        <a href="tel:18001234567" class="acc-btn">
+          <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          Call Vyapti
+        </a>
+        <a href="https://wa.me/919876543210" target="_blank" class="acc-btn">
+          <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+          WhatsApp Vyapti
+        </a>
+      </div>
+    </div>
+  </main>
+
+  
+  <!-- Add Crop Modal -->
+  <div class="farm-modal-backdrop" id="addCropModal">
+    <div class="farm-modal-card">
+      <h2 class="fm-title">Add New Crop</h2>
+      <p class="fm-subtitle">Enter details and upload a photo of your new crop.</p>
+      
+      <div class="fm-upload-zone" id="cropUploadZone">
+        <svg class="fm-upload-icon" style="width: 48px; height: 48px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        <div style="font-size: 15px; font-weight: 700; color: #12231C;">Click to upload crop photo</div>
+        <div style="font-size: 13px; color: #64766E; margin-top: 4px;">JPG, PNG or HEIC (Max 5MB)</div>
+      </div>
+      
+      <div class="fm-form-group">
+        <label class="fm-label">Crop Name</label>
+        <input type="text" class="fm-input" placeholder="e.g. Potato, Tomato, Maize">
+      </div>
+      
+      <div style="display: flex; gap: 16px;">
+        <div class="fm-form-group" style="flex: 1;">
+          <label class="fm-label">Land Area (Acres)</label>
+          <input type="number" class="fm-input" placeholder="e.g. 2.5">
+        </div>
+        <div class="fm-form-group" style="flex: 1;">
+          <label class="fm-label">Planting Date</label>
+          <input type="date" class="fm-input">
+        </div>
+      </div>
+      
+      <div class="fm-actions">
+        <button type="button" class="fm-btn-cancel" id="btnCancelCrop">Cancel</button>
+        <button type="button" class="fm-btn-save" id="btnSaveCrop">Save Crop</button>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- Tab Details Modal -->
+  <div class="farm-modal-backdrop" id="tabDetailsModal">
+    <div class="farm-modal-card">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <div id="tabModalIcon" style="width: 40px; height: 40px; border-radius: 12px; background: #EAF5EC; color: #1F6B46; display: flex; align-items: center; justify-content: center;"></div>
+        <div>
+          <h2 class="fm-title" id="tabModalTitle" style="margin: 0;">Details</h2>
+        </div>
+      </div>
+      <p class="fm-subtitle" id="tabModalDesc" style="color: #64766E; line-height: 1.5; font-size: 15px;">Here is the detailed view for this section.</p>
+      
+      <div style="background: #FAFCFA; border: 1px solid rgba(20,70,50,0.08); border-radius: 12px; padding: 20px; margin-bottom: 24px;">
+        <ul id="tabModalList" style="margin: 0; padding-left: 20px; color: #12231C; font-weight: 500; font-size: 14.5px; line-height: 2;">
+          <li>Loading data...</li>
+        </ul>
+      </div>
+      
+      <div class="fm-actions" style="margin-top: 0;">
+        <button type="button" class="fm-btn-cancel" id="btnCancelTabModal" style="background: #EAF5EC; color: #1F6B46; border: none;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="farm-toast" id="farmToast">
+    <svg style="width: 20px; height: 20px; color: #55B85A;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+    <span id="toastMsg">Action completed successfully!</span>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const modal = document.getElementById('addCropModal');
+      const toast = document.getElementById('farmToast');
+      const toastMsg = document.getElementById('toastMsg');
+      
+      function showToast(msg, isSuccess = true) {
+        toastMsg.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+      }
+
+      // Add Crop Modal Logic
+      document.querySelectorAll('.btn-add-crop, .qa-row').forEach(el => {
+        if (el.textContent.includes('Add New Crop')) {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.classList.add('show');
+          });
+        }
+      });
+      
+      document.getElementById('btnCancelCrop').addEventListener('click', () => {
+        modal.classList.remove('show');
+      });
+      
+      document.getElementById('btnSaveCrop').addEventListener('click', () => {
+        modal.classList.remove('show');
+        showToast('New crop added successfully!');
+      });
+      
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('show');
+      });
+
+      // Quick Actions & Other Buttons Logic
+      document.querySelectorAll('.qa-row').forEach(el => {
+        if (!el.textContent.includes('Add New Crop')) {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            const title = el.querySelector('.qa-title').textContent;
+            showToast('Opening ' + title + '...');
+          });
+        }
+      });
+      
+      document.querySelectorAll('.action-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          showToast('Action triggered: ' + btn.getAttribute('data-action'));
+        });
+      });
+
+      
+      const tabDetailsModal = document.getElementById('tabDetailsModal');
+      const tabModalTitle = document.getElementById('tabModalTitle');
+      const tabModalDesc = document.getElementById('tabModalDesc');
+      const tabModalList = document.getElementById('tabModalList');
+      const tabModalIcon = document.getElementById('tabModalIcon');
+      
+      const tabContentMap = {
+        'My Crops': {
+          desc: 'Manage your current and upcoming crop cycles, view expected yields, and track growth progress.',
+          list: ['Active Crops: Potato (2.5 Acres)', 'Upcoming Harvest: July 2025', 'Expected Yield: 15 Tons'],
+          icon: '<svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 7.477 2 13s4.477 10 10 10z"></path></svg>'
+        },
+        'Soil & Water': {
+          desc: 'Monitor soil health parameters and track your irrigation schedule based on real-time weather data.',
+          list: ['Soil Type: Red Loamy', 'Current Moisture: 42%', 'Next Irrigation: Today, 5:00 PM', 'pH Level: 6.8'],
+          icon: '<svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>'
+        },
+        'Crop History': {
+          desc: 'Review past crop cycles, historical yields, and prices received to plan better for the next season.',
+          list: ['2024 Kharif: Tomatoes (Good Yield)', '2023 Rabi: Onions (Market Price High)', '2023 Kharif: Cotton'],
+          icon: '<svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>'
+        },
+        'Documents': {
+          desc: 'Securely access and manage all your farm-related documents, certificates, and soil health cards.',
+          list: ['Land Registration (Verified)', 'Soil Health Card (Updated 2024)', 'Organic Certification (Pending)'],
+          icon: '<svg style="width: 20px; height: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>'
+        }
+      };
+
+      // Override previous tab logic
+      const tabs = document.querySelectorAll('.tab-item');
+      tabs.forEach(tab => {
+        // Remove old listeners by cloning (quick hack)
+        const newTab = tab.cloneNode(true);
+        tab.parentNode.replaceChild(newTab, tab);
+        
+        newTab.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          const tabName = newTab.textContent.trim();
+          if (tabName !== 'Farm Overview') {
+            const data = tabContentMap[tabName] || { desc: 'Details not available.', list: [], icon: '' };
+            tabModalTitle.textContent = tabName;
+            tabModalDesc.textContent = data.desc;
+            tabModalIcon.innerHTML = data.icon;
+            tabModalList.innerHTML = data.list.map(i => `<li>${i}</li>`).join('');
+            
+            tabDetailsModal.classList.add('show');
+          } else {
+            // Just activate Farm Overview
+            document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+            newTab.classList.add('active');
+          }
+        });
+      });
+      
+      document.getElementById('btnCancelTabModal').addEventListener('click', () => {
+        tabDetailsModal.classList.remove('show');
+      });
+      tabDetailsModal.addEventListener('click', (e) => {
+        if (e.target === tabDetailsModal) tabDetailsModal.classList.remove('show');
+      });
+
+      // Old tabs logic removed/replaced
+      tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+          e.preventDefault();
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          showToast('Loading ' + tab.textContent.trim() + ' data...');
+        });
+      });
+      
+      // Upload zone mock interaction
+      document.getElementById('cropUploadZone').addEventListener('click', () => {
+         showToast('File picker opened...');
+      });
+    });
+  </script>
+
+  <!-- Ask Vyapti & Drawer are maintained dynamically by scripts -->
+  <script type="module" src="/src/farmer-app.js"></script>
+  <script type="module" src="/src/home-integration.js"></script>
+  <script src="/src/vyapti-kb.js"></script>
+  <script src="/src/ask-vyapti.js"></script>
+  <script src="/src/guided-tour.js"></script>
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Find the Update Farm Details and Download Farm Report cards
+    const cards = document.querySelectorAll('.action-card');
+    cards.forEach(card => {
+        if (card.innerText.includes('Update Farm Details')) {
+            card.onclick = (e) => { e.preventDefault(); window.showToast('Farm details securely updated on network', 'success'); };
+        } else if (card.innerText.includes('Download Farm Report')) {
+            card.onclick = (e) => { e.preventDefault(); window.showToast('Farm Report generating... download started', 'info'); };
+        }
+    });
+});
+
+</script>
+</body>
+</html>

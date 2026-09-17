@@ -1646,3 +1646,225 @@ html, body {
   }
 }
 
+
+/* ANDROID APK MOBILE MIGRATION */
+@media (max-width: 768px) {
+  body, html {
+    overflow-x: hidden;
+  }
+  .app-main-layout {
+    padding: 10px 10px 90px 10px; /* Leave space for bottom nav */
+    gap: 12px;
+  }
+  
+  /* Compact Headers */
+  .app-header {
+    padding: 10px 14px;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  }
+  .page-heading {
+    font-size: 20px;
+  }
+  
+  /* Vertical Stacked Cards */
+  .grid-3-col, .grid-4-col, .grid-2-1-col {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+  
+  /* Horizontal scrollable areas */
+  .horizontal-scroll-mobile {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+  .horizontal-scroll-mobile::-webkit-scrollbar {
+    display: none;
+  }
+  .horizontal-scroll-mobile > * {
+    min-width: 280px;
+    scroll-snap-align: center;
+  }
+  
+  /* Sticky Bottom Navigation */
+  .app-bottom-acc-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    transform: none;
+    border-radius: 20px 20px 0 0;
+    padding: 12px 16px 20px 16px; /* Extra padding for bottom inset */
+    background: #FFFFFF;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    justify-content: space-around;
+    border: none;
+    z-index: 1000;
+  }
+  
+  .acc-bar-link {
+    flex-direction: column;
+    font-size: 10px;
+    padding: 4px;
+    gap: 4px;
+  }
+  
+  .acc-bar-icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* NEW MOBILE BOTTOM NAVIGATION */
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #FFFFFF;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 16px 20px 16px; /* Bottom inset */
+    z-index: 1000;
+    border-top: 1px solid #E4EBE6;
+  }
+  
+  .mob-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .mob-nav-item:hover, .mob-nav-item.active {
+    color: var(--color-primary);
+  }
+  
+  .mob-nav-icon {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+  }
+  
+  /* Hide desktop sidebar trigger on mobile if we have bottom nav */
+  .menu-toggle-btn {
+    display: flex; /* Keep for 'More' or if needed */
+  }
+  
+  /* Hide the old bottom acc bar on mobile since we redesign it */
+  .app-bottom-acc-bar {
+    display: none !important;
+  }
+  
+  /* Fix header */
+  .header-search-wrap {
+    display: none; /* Expandable later */
+  }
+  
+  .app-header {
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Convert tables to cards on mobile */
+  .data-table, .data-table tbody, .data-table tr, .data-table td {
+    display: block;
+    width: 100%;
+  }
+  
+  .data-table thead {
+    display: none;
+  }
+  
+  .data-table tr {
+    margin-bottom: 16px;
+    border: 1px solid #E4EBE6;
+    border-radius: 12px;
+    padding: 12px;
+    background: #FFFFFF;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  }
+  
+  .data-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+    border-bottom: 1px solid #F4F7F5;
+    padding: 8px 4px;
+    font-size: 13px;
+  }
+  
+  .data-table td:last-child {
+    border-bottom: none;
+  }
+  
+  .data-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-align: left;
+    margin-right: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-grid-3, .main-grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+  
+  .stepper-container {
+    padding: 12px 16px !important;
+    overflow-x: auto;
+    justify-content: flex-start !important;
+    gap: 12px;
+  }
+  
+  .step-line {
+    min-width: 20px;
+    margin: 0 4px !important;
+  }
+  
+  .step-label {
+    white-space: nowrap;
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid, .main-grid, .booking-form-grid, .booking-form-grid-2 {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+  
+  [style*="display: grid; grid-template-columns: 1fr 1fr;"] {
+    grid-template-columns: 1fr !important;
+  }
+  
+  /* Maps full width */
+  .map-container {
+    width: 100% !important;
+    height: 250px !important;
+  }
+}

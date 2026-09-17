@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VYAPTI KSHETRA - Market & Fair Price</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%231B4D35'/><path d='M50 20 A30 30 0 0 1 80 50 A30 30 0 0 1 50 80 A30 30 0 0 1 20 50 A30 30 0 0 1 50 20 Z' fill='none' stroke='%23ffffff' stroke-width='6'/></svg>" />
+  <link rel="stylesheet" href="/src/style.css" />
+  <style>
+    body { background-color: #F8F9FA; font-family: var(--font-main); overflow-x: hidden; }
+    
+    /* Sidebar */
+    #app-sidebar-drawer {  width: 260px; background: #FFFFFF; border-right: 1px solid #E8ECEF; box-shadow: none; left: 0; position: fixed;  }
+    .app-main-layout { margin-left: 0; max-width: 1400px; padding: 30px 40px 100px; min-height: 100vh; display: flex; flex-direction: column; }
+    
+    /* Top Header */
+    .top-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+    .search-bar { background: #F0F3F5; border: 1px solid #E8ECEF; border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 10px; width: 400px; }
+    .search-bar input { border: none; background: transparent; outline: none; width: 100%; font-size: 14px; font-family: inherit; color: #163323; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .header-pill { background: #F0F3F5; border: none; padding: 8px 16px; border-radius: 20px; font-size: 13.5px; font-weight: 600; color: #163323; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .header-bell { background: #FFFFFF; border: 1px solid #E4EBE6; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .bell-badge { position: absolute; top: -2px; right: -2px; background: #E03131; color: white; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid white; }
+    .profile-pill { background: #F0F3F5; padding: 4px 12px 4px 4px; border-radius: 24px; display: flex; align-items: center; gap: 10px; cursor: pointer; margin-left: 8px; }
+    
+    /* Page Title */
+    .page-title-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+    .page-title-left h1 { font-size: 32px; font-weight: 800; color: #0D2114; margin: 0 0 4px; display: flex; align-items: center; gap: 12px; letter-spacing: -0.5px; }
+    .page-title-left p { font-size: 15px; color: #65796E; margin: 0; }
+    .update-banner { background: #E8F4EC; padding: 12px 20px; border-radius: 12px; display: flex; align-items: center; gap: 16px; }
+    .update-banner-icon { color: #1B4D35; }
+    .update-banner-text { font-size: 14px; color: #163323; line-height: 1.4; }
+    
+    /* Filters / Tabs */
+    .filters-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .filters-left { display: flex; gap: 16px; }
+    .dropdown-btn { background: #FFFFFF; border: 1px solid #E8ECEF; padding: 10px 16px; border-radius: 10px; font-size: 14px; font-weight: 600; color: #11261A; display: flex; align-items: center; gap: 10px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .filters-right { display: flex; gap: 8px; }
+    .time-tab { padding: 8px 16px; border-radius: 8px; font-size: 13.5px; font-weight: 600; color: #65796E; cursor: pointer; }
+    .time-tab.active { background: #1B4D35; color: #FFFFFF; }
+    
+    
+    /* VIBRANT CARD COLORS */
+    .card { border: none !important; box-shadow: 0 10px 30px rgba(0,0,0,0.06) !important; color: #FFFFFF; }
+    .card-title, .card-title svg { color: #FFFFFF !important; stroke: #FFFFFF !important; fill: none; }
+    
+    .card-today-price {
+      background: linear-gradient(135deg, #0B3D2E 0%, #1A744B 100%) !important;
+    }
+    .card-today-price h2, .card-today-price p, .card-today-price .news-text { color: #FFFFFF !important; }
+    .potato-circle { background: rgba(255,255,255,0.2) !important; }
+    .trend-badge { background: rgba(255,255,255,0.2) !important; color: #FFFFFF !important; }
+
+    .card-fair-price {
+      background: linear-gradient(135deg, #F59F00 0%, #E85D04 100%) !important;
+    }
+    .card-fair-price .fair-price-box { background: rgba(255,255,255,0.2) !important; }
+    .card-fair-price h2, .card-fair-price p { color: #FFFFFF !important; }
+    .fair-check-list div { color: #FFFFFF !important; }
+    .fair-check-list svg { stroke: #FFFFFF !important; fill: rgba(255,255,255,0.3) !important; }
+
+    .card-trend {
+      background: linear-gradient(135deg, #1C7ED6 0%, #0B2B5E 100%) !important;
+    }
+    .card-trend text { fill: rgba(255,255,255,0.7) !important; }
+    
+    .card-nearby {
+      background: linear-gradient(135deg, #82C89A 0%, #2B6B39 100%) !important;
+    }
+    .nearby-table th, .nearby-table td { color: #FFFFFF !important; border-bottom-color: rgba(255,255,255,0.2) !important; }
+    .nearby-table tr:hover { background: rgba(255,255,255,0.1) !important; }
+    .card-link { color: #FFFFFF !important; }
+
+    .card-comparison {
+      background: linear-gradient(135deg, #9C36B5 0%, #5C007A 100%) !important;
+    }
+    .comp-name, .comp-price { color: #FFFFFF !important; }
+    .bar-dark { background: #FFFFFF !important; }
+    .bar-light { background: rgba(255,255,255,0.4) !important; }
+
+    .card-insight {
+      background: linear-gradient(135deg, #FDE68A 0%, #D97706 100%) !important;
+    }
+    .card-insight .insight-text { color: #432000 !important; font-weight: 600; }
+    .card-insight .insight-green-box { background: rgba(255,255,255,0.6) !important; }
+    .card-insight .insight-green-box h4, .card-insight .insight-green-box p { color: #432000 !important; }
+    .card-insight .card-title, .card-insight .card-title svg { color: #432000 !important; stroke: #432000 !important; }
+
+    .card-ds {
+      background: linear-gradient(135deg, #20C997 0%, #087F5B 100%) !important;
+    }
+    .ds-label { color: #FFFFFF !important; }
+    .ds-bar-bg { background: rgba(255,255,255,0.3) !important; }
+    .ds-bar-fill { background: #FFFFFF !important; }
+    .ds-high, .ds-low { color: #FFFFFF !important; }
+    .ds-msg { background: rgba(255,255,255,0.2) !important; color: #FFFFFF !important; }
+
+    .card-map {
+      background: linear-gradient(135deg, #F0F6EA 0%, #A3C9A8 100%) !important;
+    }
+    .card-map .card-title, .card-map .card-title svg { color: #1B4D35 !important; stroke: #1B4D35 !important; }
+
+    .card-news {
+      background: linear-gradient(135deg, #4A5C52 0%, #11261A 100%) !important;
+    }
+    .news-date { color: #A8C7B4 !important; }
+    .news-text { color: #FFFFFF !important; }
+    .news-dot { background: #82C89A !important; border-color: #4A5C52 !important; }
+    .news-item { border-left-color: rgba(255,255,255,0.2) !important; }
+
+    /* Main Grid */
+    .main-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    
+    /* Cards */
+    .card { background: #FFFFFF; border: 1px solid #E8ECEF; border-radius: 16px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); display: flex; flex-direction: column; }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .card-title { font-size: 16px; font-weight: 700; color: #11261A; display: flex; align-items: center; gap: 8px; margin: 0; }
+    
+    /* Card 1: Today's Market Price */
+    .price-flex { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .potato-icon-lg { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .huge-price { font-size: 36px; font-weight: 800; color: #11261A; letter-spacing: -1px; }
+    .trend-pill-up { background: #E8F4EC; color: #165A31; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+    .trend-pill-flat { background: #FEF3C7; color: #D97706; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; }
+    .range-box p { margin: 0 0 4px; font-size: 13px; color: #65796E; }
+    .range-box h4 { margin: 0; font-size: 18px; font-weight: 800; color: #11261A; }
+    
+    /* Card 2: Fair Price */
+    .fair-price-box { background: #F0F6EA; border-radius: 12px; padding: 16px; text-align: center; margin-bottom: 20px; }
+    .fair-price-box p { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: #4A5C52; }
+    .fair-price-box h2 { margin: 0; font-size: 32px; font-weight: 800; color: #1B4D35; }
+    .fair-check-list { display: flex; flex-direction: column; gap: 10px; }
+    .fair-check-list div { font-size: 13.5px; color: #4A5C52; display: flex; align-items: center; gap: 10px; }
+    
+    /* Card 3: Price Trend */
+    .trend-chart-container { position: relative; flex: 1; min-height: 150px; margin-top: 10px; }
+    .tooltip { position: absolute; right: 20px; top: 10px; background: white; border: 1px solid #E8ECEF; padding: 8px 12px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); text-align: center; z-index: 10; }
+    
+    /* Card 4: Nearby Markets Table */
+    .nearby-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .nearby-table th { text-align: left; padding: 0 0 12px 0; color: #65796E; font-weight: 600; border-bottom: 1px solid #E8ECEF; }
+    .nearby-table td { padding: 14px 0; color: #FFFFFF; border-bottom: 1px solid #F0F3F5; }
+    .nearby-table tr:last-child td { border-bottom: none; padding-bottom: 0; }
+    .td-price { font-weight: 700; }
+    
+    /* Card 5: Price Comparison */
+    .comp-row { display: grid; grid-template-columns: 100px 40px 1fr; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .comp-row:last-child { margin-bottom: 0; }
+    .comp-name { font-size: 12.5px; color: #4A5C52; }
+    .comp-price { font-size: 13px; font-weight: 700; color: #11261A; }
+    .comp-bar-bg { background: transparent; height: 20px; border-radius: 4px; width: 100%; display: flex; align-items: center; }
+    .comp-bar { height: 100%; border-radius: 4px; }
+    .bar-dark { background: #1B4D35; }
+    .bar-light { background: #82C89A; }
+    
+    /* Card 6: Market Insight */
+    .insight-card { background: #FFFBEA; border: 1px solid #FDE68A; }
+    .insight-text { font-size: 14.5px; color: #4A5C52; line-height: 1.5; margin-bottom: 20px; }
+    .insight-green-box { background: #E8F4EC; border-radius: 8px; padding: 16px; }
+    .insight-green-box h4 { margin: 0 0 8px; font-size: 15px; font-weight: 700; color: #165A31; display: flex; align-items: center; gap: 8px; }
+    .insight-green-box p { margin: 0; font-size: 13.5px; color: #2B6B39; line-height: 1.4; }
+    
+    /* Card 7: Demand & Supply */
+    .ds-row { display: grid; grid-template-columns: 60px 1fr 40px; align-items: center; gap: 16px; margin-bottom: 20px; }
+    .ds-label { font-size: 13px; color: #4A5C52; }
+    .ds-bar-bg { background: #F0F3F5; height: 16px; border-radius: 8px; overflow: hidden; display: flex; }
+    .ds-bar-fill { height: 100%; border-radius: 8px; }
+    .ds-val { font-size: 13px; font-weight: 700; }
+    .ds-high { color: #165A31; }
+    .ds-low { color: #D97706; }
+    .ds-msg { background: #E8F4EC; padding: 12px 16px; border-radius: 8px; font-size: 13px; color: #165A31; font-weight: 600; display: flex; align-items: center; gap: 8px; margin-top: auto; }
+    
+    /* Card 8: Market Locations */
+    .map-card { padding: 16px; }
+    .map-wrap { position: relative; width: 100%; height: 180px; border-radius: 12px; overflow: hidden; }
+    .map-img { width: 100%; height: 100%; object-fit: cover; }
+    .map-pin-box { position: absolute; background: white; border-radius: 6px; padding: 6px 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; flex-direction: column; gap: 2px; text-align: center; font-size: 11px; }
+    .map-pin-box::after { content: ''; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); border-width: 5px 5px 0; border-style: solid; border-color: white transparent transparent transparent; }
+    .pin-price { font-size: 13px; font-weight: 800; color: #11261A; }
+    .pin-loc { color: #65796E; }
+    
+    /* Card 9: Market News */
+    .news-list { display: flex; flex-direction: column; gap: 16px; }
+    .news-item { display: flex; align-items: flex-start; gap: 12px; }
+    .news-dot { width: 6px; height: 6px; background: #8F9E96; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+    .news-content { flex: 1; }
+    .news-date { font-size: 11px; color: #8F9E96; margin-bottom: 4px; display: block; }
+    .news-text { font-size: 13px; color: #11261A; line-height: 1.4; margin: 0; }
+    
+    /* Links */
+    .card-link { font-size: 12.5px; font-weight: 700; color: #1B4D35; text-decoration: none; display: flex; align-items: center; gap: 4px; }
+    
+    /* Sidebar Footer specific to this screen */
+    .sidebar-footer-solid { margin: auto 20px 20px; background: #E8F4EC; padding: 16px; border-radius: 12px; }
+    .sidebar-footer-solid h5 { margin: 0 0 8px; font-size: 13px; color: #165A31; display: flex; align-items: flex-start; gap: 8px; line-height: 1.3; }
+    
+    /* Bottom Bar */
+    .bottom-acc-container { display: flex; justify-content: center; align-items: center; padding: 20px 0 40px; margin-top: auto; }
+    .acc-pill-wrap { display: flex; align-items: center; pointer-events: auto; background: white; border-radius: 30px; box-shadow: 0 6px 20px rgba(0,0,0,0.08); border: 1px solid #E4EBE6; overflow: hidden; margin: 0 auto; }
+    .acc-btn { display: flex; align-items: center; gap: 8px; padding: 10px 18px; color: #273E31; font-size: 13px; font-weight: 600; text-decoration: none; transition: background 0.15s; background: none; border: none; cursor: pointer; }
+    .acc-btn:hover { background: #F4F7F5; }
+    .acc-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+    .acc-btn.btn-read-aloud svg { fill: currentColor; stroke: none; }
+    .acc-btn:not(:last-child) { border-right: 1px solid #E4EBE6; }
+    .farmers-feed { display: flex; align-items: center; gap: 8px; color: #1B4D35; font-family: cursive, sans-serif; font-size: 16px; font-weight: bold; pointer-events: auto; position: absolute; right: 40px; }
+    
+  
+    /* Drawer Styles */
+    #app-sidebar-drawer {
+      transform: translateX(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+    }
+    #app-sidebar-drawer.open {
+      transform: translateX(0);
+    }
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 33, 20, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .drawer-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+<style>
+body { top: 0 !important; }
+.skiptranslate { display: none !important; }
+</style>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <link rel="stylesheet" href="/src/ask-vyapti.css">
+</head>
+<body data-page="market">
+<div id="google_translate_element" style="display:none;"></div>
+  <div id="app-drawer-backdrop" class="drawer-backdrop"></div>
+
+  <aside id="app-sidebar-drawer" aria-label="Main Navigation">
+    <div class="sidebar-header" style="padding: 24px 20px 16px; display: flex; justify-content: center; align-items: center; min-height: 100px;">
+      <a href="/role.html" title="Switch Role" style="display:block; text-align:center;"><img src="/assets/app_logo.png" alt="Vyapti Kshetra" style="width: 180px; height: auto; object-fit: contain; image-rendering: -webkit-optimize-contrast;" /></a>
+    </div>
+    
+    <ul class="sidebar-nav-list">
+      <li>
+        <a href="/farmer-home.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span>Home</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-my-farm.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+          <span>My Farm</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-market.html" class="sidebar-nav-link active" style="background: #1B4D35; color: white; border-radius: 12px; box-shadow: none;">
+          <svg class="nav-icon" style="stroke: white;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          <span>Market & Fair Price</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-grade-sell.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+          <span>Grade & Sell</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-find-buyers.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <span>Find Buyers</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-collective-logistics.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+          <span>Collective & Logistics</span>
+        </a>
+      </li>
+      <li>
+        <a href="/farmer-transactions.html" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          <span>My Transactions</span>
+        </a>
+      </li>
+      <li class="sidebar-divider"></li>
+      <li>
+        <a href="#" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Help & Support</span>
+        </a>
+      </li>
+      <li>
+        <a href="#" class="sidebar-nav-link">
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          <span>Settings</span>
+        </a>
+      </li>
+    </ul>
+    
+    <div class="sidebar-footer-solid">
+      <h5><svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; flex-shrink: 0;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg> Stronger Farmers<br>Brighter Tomorrows</h5>
+    </div>
+    <div style="padding: 0 20px 20px; font-size: 10px; color: #8F9E96;">Version 1.0.0</div>
+  </aside>
+
+  <main class="app-main-layout">
+    
+    <div class="top-header-row">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button type="button" id="app-menu-toggle" style="background: #FFFFFF; border: 1px solid #E8ECEF; border-radius: 8px; width: 42px; height: 42px; cursor: pointer; color: #163323; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02);"><svg style="width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+        <div class="search-bar">
+        <svg style="width: 18px; height: 18px; stroke: #65796E; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" placeholder="Search crops, markets, prices..." />
+      </div>
+      </div>
+      <div class="header-right">
+        <select id="header-lang-select" class="header-pill" style="border: 1px solid #E4EBE6; appearance: none; -webkit-appearance: none; padding-right: 32px; background: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2214%22 height=%2214%22 stroke=%22%2311261A%22 fill=%22none%22 stroke-width=%222%22 viewBox=%220 0 24 24%22><polyline points=%226 9 12 15 18 9%22></polyline></svg>') no-repeat right 12px center; background-color: #FFFFFF; font-family: inherit; font-size: 13.5px; font-weight: 600; color: #163323; cursor: pointer; outline: none; margin: 0; box-sizing: border-box; display: inline-flex; height: 40px;">
+        <option value="en">English</option>
+        <option value="hi">हिंदी (Hindi)</option>
+        <option value="te">తెలుగు (Telugu)</option>
+        <option value="ta">தமிழ் (Tamil)</option>
+        <option value="kn">ಕನ್ನಡ (Kannada)</option>
+        <option value="mr">मराठी (Marathi)</option>
+      </select>
+        <button type="button" class="header-pill btn-read-aloud">
+          <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+          Read Aloud
+        </button>
+        <div class="header-bell">
+          <svg style="width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          <span class="bell-badge">3</span>
+        </div>
+        <div class="profile-pill">
+          <img src="/assets/farmer_portrait.jpg" alt="Ramesh Kumar" style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover;" />
+          <div style="display: flex; flex-direction: column;">
+            <span style="font-size: 14px; font-weight: 700; color: #11261A;" class="sync-farmer-name">Ramesh Kumar</span>
+            <span style="font-size: 11px; color: #65796E;" class="sync-farmer-loc">Farmer | Krishna District, AP</span>
+          </div>
+          <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none; margin-left: 4px;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-title-row">
+      <div class="page-title-left">
+        <h1>Market & Fair Price <svg style="width: 36px; height: 36px; stroke: #1B4D35; fill: none; stroke-width: 2.5; margin-left: 8px;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></h1>
+        <p>Real-time market prices, trends and insights to help you get the best value.</p>
+      </div>
+      <div class="update-banner">
+        <svg class="update-banner-icon" style="width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
+        <div class="update-banner-text">
+          <strong>Better information.</strong><br>
+          <span style="color: #4A5C52;">Fairer prices. Stronger farmers.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="filters-row">
+      <div class="filters-left">
+        <div class="dropdown-btn">
+          <div style="font-size: 20px; line-height: 1;">🍅</div> <span class="sync-crop-name">Potato</span> <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+        <div class="dropdown-btn">
+          <svg style="width: 18px; height: 18px; stroke: #1B4D35; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          Nearby Markets (Andhra Pradesh)
+          <svg style="width: 16px; height: 16px; stroke: #65796E; fill: none;" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+      </div>
+      <div class="filters-right">
+        <div class="time-tab active">Today</div>
+        <div class="time-tab">1 Week</div>
+        <div class="time-tab">1 Month</div>
+        <div class="time-tab">3 Months</div>
+        <div class="time-tab">6 Months</div>
+      </div>
+    </div>
+
+    <div class="main-grid">
+      
+      <!-- Top Row -->
+      <!-- Card 1: Today's Market Price -->
+      <div class="card card-today-price">
+        <div class="card-header">
+          <h3 class="card-title">Today's Market Price <svg style="width: 16px; height: 16px; stroke: #8F9E96; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></h3>
+        </div>
+        <div class="price-flex">
+          <img src="/assets/potato_crop.jpg" alt="Potato" class="potato-icon-lg" />
+          <div>
+            <div class="huge-price">₹ 22 <span style="font-size: 24px;">/ kg</span></div>
+            <div style="margin-top: 6px; display: flex; align-items: center; gap: 8px;">
+              <span class="trend-pill-up"><svg style="width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg> +12%</span>
+              <span style="font-size: 12.5px; color: #65796E;">Higher than last week</span>
+            </div>
+          </div>
+        </div>
+        <div class="range-box" style="margin-top: auto; border-top: 1px solid #E8ECEF; padding-top: 16px;">
+          <p>Price range in nearby markets</p>
+          <h4>₹ 20 – 24 / kg</h4>
+        </div>
+      </div>
+
+      <!-- Card 2: Fair Price -->
+      <div class="card card-fair-price">
+        <div class="card-header">
+          <h3 class="card-title">Fair Price for Farmers <svg style="width: 16px; height: 16px; stroke: #8F9E96; fill: none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></h3>
+        </div>
+        <div class="fair-price-box">
+          <p>Estimated Fair Price</p>
+          <h2>₹ 21 – 23 / kg</h2>
+        </div>
+        <div class="fair-check-list" style="margin-top: auto;">
+          <div><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Based on market prices</div>
+          <div><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Quality (Grade A)</div>
+          <div><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Current demand & supply</div>
+          <div><svg style="width: 16px; height: 16px; stroke: #2E7D32; fill: #2E7D32; color: white;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="none"></circle><polyline points="8 12 11 15 16 9" stroke-width="3"></polyline></svg> Seasonal trend analysis</div>
+        </div>
+      </div>
+
+      <!-- Card 3: Price Trend -->
+      <div class="card card-trend">
+        <div class="card-header" style="margin-bottom: 0;">
+          <h3 class="card-title">Price Trend (Last 6 Months)</h3>
+        </div>
+        <div class="trend-chart-container">
+          <div class="tooltip">
+            <div style="font-weight: 800; color: #11261A; font-size: 14px; margin-bottom: 2px;">₹ 22 /kg</div>
+            <div style="color: #65796E; font-size: 11px;">26 May 2025</div>
+          </div>
+          <!-- Exact matching SVG Chart -->
+          <svg width="100%" height="100%" viewBox="0 0 400 180" style="overflow: visible; margin-top: 20px;">
+            <!-- Grid Lines -->
+            <line x1="30" y1="20" x2="380" y2="20" stroke="#E8ECEF" stroke-width="1" />
+            <line x1="30" y1="60" x2="380" y2="60" stroke="#E8ECEF" stroke-width="1" />
+            <line x1="30" y1="100" x2="380" y2="100" stroke="#E8ECEF" stroke-width="1" />
+            <line x1="30" y1="140" x2="380" y2="140" stroke="#E8ECEF" stroke-width="1" />
+            
+            <!-- Y Axis Labels -->
+            <text x="20" y="24" font-size="11" fill="#8F9E96" text-anchor="end">40</text>
+            <text x="20" y="64" font-size="11" fill="#8F9E96" text-anchor="end">30</text>
+            <text x="20" y="104" font-size="11" fill="#8F9E96" text-anchor="end">20</text>
+            <text x="20" y="144" font-size="11" fill="#8F9E96" text-anchor="end">10</text>
+            
+            <!-- X Axis Labels -->
+            <text x="40" y="160" font-size="11" fill="#8F9E96" text-anchor="middle">Jan</text>
+            <text x="100" y="160" font-size="11" fill="#8F9E96" text-anchor="middle">Feb</text>
+            <text x="160" y="160" font-size="11" fill="#8F9E96" text-anchor="middle">Mar</text>
+            <text x="220" y="160" font-size="11" fill="#8F9E96" text-anchor="middle">Apr</text>
+            <text x="280" y="160" font-size="11" fill="#8F9E96" text-anchor="middle">May</text>
+            <text x="340" y="160" font-size="11" fill="#8F9E96" text-anchor="middle">Jun</text>
+            
+            <!-- Trend Line -->
+            <polyline points="30,130 50,120 80,130 110,120 140,115 170,80 200,120 240,105 270,95 300,100 340,92 380,75" fill="none" stroke="#2B6B39" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            
+            <!-- Data Points -->
+            <circle cx="30" cy="130" r="4" fill="white" stroke="#2B6B39" stroke-width="2" />
+            <circle cx="50" cy="120" r="4" fill="white" stroke="#2B6B39" stroke-width="2" />
+            <circle cx="80" cy="130" r="4" fill="white" stroke="#2B6B39" stroke-width="2" />
+            <circle cx="110" cy="120" r="4" fill="white" stroke="#2B6B39" stroke-width="2" />
+            <circle cx="140" cy="115" r="4" fill="white" stroke="#2B6B39" stroke-width="2" />
+            <circle cx="170" cy="80" r="4" fill="white" stroke="#2B6B39" stroke-width="2" />
+            <circle cx="200" cy="120" r="4" fill="white" stroke="#2B6B39" stroke-width="2" />
+            <circle cx="240" cy="105" r="4" fill="white" stroke="#2B6B39" stroke-width="2" />
+            <circle cx="270" cy="95" r="4" fill="white" stroke="#2B6B39" stroke-width="2" />
+            
+            <!-- Active Point with Tooltip Link -->
+            <line x1="340" y1="92" x2="340" y2="40" stroke="#E8ECEF" stroke-width="1" stroke-dasharray="4,4" />
+            <circle cx="340" cy="92" r="6" fill="#FFFFFF" stroke="#2B6B39" stroke-width="3" />
+            <circle cx="380" cy="75" r="4" fill="white" stroke="#2B6B39" stroke-width="2" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Middle Row -->
+      <!-- Card 4: Prices in Nearby Markets -->
+      <div class="card card-nearby">
+        <div class="card-header">
+          <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Prices in Nearby Markets</h3>
+          <a href="#" class="card-link">View on Map <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        </div>
+        <table class="nearby-table">
+          <thead>
+            <tr>
+              <th>Market</th>
+              <th>Price (₹/kg)</th>
+              <th>Trend</th>
+              <th>Distance</th>
+              <th>Arrivals</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Krishna District APMC</td>
+              <td class="td-price">22</td>
+              <td><span style="color: #165A31; font-weight: 700;">↑ +12%</span></td>
+              <td style="color: #65796E;">12 km</td>
+              <td style="color: #65796E;">High</td>
+            </tr>
+            <tr>
+              <td>Vijayawada APMC</td>
+              <td class="td-price">24</td>
+              <td><span style="color: #165A31; font-weight: 700;">↑ +9%</span></td>
+              <td style="color: #65796E;">45 km</td>
+              <td style="color: #65796E;">Medium</td>
+            </tr>
+            <tr>
+              <td>Guntur</td>
+              <td class="td-price">20</td>
+              <td><span style="color: #165A31; font-weight: 700;">↑ +5%</span></td>
+              <td style="color: #65796E;">28 km</td>
+              <td style="color: #65796E;">Medium</td>
+            </tr>
+            <tr>
+              <td>Machilipatnam</td>
+              <td class="td-price">21</td>
+              <td><span style="color: #D97706; font-weight: 700;">→ 0%</span></td>
+              <td style="color: #65796E;">38 km</td>
+              <td style="color: #65796E;">Low</td>
+            </tr>
+            <tr>
+              <td>Tenali</td>
+              <td class="td-price">20</td>
+              <td><span style="color: #165A31; font-weight: 700;">↑ +8%</span></td>
+              <td style="color: #65796E;">32 km</td>
+              <td style="color: #65796E;">Medium</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Card 5: Price Comparison -->
+      <div class="card card-comparison">
+        <div class="card-header">
+          <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Price Comparison</h3>
+        </div>
+        <div style="display: flex; flex-direction: column; justify-content: center; flex: 1;">
+          <div class="comp-row">
+            <div class="comp-name">Your Area (Krishna District)</div>
+            <div class="comp-price">₹ 22</div>
+            <div class="comp-bar-bg"><div class="comp-bar bar-dark" style="width: 70%;"></div></div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-name">Vijayawada</div>
+            <div class="comp-price">₹ 24</div>
+            <div class="comp-bar-bg"><div class="comp-bar bar-light" style="width: 90%;"></div></div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-name">Guntur</div>
+            <div class="comp-price">₹ 20</div>
+            <div class="comp-bar-bg"><div class="comp-bar bar-light" style="width: 50%;"></div></div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-name">Machilipatnam</div>
+            <div class="comp-price">₹ 21</div>
+            <div class="comp-bar-bg"><div class="comp-bar bar-light" style="width: 60%;"></div></div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-name">Tenali</div>
+            <div class="comp-price">₹ 20</div>
+            <div class="comp-bar-bg"><div class="comp-bar bar-light" style="width: 50%;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 6: Market Insight -->
+      <div class="card insight-card card-insight">
+        <div class="card-header">
+          <h3 class="card-title"><svg style="width: 20px; height: 20px; stroke: #D97706; fill: #FDE68A;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Market Insight</h3>
+        </div>
+        <div class="insight-text">
+          <span class="sync-crop-name">Potato</span> prices are 12% higher this week due to lower supply in nearby markets.
+        </div>
+        <div class="insight-green-box">
+          <h4><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 3;" viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg> Good time to sell</h4>
+          <p>Demand is high in Krishna District, Vijayawada and Guntur markets.</p>
+        </div>
+      </div>
+
+      <!-- Bottom Row -->
+      <!-- Card 7: Demand & Supply -->
+      <div class="card card-ds">
+        <div class="card-header">
+          <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Demand & Supply</h3>
+        </div>
+        <div class="ds-row">
+          <div class="ds-label">Demand</div>
+          <div class="ds-bar-bg"><div class="ds-bar-fill" style="background: #1B4D35; width: 80%;"></div></div>
+          <div class="ds-val ds-high">High</div>
+        </div>
+        <div class="ds-row">
+          <div class="ds-label">Supply</div>
+          <div class="ds-bar-bg"><div class="ds-bar-fill" style="background: #D97706; width: 35%;"></div></div>
+          <div class="ds-val ds-low">Low</div>
+        </div>
+        <div class="ds-msg">
+          <svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path></svg>
+          Higher demand may keep prices strong this week.
+        </div>
+      </div>
+
+      <!-- Card 8: Market Locations Map -->
+      <div class="card map-card card-map">
+        <div class="card-header" style="margin-bottom: 12px;">
+          <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Market Locations</h3>
+          <button style="background: white; border: 1px solid #E8ECEF; padding: 4px; border-radius: 6px; cursor: pointer;">
+            <svg style="width: 14px; height: 14px; stroke: #4A5C52; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+          </button>
+        </div>
+        <div class="map-wrap">
+          <img src="/assets/market_locations_map.jpg" alt="Market Map" class="map-img" />
+          
+          <div class="map-pin-box" style="top: 20px; right: 40px;">
+            <div class="pin-price">₹ 20 /kg <svg style="width:10px; height:10px; stroke:#65796E; fill:none; display:inline-block;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div>
+            <div class="pin-loc">Guntur</div>
+          </div>
+          <svg style="position: absolute; top: 58px; right: 100px; width: 14px; height: 14px; stroke: #1B4D35; fill: #1B4D35;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
+          
+          <div class="map-pin-box" style="bottom: 40px; left: 30px;">
+            <div class="pin-price">₹ 24 /kg</div>
+            <div class="pin-loc">Vijayawada</div>
+          </div>
+          <svg style="position: absolute; bottom: 30px; left: 80px; width: 14px; height: 14px; stroke: #1B4D35; fill: #1B4D35;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
+          
+          <div class="map-pin-box" style="bottom: 40px; right: 40px;">
+            <div class="pin-price">₹ 22 /kg</div>
+            <div class="pin-loc">Krishna District</div>
+          </div>
+          <svg style="position: absolute; bottom: 30px; right: 80px; width: 14px; height: 14px; stroke: #1B4D35; fill: #1B4D35;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
+        </div>
+      </div>
+
+      <!-- Card 9: Market News -->
+      <div class="card card-news">
+        <div class="card-header">
+          <h3 class="card-title"><svg style="width: 18px; height: 18px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Market News</h3>
+          <a href="#" class="card-link">View All <svg style="width: 14px; height: 14px; stroke: currentColor; fill: none;" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        </div>
+        <div class="news-list">
+          <div class="news-item">
+            <div class="news-dot"></div>
+            <div class="news-content">
+              <span class="news-date">24 May 2025</span>
+              <p class="news-text"><span class="sync-crop-name">Potato</span> supply drops due to unseasonal rains in nearby regions.</p>
+            </div>
+            <svg style="width: 14px; height: 14px; stroke: #8F9E96; fill: none; flex-shrink: 0;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+          <div class="news-item">
+            <div class="news-dot"></div>
+            <div class="news-content">
+              <span class="news-date">22 May 2025</span>
+              <p class="news-text">Prices likely to remain high this week, says APMC.</p>
+            </div>
+            <svg style="width: 14px; height: 14px; stroke: #8F9E96; fill: none; flex-shrink: 0;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+          <div class="news-item">
+            <div class="news-dot"></div>
+            <div class="news-content">
+              <span class="news-date">20 May 2025</span>
+              <p class="news-text">Increased demand from Vijayawada markets.</p>
+            </div>
+            <svg style="width: 14px; height: 14px; stroke: #8F9E96; fill: none; flex-shrink: 0;" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div class="bottom-acc-container">
+    <div class="acc-pill-wrap">
+      <a href="javascript:void(0)" class="acc-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+        Speak / Voice Input
+      </a>
+      <button type="button" class="acc-btn btn-read-aloud">
+        <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+        Read Aloud
+      </button>
+      <a href="tel:18001234567" id="acc-call-btn" class="acc-btn">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        Call Vyapti
+      </a>
+      <a href="https://wa.me/919876543210" target="_blank" rel="noopener" id="acc-wa-btn" class="acc-btn">
+        <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        WhatsApp Vyapti
+      </a>
+    </div>
+    <div class="farmers-feed">
+      <svg style="width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2;" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+      Farmers<br>Feed the Future
+    </div>
+  </div>
+
+  <script type="module" src="/src/farmer-app.js"></script>
+
+  <script src="/src/vyapti-kb.js"></script>
+  <script src="/src/ask-vyapti.js"></script>
+
+  <script src="/src/guided-tour.js"></script>
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Time filters
+    const filterPills = document.querySelectorAll('.filter-pill');
+    filterPills.forEach(pill => {
+        pill.onclick = (e) => {
+            filterPills.forEach(p => { p.style.background = 'white'; p.style.color = '#4A5C52'; });
+            e.target.style.background = '#163323';
+            e.target.style.color = 'white';
+            window.showToast('Fetching latest market data for ' + e.target.innerText, 'info');
+        };
+    });
+});
+
+</script>
+</body>
+</html>
+

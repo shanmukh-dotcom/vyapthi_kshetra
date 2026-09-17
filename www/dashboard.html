@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VYAPTI KSHETRA - Fair Market Dashboard</title>
+    <!-- Tailwind CSS for fast styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js for graphs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body { top: 0 !important; }
+.skiptranslate { display: none !important; }
+</style>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+}
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+<body class="bg-gray-50 p-8 font-sans text-gray-800">
+<div id="google_translate_element" style="display:none;"></div>
+
+    <div class="max-w-5xl mx-auto">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-green-700">VYAPTI KSHETRA</h1>
+                <p class="text-gray-500">Bridging Fields to Fair Markets</p>
+            </div>
+            <div class="bg-white px-4 py-2 rounded-lg shadow border border-gray-200">
+                <span class="text-sm text-gray-500">Location:</span>
+                <span class="font-semibold text-green-700" id="location-name">Krishna District (Loading...)</span>
+            </div>
+        </header>
+
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Current Price -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h3 class="text-gray-500 text-sm font-semibold mb-1">Current Market Price (Modal)</h3>
+                <div class="flex items-end gap-2">
+                    <span class="text-4xl font-bold text-gray-900" id="current-price">₹--</span>
+                    <span class="text-gray-500 mb-1">/ quintal</span>
+                </div>
+                <div class="mt-2 text-sm" id="trend-7d">
+                    <span class="text-gray-400">7-Day Trend: --</span>
+                </div>
+            </div>
+
+            <!-- Fair Price Engine -->
+            <div class="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl shadow-sm border border-green-200 relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">VYAPTI ENGINE</div>
+                <h3 class="text-green-800 text-sm font-semibold mb-1">Indicative Fair Price Range</h3>
+                <div class="flex items-end gap-2">
+                    <span class="text-3xl font-bold text-green-700" id="fair-price-range">₹-- to ₹--</span>
+                </div>
+                <div class="mt-3">
+                    <label class="text-xs text-green-700 font-semibold mr-2">Grade your crop:</label>
+                    <select id="grade-selector" class="text-sm bg-white border border-green-300 rounded p-1 text-green-800 focus:outline-none" onchange="fetchFairPrice()">
+                        <option value="Premium">Premium (+15%)</option>
+                        <option value="Standard" selected>Standard (Base)</option>
+                        <option value="Low">Low (-15%)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Data Confidence -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                <h3 class="text-gray-500 text-sm font-semibold mb-1">Data Confidence</h3>
+                <div class="flex items-center gap-3 mt-2">
+                    <div id="confidence-badge" class="px-3 py-1 rounded-full text-sm font-bold bg-gray-200 text-gray-700">--</div>
+                </div>
+                <p class="text-xs text-gray-500 mt-3" id="confidence-reason">Fetching data engine status...</p>
+            </div>
+        </div>
+
+        <!-- Chart Section -->
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-8">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">Price Trend & AI Forecast (Next 15 Days)</h3>
+            <canvas id="priceChart" width="400" height="150"></canvas>
+        </div>
+
+    </div>
+
+    <script>
+        const API_BASE = "http://localhost:8000/api/v1/market";
+        const MARKET = "Vijayawada";
+        let priceChart = null;
+
+        async function initDashboard() {
+            await fetchDashboardData();
+            await fetchFairPrice();
+            await fetchChartData();
+        }
+
+        async function fetchDashboardData() {
+            try {
+                const res = await fetch(`${API_BASE}/dashboard?market_name=${MARKET}`);
+                const data = await res.json();
+                
+                document.getElementById('location-name').innerText = `${data.market}, ${data.district}`;
+                document.getElementById('current-price').innerText = `₹${data.current_market_price_quintal}`;
+                
+                const trendEl = document.getElementById('trend-7d');
+                if (data.trend_7_day_pct > 0) {
+                    trendEl.innerHTML = `<span class="text-green-600 font-bold">↑ ${data.trend_7_day_pct}%</span> <span class="text-gray-500">vs last week</span>`;
+                } else {
+                    trendEl.innerHTML = `<span class="text-red-600 font-bold">↓ ${data.trend_7_day_pct}%</span> <span class="text-gray-500">vs last week</span>`;
+                }
+            } catch (e) {
+                console.error("Dashboard error", e);
+            }
+        }
+
+        async function fetchFairPrice() {
+            const grade = document.getElementById('grade-selector').value;
+            try {
+                const res = await fetch(`${API_BASE}/fair-price?market_name=${MARKET}&grade=${grade}`);
+                const data = await res.json();
+                
+                document.getElementById('fair-price-range').innerText = `₹${data.vyapti_indicative_fair_range_quintal[0]} - ₹${data.vyapti_indicative_fair_range_quintal[1]}`;
+                
+                const badge = document.getElementById('confidence-badge');
+                badge.innerText = data.confidence;
+                if(data.confidence === 'HIGH') badge.className = "px-3 py-1 rounded-full text-sm font-bold bg-green-100 text-green-700";
+                if(data.confidence === 'MEDIUM') badge.className = "px-3 py-1 rounded-full text-sm font-bold bg-yellow-100 text-yellow-700";
+                
+                document.getElementById('confidence-reason').innerText = data.reason;
+            } catch (e) {
+                console.error("Fair price error", e);
+            }
+        }
+
+        async function fetchChartData() {
+            try {
+                const res = await fetch(`${API_BASE}/chart-data?market_name=${MARKET}&days=60`);
+                const data = await res.json();
+
+                // Process Historical Data
+                const labels = data.historical.map(d => d.date);
+                const historicalPrices = data.historical.map(d => d.price);
+                
+                // Process Forecast Data (Pad historical array with nulls, then add forecast)
+                const forecastLabels = data.forecast.map(d => d.date);
+                const allLabels = [...labels, ...forecastLabels];
+                
+                const forecastPrices = Array(labels.length - 1).fill(null);
+                // Connect the lines
+                forecastPrices.push(historicalPrices[historicalPrices.length - 1]); 
+                forecastPrices.push(...data.forecast.map(d => d.predicted_price));
+
+                renderChart(allLabels, historicalPrices, forecastPrices);
+            } catch (e) {
+                console.error("Chart error", e);
+            }
+        }
+
+        function renderChart(labels, historical, forecast) {
+            const ctx = document.getElementById('priceChart').getContext('2d');
+            
+            if (priceChart) priceChart.destroy();
+
+            priceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Historical Market Price',
+                            data: historical,
+                            borderColor: '#374151',
+                            backgroundColor: 'rgba(55, 65, 81, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.1
+                        },
+                        {
+                            label: 'VYAPTI AI Forecast',
+                            data: forecast,
+                            borderColor: '#10B981',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    scales: {
+                        y: {
+                            title: { display: true, text: 'Price (₹/Quintal)' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Start everything on load
+        window.onload = initDashboard;
+    </script>
+</body>
+</html>
+
