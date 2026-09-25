@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Continue Button Handler — Redirect to login with role param
+  // Continue Button Handler — Redirect directly to role dashboard (bypassing login)
   if (continueBtn) {
     continueBtn.addEventListener('click', () => {
       const selectedCard = document.querySelector('.role-option-card.selected');
@@ -122,7 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
       continueBtn.style.transform = 'scale(0.98)';
 
       setTimeout(() => {
-        window.location.href = '/login.html?role=' + selectedRole;
+        if (selectedRole === 'buyer' || selectedRole === 'consumer') {
+          window.location.href = '/consumer-home.html';
+        } else {
+          window.location.href = '/farmer-home.html';
+        }
       }, 150);
     });
   }
